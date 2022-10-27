@@ -1,69 +1,52 @@
-# Ejemplo 3. Listas y data frames
+## EJEMPLO 3: Listas y Dataframes
 
-# Objetivo
-# Crear listas y data frames
-# Extraer información de estos
-# Cálculo de estadísticos básicos
+"Las listas son muy parecidas a los vectores, salvo que estas pueden tener objetos
+de distinto tipo como variables, vectores, matrices, dataframes e incluso otros listas.
 
-# Requisitos
+Para crea una lista, basta llamar la función list() con la serie de elementos a 
+guardar como argumentos de la función identificados por un nombre:
+"
+lista <- list(string = "Pepe", 
+              numeric = 3,
+              vector = c(4, 7, 9),
+              matrix = matrix(1:9, nrow = 3, ncol = 3),
+              lista2 = list(a = "Hola", b = "Mundo")
+              )
+class(lista)
+lista
 
-# Prework
-# R, RStudio
-# Ejemplos 1 y 2
+"La listas poseen atributos a los cuales se puede acceder mediante el operador $"
+str(lista)
 
-# Desarrollo
+lista$matrix
+lista$lista2
+lista$lista2$b
 
-# Seguir el contenido y tratar de comprender el código mostrado a continuación
+"Los Dataframe son muy parecidos a las matrices, salvo que estos pueden tener 
+vectores de distintos tipos.
 
-# Listas
+Para crea una lista, basta llamar la función data.frame() y agregar los vectores
+columnas con su respectivo nombre:
+"
+x <- 10:21
+y <- letters[x]
 
-(milista <- list(nombre = "Pepe", no.hijos = 3, edades.hijos = c(4, 7, 9)))
+df <- data.frame(edad=10:21, 
+                 grupo=letters[x]
+                 )
+class(df)
+df
 
-# propiedades de la lista
+str(df)
+names(df)
 
-str(milista)
+"Se pueden agregar y eliminar columnas de ls siguiente manera"
+df$sexo <- c("H", "M", "H", "M", "H", "H", "M", "H","H","M", "M", "H")
+df
 
-# Extrayendo elementos de la lista, recuerda que para ingresar se debe usar el símbolo $
-  
-milista$nombre
+df$edad <- NULL
+df
 
-# Creando data frames
-
-(x <- 10:21)
-(y <- letters[x])
-
-(mydf <- data.frame(edad=x, grupo=y))
-
-str(mydf)
-
-# Extrayendo información del df, se hace igual que con las matrices
-
-mydf[1]
-mydf[,1]
-mydf$edad
-
-# Calculando algunos estadísticos básicos
-
-mean(mydf$edad)
-
-# Podemos hacer uso de la función `paste` para agregar un mensaje
-
-paste("La media de la edad es:", mean(mydf$edad))
-
-# Podemos inspeccionar a detalle el df utilizando `summary`
-
-summary(mydf)
-
-# También se puede conocer su dimensión
-
-dim(mydf)
-
-# Podemos agregar una columna extra con datos
-
-mydf$sexo <- c("H", "M", "H", "M", "H", "H", "M", "H","H","M", "M", "H")
-mydf
-
-# Si fuera el caso, se puede eliminar una columna
-
-(mydf$sexo <- NULL)
-
+"Los Dataframes pueden descargarse en una gran variedad de formatos, siendo .csv 
+uno de los más utilizados"
+write.table(x=df, file="primer_df.csv", col.names = TRUE)
