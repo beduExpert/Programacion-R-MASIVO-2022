@@ -1,95 +1,49 @@
-# EJEMPLO 1. Tipos de datos y vectores
+## EJEMPLO 1: TIPOS DE DATOS
 
-# Objetivo
-# Poder determinar el tipo de variables y objetos que se utilizan
-# Creación y manipulación de objetos (vectores, matrices, data frames, entre otros)
-# Operaciones básicas
+"R es un lenguaje de programación orientada a objetos (OOP), por lo que todos los
+elementos con los que opera son en realidad objetos, que son asignados a variables
+para su almacenamiento local.
 
-# Requisitos
-# Tener previamente instalados R y RStudio
-# Haber leido y comprendido el Prework
+Dentro del lenguaje de R, existen una gran cantidad de objetos que deben conocerse
+a detalle para saber cómo pueden operar cada uno de ellos.
 
-# Desarrollo
-# Se tiene una serie de códigos los cuales deberán irse corriento línea a línea, recordar que siempre se ejecuta una línea presionando Ctrl + Enter
+En esta primera sesión comenzaremos a ver los objetos más importantes, sin embargo,
+a lo largo de todo el módulo veremos una gran cantidad de ellos.
 
-# Primero vamos a crear algunas variables de diferentes tipos:
-  
-(var.hola <- "Hola Mundo")
-(var.number <- 5L)
-(var.double <- 2.7076)
-(var.logical <- T)
-(vector <- c(1,2))
+Veamos cómo asignar un objeto a una variable:"
 
-# Ahora con la función class veremos la tipología de las variables
+var.1 <- "Hola Mundo"
+var.2 <- 5L
+var.3 <- 5
+var.4 <- 2.7076
+var.5 <- TRUE
 
-class(var.number)
-class(var.hola)
-class(var.double)
-class(var.logical)
+"Cada uno de estos objetos pertenece a una clase particular, la cual puede entenderse
+como una huella digital que contiene toda los atributos, propiedades y características
+asociadas a cada tipo de objeto.
 
-# Observa que diferencia hay entre class y typeof
+Para identificar a qué clase pertence un objeto, podemos aplicar la siguiente función:"
 
-class(var.logical)
-typeof(var.logical)
+class(var.1)
+class(var.2)
+class(var.3)
+class(var.4)
+class(var.5)
 
-# En este paso vamos a crear vectores, siempre serán de la forma c(elem1, elem2, ...)
+"Conocer el tipo de clase es fundamental para poder realizar operaciones, ya que
+de ellas dependerá el resultado
 
-a <- c(4, 6, 8, 10,12)
-b <- c(3, 5, 7, 9)
+Las operaciones entre variabes numéricas no causan confusión, pero vamos a
+probar las siguientes operaciones para ver algunas implicaciones:"
 
-# Para saber la longitud del vector
+var.2 + var.4
+var.3 + var.4
 
-length(a)
-length(b)
+var.2 * var.4
+var.3 * var.4
 
-# Se puede acceder a las coordenadas de un vector haciendo uso de [] y su posición
+var.1 + var.2
+var.1 * var.3
 
-a[1]
-b[4]
-
-# Para unir 2 vectores
-
-c(a,b)
-
-# Organizarlos con la función sort, cambia la F por T y observa que ocurre
-
-sort(c(a,b), decreasing = F)
-
-# Otra forma de generar el vector es de la siguiente manera, utilizando ":"
-
-3:12  # así de sencillo es
-
-# Intenta los siguientes y prueba con otras que se te vengan a la imaginación
-
-10:1
-1:1000
-0:10
-
-# También se pueden generar vectores que no sean sucesivos con la función seq, intenta cambiar el valor de los argumentos y observa el comportamiento de los vectores
-
-(vector.by2 <- seq(from = 1, to = 10, by =2))
-
-(vector.by3 <- seq(1, 10, 3))
-
-# Para repetir un número o un vector un determinado número de ocasiones utilizamos rep
-
-rep(5, times = 6)
-
-# Observa que hace el siguiente comando con los vectores a y b
-
-rep(a, 2)
-rep(b, 3)
-
-# Reciclaje, al hacer operaciones entre vectores, R repetirá los valores del vector, hasta alcanzar la dimensión requerida
-
-c(1, 2) + c(7, 8, 9, 10)
-
-# Existen varias operaciones entre vectores, intenta probar algunas de las siguientes:
-  
-a + b     
-a - b     
-a*b
-a/b
-a^2
-a1 <- a*0.5 + b^2
-a1[1]
+var.4 + var.5
+var.4 * var.5
