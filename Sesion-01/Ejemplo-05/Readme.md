@@ -1,8 +1,8 @@
-# EJEMPLO 5. Instalar paquetes y cargarlos. 
+# Ejemplo 05: Loops y condicionales
 
 # Objetivo
-- Instalar paquetes
-- Cargar paquetes
+- Conocer la inicialización de variables 
+- Ejecutar un loop, for, while, if y if-else
 
 # Requisitos
 1. Haber estudiado Prework
