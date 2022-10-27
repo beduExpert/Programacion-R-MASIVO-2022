@@ -1,11 +1,11 @@
-#      Ejemplo 2- Matrices
+#      Ejemplo 2:  Vectores y matrices
 
 # Objetivo
 
-- Crear nuevas matrices
-- Extraer datos dentro de una matriz
+- Crear vectores y matrices
+- Extraer datos de un vector y una matriz
 - Calcular sus dimensiones
-- Realizar operaciones básicas entre matrices
+- Realizar operaciones básicas
 
 # Requisitos
 
