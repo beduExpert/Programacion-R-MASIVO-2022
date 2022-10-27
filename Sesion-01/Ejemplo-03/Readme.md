@@ -4,7 +4,6 @@
 
 - Crear listas y data frames
 - Extraer información de estos
-- Cálculo de estadísticos básicos
 
 # Requisitos
 
@@ -12,63 +11,58 @@
 2. Tener previamente instalados R y RStudio
 
 # Desarrollo
-Ejecutar las líneas de comando y tratar de comprender qué realiza cada parte de sus entradas
 
-#### Listas 
+Las listas son muy parecidas a los vectores, salvo que estas pueden tener objetos de distinto tipo como variables, vectores, matrices, dataframes e 
+incluso otros listas.
+
+Para crea una lista, basta llamar la función list() con la serie de elementos a guardar como argumentos de la función identificados por un nombre:
 ```R
-(milista <- list(nombre = "Pepe", no.hijos = 3, edades.hijos = c(4, 7, 9)))
-```
-Propiedades de la lista
-```R
-str(milista)
-```
-Extrayendo elementos de la lista, recuerda que para ingresar se debe usar el símbolo `$` 
-```
-milista$nombre
-```
-
-Creando data frames
-```R
-(x <- 10:21)
-(y <- letters[x])
-
-(mydf <- data.frame(edad=x, grupo=y))
-
-str(mydf)
+lista <- list(string = "Pepe", 
+              numeric = 3,
+              vector = c(4, 7, 9),
+              matrix = matrix(1:9, nrow = 3, ncol = 3),
+              lista2 = list(a = "Hola", b = "Mundo")
+              )
+class(lista)
+lista
 ```
 
-Extrayendo información del df, se hace igual que con las matrices
+La listas poseen atributos a los cuales se puede acceder mediante el operador $
 ```R
-mydf[1]
-mydf[,1]
-mydf$edad
-```
-Calculando algunos estadísticos básicos
-```R
-mean(mydf$edad)
+str(lista)
+
+lista$matrix
+lista$lista2
+lista$lista2$b
 ```
 
-Podemos hacer uso de la función `paste` para agregar un mensaje
+Los Dataframe son muy parecidos a las matrices, salvo que estos pueden tener vectores de distintos tipos.
+
+Para crea una lista, basta llamar la función data.frame() y agregar los vectores columnas con su respectivo nombre:
 ```R
-paste("La media de la edad es:", mean(mydf$edad))
+x <- 10:21
+y <- letters[x]
+
+df <- data.frame(edad=10:21, 
+                 grupo=letters[x]
+                 )
+class(df)
+df
+
+str(df)
+names(df)
 ```
 
-Podemos inspeccionar a detalle el df utilizando `summary`
+Se pueden agregar y eliminar columnas de ls siguiente manera:
 ```R
-summary(mydf)
-```
-También se puede conocer su dimensión 
-```R
-dim(mydf)
-```
-Podemos agregar una columna extra con datos 
-```RR
-mydf$sexo <- c("H", "M", "H", "M", "H", "H", "M", "H","H","M", "M", "H")
-mydf
+df$sexo <- c("H", "M", "H", "M", "H", "H", "M", "H","H","M", "M", "H")
+df
+
+df$edad <- NULL
+df
 ```
 
-Si fuera el caso, se puede eliminar una columna 
+Los Dataframes pueden descargarse en una gran variedad de formatos, siendo .csv uno de los más utilizados
 ```R
-mydf$sexo <- NULL
-mydf
-```
+write.table(x=df, file="primer_df.csv", col.names = TRUE)
+
