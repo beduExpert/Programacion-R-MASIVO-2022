@@ -2,9 +2,7 @@
 #   Ejemplo 1: Tipos de Datos
 
 # Objetivo
-- Poder determinar el tipo de variables y objetos que se utilizan.
-- Creación y manipulación de objetos (vectores, matrices, data frames, entre otros).
-- Operaciones básicas. 
+- Conocer el tipo de variables utilizadas en R
 
 # Requisitos
 - Tener previamente instalados R y RStudio
