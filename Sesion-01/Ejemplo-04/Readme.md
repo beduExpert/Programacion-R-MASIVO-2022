@@ -1,52 +1,24 @@
 # EJEMPLO 4. Descarga y lectura de data sets.
 
 # Objetivo
-- Fijar y conocer ruta de trabajo
-- Lectura de ficheros CSV, locales y en repositorio
-- Manejo de objetos
+- Aprender a instalar paqueterías en el ambiente local de R
+- Aprender a cargar librería en la sesión actual de trabajo
 
 # Requisitos
 1. R, RStudio
 2. Prework
 
 # Desarrollo
-Ejecutar las líneas de comando y tratar de comprender que realiza cada parte de sus entradas
-#### Se pueden obtener diversos data sets de Kaggle, visita el sitio para que te familiarices
-#### La siguiente es una base de datos de los libros más vendidos en Amazon del 2009 - 2019
 
-Obtenemos la ruta del directorio de trabajo
+En R, la instalación de paqueterías sólo se realiza una ves a nivel del ambiente, por lo que no es necesario instalar nuevamente al iniciar otra sesión.
 ```R
-getwd()
-```
-Fijando el directorio de trabajo
-```R
-setwd("c:/DATA/Sesion1/") # Depende del usuario donde ubicar su wd
-```
-La función `read.csv` será util para leer fichero .csv
-```R
-read.csv("bestsellers with categories.csv") # El archivo csv debe estar en el directorio de trabajo
-```
-se puede asignar a un objeto el fichero leido anteriormente
-```R
-amazon.books <- read.csv("bestsellers with categories.csv")
-str(amazon.books) 
-head(amazon.books); tail(amazon.books) 
+install.packages("ggplot2")
+install.packages("dplyr")
 ```
 
-Calculamos la dimensión de la base de datos
+Sin embargo, instalar una paquetería no implica que ya estará disponible para su uso. En cada sesión deben llamarse las librerías a utilizar de la 
+siguiente forma:
 ```R
-dim(amazon.books)
-```
-
-El tipo de objeto se puede saber utilizando class() 
-```R
-class(amazon.books)
-```
-
-
-También se puede leer el fichero directamente desde una URL
-```R
-data.url <- read.csv("https://www.football-data.co.uk/mmz4281/2021/SP1.csv")
-str(data.url)
-head(data.url); tail(data.url) 
+library(ggplot2)
+library(dplyr)
 ```
