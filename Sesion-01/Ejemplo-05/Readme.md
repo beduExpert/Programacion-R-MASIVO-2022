@@ -9,35 +9,45 @@
 2. Tener previamente instalados R y RStudio
 
 # Desarrollo
-En este ejemplo se te guiará para poder realizar la instalación y carga de paquetes que son requeridos para realizar análisis, gráficas, o para extraer información con diversas funciones. Esto es útil ya que agrega funcionalidades a R, ya sea para graficar o generar análisis con diversas técnicas.
 
-Se instalan de la siguiente manera
+Los loops son unos de los elementos más utilizados en programación, ya que permiten ejecutar, de forma repetitiva, un serie de acciones.
 
+Los 'for loops' son los más sencillos y utilizados en R, ya que estos iteran sobre 
+los elementos de un vector, siendo su longitud el número de repeticiones:
 ```R
-install.packages("ggplot2")    #siempre lleva  comillas
-```
-Una vez que se instaló, se debe de cargar 
-```R
-library(ggplot2)                # Se omite el uso de las comillas
-```
-Otro ejemplo
-```R
-install.packages("dplyr")
-library(dplyr)
-```
+w <- c(2,4,6,8,10)
 
-Algo útil es revisar la versión que se tiene de `R`, ya que en ocasiones no se instalan ciertos paquetes por la incompatibilidad de `R`, el siguiente comando nos indicará la versión que estamos trabajando.
+for(i in 1:length(w)) {
+  w.sq <- w[i]**2
+  print(w.sq)
+}
 
-```R
-version
+w.sq <- c()
+for(i in c(2,4,6,8,10)){
+  w.sq <- c(w.sq, i**2)
+  print(w.sq)
+}
 ```
 
-En caso de que tu versión de R no sea la más reciente puedes intentar desde el RGui.exe lo siguiente para actualizarlo a la última versión (recuerda que no se hace desde RSTudio)
-
+Por su parte, los 'while loops' ejecutan una serie mientras la condición inicial sea verdadera
 ```R
-install.packages("installr", dependencies = TRUE)
-library(installr)
-updateR()
+x <- 20
+while(x>0) {
+  paste("Quedan", print(x), "iteraciones")
+  x <- x-1 #Siempre es importante actualizar el valor de la condición.
+}
 ```
 
-También se puede realizar esta acción en la pestaña de Packages, inténtalo.
+Otro elemento importante en programación es el uso de condicionantes, ya que estas nos permiten ejecutar acciones dependiendo de las condiciones que se 
+cumplan:
+```R
+x <- runif(1, min=-10, max=10)
+
+if(x > 0) {
+  print("x es positivo")
+} else if (x == 0) {
+  print("x es igual a 0")
+} else {
+  print("X es negativo")
+}
+```
