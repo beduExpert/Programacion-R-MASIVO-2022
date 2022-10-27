@@ -1,38 +1,42 @@
-# EJEMPLO 5. Instalar paquetes y cargarlos.
+## Ejemplo 05: Loops y condicionales
 
-# Objetivo
-# Instalar paquetes
-# Cargar paquetes
+"Los loops son unos de los elementos más utilizados en programación, ya que permiten
+ejecutar, de forma repetitiva, un serie de acciones.
 
-# Requisitos
-# R y RStudio
-# Prework
+Los 'for loops' son los más sencillos y utilizados en R, ya que estos iteran sobre 
+los elementos de un vector, siendo su longitud el número de repeticiones:"
 
-# Desarrollo
-# En este ejemplo se te guiará para poder realizar la instalación y carga de paquetes que son requeridos para realizar análisis, gráficas, o para extraer información con diversas funciones. Esto es útil ya que agrega funcionalidades a R, ya sea para graficar o generar análisis con diversas técnicas.
+w <- c(2,4,6,8,10)
 
-# Se instalan de la siguiente manera
+for(i in 1:length(w)) {
+  w.sq <- w[i]**2
+  print(w.sq)
+}
 
-install.packages("ggplot2") #siempre lleva  comillas
+w.sq <- c()
+for(i in c(2,4,6,8,10)){
+  w.sq <- c(w.sq, i**2)
+  print(w.sq)
+}
 
-# Una vez que se instaló, se debe de cargar
+"Por su parte, los 'while loops' ejecutan una serie mientras la condición inicial 
+sea verdadera"
 
-library(ggplot2) # Se omite el uso de las comillas
+x <- 20
+while(x>0) {
+  paste("Quedan", print(x), "iteraciones")
+  x <- x-1 #Siempre es importante actualizar el valor de la condición.
+}
 
-# Otro ejemplo
+"Otro elemento importante en programación es el uso de condicionantes, ya que 
+estas nos permiten ejecutar acciones dependiendo de las condiciones que se cumplan:"
 
-install.packages("dplyr")
-library(dplyr)
-# También se puede realizar esta acción en la pestaña de Packages, intentalo.
+x <- runif(1, min=-10, max=10)
 
-# Algo útil es revisar la versión que se tiene de R, ya que en ocasiones no se instalan ciertos paquetes por la incompatibilidad de R, el siguiente comando nos indicará la versión que estamos trabajando.
-
-version
-
-#En caso de que tu versión de R no sea la más reciente puedes intentar desde el RGui.exe lo siguiente para actualizarlo a la última versión (recuerda que no se hace desde RSTudio)
-
-
-install.packages("installr", dependencies = TRUE)
-library(installr)
-updateR()
-
+if(x > 0) {
+  print("x es positivo")
+} else if (x == 0) {
+  print("x es igual a 0")
+} else {
+  print("X es negativo")
+}
