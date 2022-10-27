@@ -1,22 +1,68 @@
 # Reto 1. Lectura y escritura de datos 
 
 # Objetivo
-Reforzar la lectura de ficheros CSV y la escritura de variables resultado en un nuevo fichero CSV, de este modo será fácil su lectura en otros lenguajes o plataformas.
+Reforzar la creación de vectores y matrices y aprender a realizar operaciones elementales.
 
 # Requisitos
 Haber realizado el prework, además de haber realizado los ejemplos de la sesión.
 
 # Desarrollo
-Abre el fichero que se encuentra en el repositorio y obten sus características, para finalmente imprimir los resultados en un fichero CSV.
 
-1. Leer el archivo "netflix_titles.csv" desde Github
-(https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2021/main/Sesion-01/Data/netflix_titles.csv), almacenarlo en un df llamado netflix
+Una empresa realiza un corte semanal del total de sus ventas para conocer cuál es su
+utilidad neta al final de cada semana. La empresa sólo maneja dos productos (a y b),
+los cuales tienen un precio de 15.5 y 7.8, así como un costo de 5.9 y 2.4 respectivamente.
 
-2. Obtener la dimensión y el tipo de objeto que se obtiene
+Adicionalmente, en corte semanal descuenta el 10% de sus utilidades por motivo de 
+impuestos.
 
-3. Obtener los títulos que se estrenaron después del 2015. Almacenar este df en una variable llamada net.2015 
-(Hint: primero podrías filtrar solo aquellas filas del data frame que corresponden a estrenos después del 2015, por ejemplo, `dataframe[dataframe$columna > 2015, ]`)
+Los datos de las unidades de ventas y devoluciones son los siguientes:
+```R
+ventas.a <- c(18,26,14,22,34,46,37)
+ventas.b <- c(58,28,35,16,5,19,11)
 
-4. Escribir los resultados en un archivo .csv llamado res.netflix.csv
-(Hint: consulta la función `write.csv`)
+devoluciones.a <- c(0,4,2,0,12,20,8)
+devoluciones.b <- c(25,0,8,0,0,0,2)
+```
+
+A) Calcula las unidades de ventas netas de cada día y para cada producto:
+```R
+ventas.netas.a <- 
+ventas.netas.b <- 
+
+B) Calcula los ingresos de cada día y para cada producto:
+```R
+ingresos.netos.a <- 
+ingresos.netos.b <- 
+```
+
+C) Calculo los costos de cada día y para cada producto:
+```R
+costos.netos.a <- 
+costos.netos.b <- 
+```
+
+D) Con los vectores de ingreso y costos para cada producto, crea una matriz de
+ingresos y otra de costos diarios
+```R
+ingresos.dia <- 
+costos.dia <- 
+```
+
+E) Usando las matrice anteriores, calcula la utilidad bruta y neta por día
+```R
+utilidad.bruta.dia <- 
+utilidad.neta.dia <- 
+```
+
+F) Considerando las funciones colSums() y rowSums, utiliza la adecuada para calular
+la utilidad semanal por producto
+```R
+utilidad.neta.prod <-
+```
+
+G) Utilizando una función de R, sumo los elementos de tu resultado anterior para 
+conocer la utilidad total de la semana
+```R
+utilidad.semanal <- 
+```
 
