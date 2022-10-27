@@ -1,4 +1,4 @@
-# Reto 1. Lectura y escritura de datos 
+# Reto 1. Operaciones con vectores y matrices
 
 # Objetivo
 Reforzar la creación de vectores y matrices y aprender a realizar operaciones elementales.
