@@ -1,9 +1,7 @@
-# Reto 3. Loops
+# Reto 3. Loops y pseudocódigo
 
 # Objetivo 
 
-- Crear vectores aleatorios
-- Operaciones básicas
 - Crear un loop y su pseudocódigo
 
 # Requisitos
@@ -11,11 +9,17 @@
 Entender la lógica de un loop, para poder realizar su programación y su pseudocódigo 
 
 # Desarrollo
-Leer detenidamente las instrucciones, para ejecutar apropiadamente el código requerido
 
-Agrega las instrucciones generales del ejemplo o reto
+Imaginemos que tenenos una columna de datos con información del sexo de nuestros clientes:
 
-1. Genera un vector de 44 entradas (aleatorias), llamado _ran_ (Hint: utiliza la función _rnorm()_).
-2. Escribe un loop que eleve al cubo las primeras 15 entradas y les sume 12.
-3. Guarda el resultado en un data frame, donde la primera columna sea el número aleatorio y la segunda el resultado, nómbralo _df.al_.
-4. Escribe el pseudocódigo del loop anterior.
+clientes <- c("M", "H", "NA", "M", "M", "H", "NA", "M", "H",
+              "M", "M", "M", "H", "M", "H", "H", "NA", "M",
+              "NA", "NA", "M", "H", "NA", "M", "M", "H", "H",
+              "M", "H", "H", "H", "M", "NA", "H", "M", "M")
+
+Para comenzar a hacer análisis y calcular algunos estadísticos, necesitamos contar 
+cuántos clientes son mujeres y hombres, así como aquellos con los que aún no 
+contamos información.
+
+Utilizando loops y pseudocódigo, desarrolla una forma rápida de lograr el objetivo
+mencionado.
