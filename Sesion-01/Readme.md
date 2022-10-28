@@ -17,15 +17,14 @@ Durante el transcurso de esta sesión serás capaz de desarrollar las siguientes
 
 ## 📂 Organización de la clase
 
-- [Ejemplo 1](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-01/Ejemplo-01) Tipos de datos y vectores
-- [Ejemplo 2](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-01/Ejemplo-02) Matrices
-- [Ejemplo 3](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-01/Ejemplo-03) Listas y data frames
-- [Ejemplo 4](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-01/Ejemplo-04) Descarga y lectura de data sets
-    - [Reto 1](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-01/Reto-01) Lectura y escritura de datos
-- [Ejemplo 5](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-01/Ejemplo-05) Instalar paquetes y cargarlos.
-    - [Reto 2](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-01/Reto-02) Operaciones con data frames
-- [Ejemplo 6](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-01/Ejemplo-06) Loops y pseudocódigo: for, if-else
-    - [Reto 3](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-01/Reto-03) Loops
+- [Ejemplo 1](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-01/Ejemplo-01) Tipos de datos
+- [Ejemplo 2](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-01/Ejemplo-02) Vectores y Matrices
+- [Ejemplo 3](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-01/Ejemplo-03) Listas y Dataframes
+- [Ejemplo 4](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-01/Ejemplo-04) Instalacación y carga de paquetería
+    - [Reto 1](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-01/Reto-01) Operaciones con vectores y matrices
+- [Ejemplo 5](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-01/Ejemplo-05) Loops y pseudocógido
+    - [Reto 2](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-01/Reto-02) Lectura de Dataframes
+    - [Reto 3](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-01/Reto-03) Loops y pseudocódigo
 - [Postwork](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-01/Postwork)
 
 
