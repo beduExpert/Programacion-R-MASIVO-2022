@@ -1,5 +1,3 @@
-# Reto 2. Lectura de DataFrames
-
 # Objetivo
 
 - Conocer cómo leer Dataframes
