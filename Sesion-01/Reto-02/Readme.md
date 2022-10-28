@@ -1,3 +1,5 @@
+# RETO 02: LECTURA DE DATAFRAMES
+
 # Objetivo
 
 - Conocer cómo leer Dataframes
@@ -7,8 +9,6 @@
 Haber cumplido con los retos anteriores. Documentarse con el prework 
 
 # Desarrollo
-
-## RETO 02: LECTURA DE DATAFRAMES
 
 En la gran mayoría de las sesiones estaremos utilizando distintas tablas de datos,
 por lo que es importante a prender a leerlas.
