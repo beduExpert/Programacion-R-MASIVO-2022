@@ -11,11 +11,12 @@ Entender la lógica de un loop, para poder realizar su programación y su pseudo
 # Desarrollo
 
 Imaginemos que tenenos una columna de datos con información del sexo de nuestros clientes:
-
+```R
 clientes <- c("M", "H", "NA", "M", "M", "H", "NA", "M", "H",
               "M", "M", "M", "H", "M", "H", "H", "NA", "M",
               "NA", "NA", "M", "H", "NA", "M", "M", "H", "H",
               "M", "H", "H", "H", "M", "NA", "H", "M", "M")
+```
 
 Para comenzar a hacer análisis y calcular algunos estadísticos, necesitamos contar 
 cuántos clientes son mujeres y hombres, así como aquellos con los que aún no 
