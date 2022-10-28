@@ -1,8 +1,8 @@
-# Reto 2. Operaciones con data frames
+# Reto 2. Lectura de DataFrames
 
 # Objetivo
 
-- Realizar operaciones con data frames, para extracción de información relevante 
+- Conocer cómo leer Dataframes
 
 # Requisitos
 
@@ -10,18 +10,38 @@ Haber cumplido con los retos anteriores. Documentarse con el prework
 
 # Desarrollo
 
-Realizar la lectura de los datos y seguir las instrucciones que se muestran a continuación.
+## RETO 02: LECTURA DE DATAFRAMES
 
-Utiliza el data frame de ventas de libros por Amazon y realiza las siguientes actividades:
+En la gran mayoría de las sesiones estaremos utilizando distintas tablas de datos,
+por lo que es importante a prender a leerlas.
 
-1. Almacénalo en un data frame que se llame amazon.best
+Como recordarás, el formato .csv es uno de los más utilizados, por lo que nos 
+enfocaremos en ello, sin embargo, la mayoría de funciones para leer archivos 
+siguen la misma lógica.
 
-2. Calcula el data frame transpuesto, asígnale el nombre de tAmazon y conviértelo en un data frame 
-(Hint: consulta la ayuda sobre las funciones `t` y `as.data.frame`)
+La función read.csv() toma un argumento principal, que establece la ruta de sistema 
+o url al archivo .csv.
 
-3. Usa el nombre de los libros como el nombre de las columnas (Hint: consulta la documentación de `names`, tienes que hacer algo similar a `names(dataframe) <- vector de nuevos nombres`)
+Si vas a leer un archivo que se encuentra localmente en tu computadora, es importante
+que este se encuentre en la dirección actual de trabajo, la cual puedes consultar 
+con la función getwd(). Para cambiar la dirección de trabajo puedes usar la función 
+setwd(path)
 
-4. ¿Cuál es el libro de menor y mayor precio?
+A) Usando la función de lectura adecuada, lee el archivo que se encuentra en la 
+siguiente url
+´´´R
+netflix <-read.csv("https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2022/main/Sesion-01/Data/netflix_titles.csv")
+´´´
 
+B) Verifica la clase de la tabla, el número de variables y de observaciones, así 
+como el nombre de las variables
+dim(netflix)
+class(netflix)
+names(netflix)
 
+C) Usando indexación, selecciona sólo los datos de películas que fueron estrenadas 
+desde 2015 y hasta antes del 2019
+net.2015 <- netflix[(netflix$release_year >= 2015 & netflix$release_year < 2019), ]
 
+D) Por último, averigua que hace la siguiente función
+View(net.2015)
