@@ -20,8 +20,11 @@ A continuación aparecen una serie de objetivos que deberás cumplir, es un ejem
 
 2. Del dataframe que resulta de importar los datos a `R`, extrae las columnas que contienen los números de goles anotados por los equipos que jugaron en casa (FTHG) y los goles anotados por los equipos que jugaron como visitante (FTAG); guárdalos en vectores separados
 
-3. Consulta cómo funciona la función `table` en `R`. Para ello, puedes ingresar los comandos `help("Table")` o `?table` para leer la documentación.
+3. Consulta cómo funciona la función `table` en `R`. Para ello, puedes ingresar los comandos `help("table")` o `?table` para leer la documentación.
  
-4. Interpreta los resultados de la tabla.
+4. Responde a las siguientes preguntas:
+  a) ¿Cuántos goles tuvo el partido con mayor empate?
+  b) ¿En cuántos partidos ambos equipos empataron 0 a 0?
+  c) ¿En cuántos partidos el equipo local (HG) tuvo la mayor goleada sin dejar que el equipo visitante (AG) metiera un solo gol?
 
 __Notas para los datos de soccer:__ https://www.football-data.co.uk/notes.txt
