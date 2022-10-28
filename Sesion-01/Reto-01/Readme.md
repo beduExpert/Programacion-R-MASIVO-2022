@@ -28,6 +28,7 @@ A) Calcula las unidades de ventas netas de cada día y para cada producto:
 ```R
 ventas.netas.a <- 
 ventas.netas.b <- 
+```
 
 B) Calcula los ingresos de cada día y para cada producto:
 ```R
