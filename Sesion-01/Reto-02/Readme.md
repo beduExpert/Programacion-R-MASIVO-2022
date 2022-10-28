@@ -29,19 +29,23 @@ setwd(path)
 
 A) Usando la función de lectura adecuada, lee el archivo que se encuentra en la 
 siguiente url
-´´´R
-netflix <-read.csv("https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2022/main/Sesion-01/Data/netflix_titles.csv")
-´´´
+```R
+netflix <- 
+```
 
 B) Verifica la clase de la tabla, el número de variables y de observaciones, así 
 como el nombre de las variables
-dim(netflix)
-class(netflix)
-names(netflix)
+```R
+
+```
 
 C) Usando indexación, selecciona sólo los datos de películas que fueron estrenadas 
 desde 2015 y hasta antes del 2019
-net.2015 <- netflix[(netflix$release_year >= 2015 & netflix$release_year < 2019), ]
+```R
+net.2015 <- 
+```
 
 D) Por último, averigua que hace la siguiente función
+```R
 View(net.2015)
+```
