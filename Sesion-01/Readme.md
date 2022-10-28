@@ -1,4 +1,4 @@
-# Sesión 1: Introducción a R y Software
+# Sesión 1: Introducción a R
 
 ## :dart: Objetivos
 
