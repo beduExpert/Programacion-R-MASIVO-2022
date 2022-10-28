@@ -1,29 +1,29 @@
-# Reto 3
+## RETO 03: LOOPS Y PSEUDOCÓDIGO
 
-# generando el vector de 44 posiciones aleatorio
+"Imaginemos que tenenos una columna de datos con información del sexo de nuestros clientes:"
 
-ran <- rnorm(44)
+clientes <- c("M", "H", "NA", "M", "M", "H", "NA", "M", "H",
+              "M", "M", "M", "H", "M", "H", "H", "NA", "M",
+              "NA", "NA", "M", "H", "NA", "M", "M", "H", "H",
+              "M", "H", "H", "H", "M", "NA", "H", "M", "M")
 
-# creando el loop que eleva al cubo y suma 12 a cada posición 
-el <- vector()
-for (i in 1:15) {
-  el[i] <- (ran[i]^3) + 12
-  print(el)
+"Para comenzar a hacer análisis y calcular algunos estadísticos, necesitamos contar 
+cuántos clientes son mujeres y hombres, así como aquellos con los que aún no 
+contamos información.
+
+Utilizando loops y pseudocódigo, desarrolla una forma rápida de lograr el objetivo
+mencionado:"
+
+m <- 0
+h <- 0
+na <- 0
+
+for(i in 1:length(clientes)) {
+  if (clientes[i] == "M") {
+    m <- m+1
+  } else if (clientes[i] == "H") {
+    h <- h+1
+  } else {
+    na <- na+1
+  }
 }
-
-# Se almacenan los valores en un data frame
-df.al <- data.frame(ran = ran[1:15], 
-                    val = el)
-df.al
-
-# pseudocódigo 
-
-# ran <- {se genera el vetor con rnorm de 44 entradas}
-# 
-# el <- {se inicializa un vector donde se almacenará el resultado}
-# 
-# for (contador desde 1 hasta 15 ){
-#   el[contador] <- operación aritmética
-#   se imprime el resultado (el)
-# }
-
