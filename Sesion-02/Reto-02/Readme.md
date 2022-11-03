@@ -1,8 +1,8 @@
-# Reto 2. Función mediana
+# RETO 2. MANIPULACIÓN DE DATAFRAMES CON DPLYR
 
 #### Objetivo
 
-- Lograr una mayor confianza con funciones de `R` que ayudan a conocer mejor un conjunto de datos u objeto de una manera fácil y rápida
+- Practicar el uso de las funciones de la librería de dplyr para la manipulación y transformación de DataFrames
 
 #### Requisitos
 
@@ -10,7 +10,6 @@
 
 #### Desarrollo
 
-
-1. Crea una función que calcule la mediana para datos no agrupados de un conjuntos de valores, sin utilizar la función `median`
-
-_ref (https://es.wikipedia.org/wiki/Mediana_(estad%C3%ADstica))_
+Utilizando el DataFrame del Reto01 de esta sesión, crea una tabla que muestre sólo aquellos equipos que, en total de la liga, hayan metido más del 85% de
+los goles jugando como local. Muestra sólo las variables HomeTeam y tu variable de proporción y arregla los datos de forma descendente respecto a la 
+proporción de goles.
