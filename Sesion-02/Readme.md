@@ -21,7 +21,7 @@ En esta sesión estudiaremos temas relacionados con los siguientes puntos
    - [Reto 1](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-02/Reto-01) lapply y lectura de datos
 
 - [Ejemplo 2](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-02/Ejemplo-02) Manipulación de DataFrames con `dplyr`
-   - [Reto 3](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-02/Reto-02) Lectura de datos y uso de `dplyr`
+   - [Reto 2](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-02/Reto-02) Lectura de datos y uso de `dplyr`
 
 - [Ejemplo 3](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-02/Ejemplo-03) Visualizaciones con `ggplot2`
 
