@@ -1,43 +1,82 @@
-# Ejemplo 2. Función _View_ y cómo crear una función
+# EJEMPLO 2. MANIPULACIÓN DE DATAFRAMES CON DPLYR
 
 #### Objetivo
 
-- Visualizar un conjuntos de datos guardados como data frames en `R` de una forma rápida
-- Crear funciones para implemetar algún proceso
+- Manipular DataFrams con el uso de la librería DPLYR
+- Conocer los verbos más utilizados y el uso de pipelines
 
 #### Requisitos
 
 - Haber instalado previamente R y RStudio 
-- Saber interpretar las medidas de tendencia central y de posición
 
 #### Desarrollo
-
-#### Función `View`
-
-La función `View` aplicada a un objeto de `R` como un data frame, invoca un visor de datos al estilo de una hoja de cálculo, por ejemplo:
-
 ```R
-View(iris)
+library(dplyr)
+visitas.rest <- read.csv(file = 'https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2022/main/Sesion-02/Data/RestaurantVisitors.csv',
+                                header = TRUE)
 ```
 
-#### Crear funciones: Función que calcula la moda
+`dplyr` es una de las librarías más utilizadas en R y forma parte de la familia 
+de librerías de `tidyverse`.
 
-En `R` también podemos crear nuestras propias funciones, por ejemplo:
+La librería dplyr contiene diversas funciones para la manipulación y transformación 
+de DataFrames, las cuales son muy intuitivas de aplicar ya que librería utiliza 
+verbos para la ejecución de acciones
 
+`select()` nos permite seleccionar una serie de variables de un DataFrame
 ```R
-moda <- function(vector){
-f.abs <- table(vector) # frecuencias absolutas
-max.f.abs <- max(f.abs) # obtenemos la máxima frecuencia absoluta
-pos.max <- which(f.abs == max.f.abs) # posición(es) de la(s) máxima(s) frecuencia(s) absoluta(s)
-print("La(s) moda(s) es(son): ")
-print(names(f.abs[pos.max]))
-paste("Con una frecuencia de: ", unique(f.abs[pos.max]))
-}
-
-Pon a prueba la función 
-
-x <- sample(1:100, 100, replace = T) # Tomamos una muestra aleatoria de tamaño 100 con reemplazo de los primeros 100 números naturales
-table(x) # obtenemos las frecuencias absolutas de los valores de la muestra
-moda(x) # obtenemos la moda de los valores de la muestra
+visitas.rest.select <- select(visitas.rest, date, spending, total)
+class(visitas.rest.select)
+names(visitas.rest.select)
 ```
 
+El primer argumento de la función `select()` es un dataframe, al igual que en 
+el resto de funciones de dplyr. Como en muchas ocaciones vamos a encadenar 
+varias funciones de dplyr a un dataframe, es útil utilizar el operador de 
+pipeline 'dataframe `%>%` fun', el cual pasa el objeto que contiene un dataframe 
+como argumento de la función:
+```R
+visitas.rest %>% select(date, spending, total)
+```
+
+`arrange()` ordena las filas de un dataframe de acuerdo con los valores 
+de una o más variables:
+```R
+visitas.rest.orden <- visitas.rest %>%
+                              select(date, spending, total) %>%
+                              arrange(spending, desc(total))
+head(visitas.rest.orden)
+```
+
+`filter()` facilita la forma en la que indexamos o extreamos filas 
+con base en condiciones lógicas:
+```R
+visitas.rest.filtro <- visitas.rest %>%
+                              select(date, spending, total) %>%
+                              arrange(spending, desc(total)) %>%
+                              filter(spending > 1000000, spending < 1200000)
+head(visitas.rest.filtro)
+```
+
+`mutate()` permite transformar variables o crear nuevas a partir de otras"
+```R
+visitas.rest.per.visita <- visitas.rest %>%
+                                  select(date, spending, total) %>%
+                                  mutate(spending_per_visit = spending / total) %>%
+                                  arrange(desc(spending_per_visit))
+head(visitas.rest.per.visita)
+```
+
+`group_by()` y `summarize()` son dos verbos que usualmente son usados en conjunto. 
+El primero permite agrupar los datos con base en un factor (variable cualitativa), 
+mientras que el segundo permite resumir la información a través de funciones
+```R
+visitas.rest.group.summ <- visitas.rest %>%
+                       select(date, holiday, spending) %>%
+                       mutate(holiday = factor(holiday, labels = c("No", "Yes"))) %>%
+                       group_by(holiday) %>%
+                       summarize(total_spending = sum(spending),
+                                 mean_spending = mean(spending),
+                                 sd_spending = sd(spending))
+head(visitas.rest.group.summ)
+```
