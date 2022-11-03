@@ -15,7 +15,7 @@ library(ggplot2)
 names(mtcars)
 head(mtcars)
 
-Ggplot es otra librería bastante popular de Tidyverse, y al mismo tiempo una de 
+`ggplot` es otra librería bastante popular de `tidyverse`, y al mismo tiempo una de 
 las más utilizadas en R para realizar visualizaciones de datos.
 
 La lógica de ggplot es realizar álgebra de gráficas, ya que cada elemento de la 
@@ -32,7 +32,7 @@ ggplot(mtcars, aes(x=cyl, y = hp)) +
   geom_point()
 ```
 
-La variable cyl, aunque numérica, sólo acepta 4, 6 y 8 como valores, por lo que 
+La variable `cyl`, aunque numérica, sólo acepta 4, 6 y 8 como valores, por lo que 
 podemos transformarla a factor para mejorar la visualización:
 ```R
 ggplot(mtcars, aes(x=factor(cyl), y = hp)) + 
