@@ -1,34 +1,30 @@
-# Sesión 2. Programación y manipulación de datos en R
+# Sesión 2. Manipulación y visualización de datos
 
 ## :dart: Objetivos:
 
-1. Repasar conceptos básicos de estadística para contextualizar al alumno y sentar las bases de la estructura del curso. 
-2. Importar datos a `R`, con estos se podrán filtrar filas, seleccionar variables, transformar variables y en general manipular los datos para llevarlos a una forma deseada.
+1. Conocer as funciones más importantes para la lectura, manipulación y transformación de DataFrames. 
+2. Realizar visualizaciones que permitan presentar de forma profesional y eficiente la información de
 
 ## 🤓 ¿Que aprenderán? 
 
 En esta sesión estudiaremos temas relacionados con los siguientes puntos
 
-- Medidas de posición y de dispersión
-- Funciones para observar algunas características de objetos en `R`
-- Funciones para filtrar filas, seleccionar variables y transformar un data frame en `R`
-- Funciones para combinar data frames en `R` por filas o por columnas
-- Importación de datos a `R`
+- Familias de funciones `read` y `apply`
+- Recastear variables con la familia de funciones `as`
+- Librería `dplyr` para la manipulación de DataFrames
+- Librería `ggplot2` para visualizaciones
 
 
 ## 📂 Organización de la clase
 
-- [Ejemplo 1](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-02/Ejemplo-01) Medidas de tendencia central, de posición y de dispersión
-   - [Reto 1](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-02/Reto-01) Medidas de tendencia central
+- [Ejemplo 1](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-02/Ejemplo-01) Lectura y manipulación de DataFrames
+   - [Reto 1](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-02/Reto-01) lapply y lectura de datos
 
-- [Ejemplo 2](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-02/Ejemplo-02) Función `View` y funciones
-   - [Reto 2](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-02/Reto-02) Características de los objetos y funciones
+- [Ejemplo 2](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-02/Ejemplo-02) Manipulación de DataFrames con `dplyr`
+   - [Reto 3](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-02/Reto-02) Lectura de datos y uso de `dplyr`
 
-- [Ejemplo 3](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-02/Ejemplo-03) Funciones `na.omit` y `complete.cases`
-- [Ejemplo 4](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-02/Ejemplo-04) Funciones `cbind`, `rbind` (manipulación de data frames)
-- [Ejemplo 5](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-02/Ejemplo-05) Funciones `apply`, `lapply` y `do.call`
-   - [Reto 3](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-02/Reto-03) Lectura de datos y usos de `dplyr`
-- [Ejemplo 6](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-02/Ejemplo-06) Paquete `dplyr` y aplicaciones
--  [Postwork](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-02/Postwork)
+- [Ejemplo 3](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-02/Ejemplo-03) Visualizaciones con `ggplot2`
+
+-  [Postwork](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-02/Postwork)
 
 
