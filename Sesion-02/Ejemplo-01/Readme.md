@@ -17,7 +17,7 @@ como .txt, .csv, xlxs, .dta, .sav, entre muchos otros. También existen otras
 librerías que contienen funciones para facilitar y ampliar
 la capacidad de lectura.
 
-La función más utilizada para leer archivos .txt es read.table(), la cual tiene
+La función más utilizada para leer archivos .txt es `read.table()`, la cual tiene
 los siguientes argumentos:
   - file: Nombre del archivo, ruta hacia el archivo o url del archivo .txt
   - header: TRUE si la primera línea del archivo corresponde al nombre de las variables
@@ -35,7 +35,7 @@ View(data.1)
 ```
 
 La misma función puede utilizarse para leer archivos .csv, basta con usar sep=','.
-Sin embargo, R tiene una para este tipo de archivos una función específica: read.csv()
+Sin embargo, R tiene una para este tipo de archivos una función específica: `read.csv()`
 ```R
 data.2 <- read.csv(file = 'https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2022/main/Sesion-02/Data/RestaurantVisitors.csv',
                    header = TRUE)
@@ -51,7 +51,7 @@ representen un problema mayor, ya que hay funciones cuyo resultado puede verse
 afectado por estos datos.
 
 Para el primer punto, siempre podemos revisar el tipo de nuestras variables con 
-la función class() que ya conocemos y usar familia de funciones as.type() 
+la función `class()` que ya conocemos y usar familia de funciones `as.type()` 
 que nos permiten recastear el tipo de variable:
 ```R
 class(data.2$mkt_strategy)
@@ -69,7 +69,7 @@ class(data.1$ID)
 ```
 
 Para revisar si en un nuesto DataFrame existen datos faltanten podemos usar 
-la función complete.cases():
+la función `complete.cases()`:
 ```R
 df <- airquality
 str(df)
@@ -91,7 +91,7 @@ Lo mismo puede lograrse con la función na.omit():
 na.omit(df)
 ```
 
-Otra función importante para el manejo de DataFrames es la función apply(), la 
+Otra función importante para el manejo de DataFrames es la función `apply()`, la 
 cual nos permite pasar una función específica sobre los márgenes (filas o columnas) 
 de una matriz o DataFrame:
 ```R
