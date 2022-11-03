@@ -1,4 +1,4 @@
-# EJEMPLO 1. Medidas de tendencia central, de posición y de dispersión
+# EJEMPLO 1. LECTURA Y MANIPULACIÓN DE DATAFRAMES
 
 #### Objetivo:
 
