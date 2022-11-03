@@ -15,7 +15,7 @@
 1) Inspecciona el DataSet iris_meaniris` disponible directamente en R. Identifica las variables que contiene y su tipo, asegúrate de que no hayan datos faltantes y 
 que los datos se encuentran listos para usarse.
 
-2) Crea una gráfica de puntos que contenga `Sepal.Lenght` en el eje horizontal, `Sepal.Width` en el eje vertical, que identifique `Species` por color y que el tamaño de la figura está representado por `Petal.Width. Asegúrate de que la geometría contenga `shape = 10` y `alpha = 0.5`.
+2) Crea una gráfica de puntos que contenga `Sepal.Lenght` en el eje horizontal, `Sepal.Width` en el eje vertical, que identifique `Species` por color y que el tamaño de la figura está representado por `Petal.Width`. Asegúrate de que la geometría contenga `shape = 10` y `alpha = 0.5`.
 
 3) Crea una tabla llamada `iris_mean` que contenga el promedio de todas las variables agrupadas por `Species`.
 
