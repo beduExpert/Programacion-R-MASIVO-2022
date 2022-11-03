@@ -8,7 +8,7 @@
 
 - Haber estudiado el Prework y trabajado con el Work
 
-### Desarollo
+#### Desarollo
 En este reto vamos a practicar nuestra habilidad en R para leer datos usando 
 que ya hemos utilizado y agregando nuevas a nuestro repertorio
 
