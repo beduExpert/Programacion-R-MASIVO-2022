@@ -2,8 +2,8 @@
 
 #### Objetivo:
 
-- Aprender a calcular medidas de tendencia central, de posición y de dispersión para conjuntos de datos, con ayuda de funciones de `R`
-- Interpretar los resultados obtenidos
+- Conocer las funcions básicas para la lectura de bases de datos
+- Manipular DataFrames
 
 #### Requisitos
 
@@ -12,57 +12,92 @@
 
 #### Desarrollo
 
-#### Medidas de tendencia central
+R tiene la capacidad de leer datos de una variedad de extensiones de forma nativa
+como .txt, .csv, xlxs, .dta, .sav, entre muchos otros. También existen otras
+librerías que contienen funciones para facilitar y ampliar
+la capacidad de lectura.
 
-En `R` utilizamos la función `mean` para calcular la media de un conjunto de mediciones, por ejemplo:
+La función más utilizada para leer archivos .txt es read.table(), la cual tiene
+los siguientes argumentos:
+  - file: Nombre del archivo, ruta hacia el archivo o url del archivo .txt
+  - header: TRUE si la primera línea del archivo corresponde al nombre de las variables
+  - sep: indica el tipo de separación. Usualmente sep='' para archivos separados por espacios
+  - dec: símbolo con el que se indica la separación decimal
 
 ```R
-x = c(4000, 9000, 9000, 10000); mean(x)
+data.1 <- read.table(file = 'https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2022/main/Sesion-02/Data/ejemplo1_data.txt',
+                     header = TRUE,
+                     sep = '')
+class(data.1)
+str(data.1)
+dim(data.1)
+View(data.1)
 ```
 
-Para calcular la mediana, utilizamos la función `median` de la siguiente manera
-
+La misma función puede utilizarse para leer archivos .csv, basta con usar sep=','.
+Sin embargo, R tiene una para este tipo de archivos una función específica: read.csv()
 ```R
-median(x)
+data.2 <- read.csv(file = 'https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2022/main/Sesion-02/Data/RestaurantVisitors.csv',
+                   header = TRUE)
+class(data.2)
+str(data.2)
+dim(data.2)
+View(data.2)
 ```
 
-Si lo que deseamos es obtener la moda de un conjunto de mediciones, una alternativa es instalar el paquete `DescTools` en `R` mediante la instrucción `install.packages("DescTools")`, luego utilizamos la función `Mode` del paquete
-`DescTools`
+Un punto importante antes de comenzar a analizar nuestros datos, es asegurarnos 
+que las variables tengan el formato deseado y que los valores faltantes no 
+representen un problema mayor, ya que hay funciones cuyo resultado puede verse 
+afectado por estos datos.
 
+Para el primer punto, siempre podemos revisar el tipo de nuestras variables con 
+la función class() que ya conocemos y usar familia de funciones as.type() 
+que nos permiten recastear el tipo de variable:
 ```R
-library(DescTools)
-Mode(x) # Mode es diferente de mode (R es case sensitive)
+class(data.2$mkt_strategy)
+data.2$mkt_strategy <- as.logical(data.2$mkt_strategy)
+class(data.2$mkt_strategy)
+
+
+class(data.2$date)
+data.2$date <- as.Date.character(data.2$date, format = '%d/%m/%Y')
+class(data.2$date)
+
+class(data.1$ID)
+data.1$ID <- as.character(data.1$ID)
+class(data.1$ID)
 ```
 
-#### Medidas de posición
-
-En `R` utilizamos la función `quantile` para obtener cuantiles muestrales. Por ejemplo
-
+Para revisar si en un nuesto DataFrame existen datos faltanten podemos usar 
+la función complete.cases():
 ```R
-x <- c(29, 13, 62, 4, 63, 96, 1, 90, 50, 46)
+df <- airquality
+str(df)
 
-quantile(x, 0.25) # cuantil del 25%
-quantile(x, c(0.25,0.50,0.75)) # Cuartiles
-quantile(x, seq(0.1,0.9, by = 0.1)) # Deciles
-
-```
-#### Medidas de dispersión
-
-Podemos calcular el rango intercuartílico en `R` con la función `IQR`, por ejemplo:
-
-```R
-IQR(x)
+complete.cases(df)
+sum(complete.cases(df))
 ```
 
-o bien
-
+La función regresa un vector lógico con `TRUE` en las posiciones que representan 
+filas donde no hay NA's y con `FALSE` aquellas filas con NA's. Este vector puede 
+usarse para indexar sólo las filas completas:
 ```R
-quantile(x, probs = 0.75) - quantile(x, probs = 0.25) # Tercer cuartil menos primer cuartil
+df.clean <- df[complete.cases(df),]
+df.clean
 ```
 
-La varianza y desviación estándar muestral en `R` las calculamos con las  siguientes instrucciones respectivamente
-
+Lo mismo puede lograrse con la función na.omit():
 ```R
-var(x)
-sd(x)
+na.omit(df)
+```
+
+Otra función importante para el manejo de DataFrames es la función apply(), la 
+cual nos permite pasar una función específica sobre los márgenes (filas o columnas) 
+de una matriz o DataFrame:
+```R
+datos <- data.frame(EDAD = as.integer(runif(10, min = 18, max = 26)),
+                    NUM.HIJOS = as.integer(runif(10, min = 0, max = 4)),
+                    INGRESO = abs(rnorm(10, mean = 5000, sd = 800)))
+
+apply(X = datos, MARGIN = 2, mean)
 ```
