@@ -1,3 +1,5 @@
+## EJEMPLO 2: MANIPULACIÓN DE DATAFRAMES CON DPLYR
+
 library(dplyr)
 visitas.rest <- read.csv(file = 'https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2022/main/Sesion-02/Data/RestaurantVisitors.csv',
                                 header = TRUE)
