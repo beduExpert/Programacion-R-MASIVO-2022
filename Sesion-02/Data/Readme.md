@@ -1,1 +1,1 @@
-## Ficheros CSV útiles para la sesión 2.
+## Ficheros útiles para la sesión 2.
