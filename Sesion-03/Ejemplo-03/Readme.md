@@ -1,9 +1,7 @@
-# Ejemplo 3. Gráficos de dispersión (scatter plots)  
+## EJEMPLO 3: MEDIDAS DESCRIPTIVAS
 
 #### Objetivo
-- Desarrollar habilidades para realizar e interpretar scatter plots
-- Utilizar diferentes funciones de `ggplot` 
-- Variantes de scatter plots
+- Conocer e interpretas las medidas de tendencia central, dispersión, posición y forma
 
 #### Requisitos
 - Tener previamente instalados R y Rstudio
@@ -11,38 +9,67 @@
 - Haber realizado el prework
 
 #### Desarrollo
-
-Realizamos un scatter plot de las variables `wt` y `mpg`, debemos utilizar necesariamente `geom_point()`
 ```R
-(my_scatplot <- ggplot(mtcars, aes(x = wt, y = mpg)) + geom_point())
+df <- read.csv("https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2022/main/Sesion-03/Data/telecom_service.csv")
+summary(df)
 ```
 
-Adicionalmente se puede agregar una línea de tendencia 
+# Medidas de tendencia central
 ```R
-(my_scatplot <- ggplot(mtcars, aes(x = wt, y = mpg)) + 
-  geom_point() + 
-  geom_smooth(method = "lm", se = T))  # modelo lineal, cambia el parametro `se`, este hace referencia al intervalo de confianza
-```
-Agregando los nombres de los ejes, observa que se almacenó el gráfico en el objeto **my_scatplot** (nota que pueden agregarse más características seguido del signo `+`)
+mean(df$total_day_calls)
+mean(df$total_day_calls, trim = 0.20)
 
-```R
-my_scatplot + xlab('Weight (x 1000lbs)') + ylab('Miles per Gallon')
+median(df$total_day_calls)
+
+Mode(df$total_day_calls)
 ```
 
-Otras características interesantes
-
+# Medidas de dispersión
 ```R
-(my_scatplot <- ggplot(mtcars, aes(x = wt, y = mpg, col = cyl)) + geom_point())
-my_scatplot + labs(x = 'Weight (x1000lbs)', y = 'Miles per Gallon', colour = 'Number of\n Cylinders')
+var(df$total_day_calls)
+sd(df$total_day_calls)
+
+IQR(df$total_day_calls) #Dispersión alrededor a la mediana
+iqr = quantile(df$total_day_calls, probs = 0.75) - quantile(df$total_day_calls, probs = 0.25)
+iqr
 ```
 
-Se puede agregar la opción _facet_wrap()_ con la variable `cyl`, para divirir la gráfica por el número de cilindros, esto ayudará a obtener información adicional
+# Medidas de posición (CuaNtiles)
+# CuaRtiles (Separan la distribución de los datos en 4 partes de 25% cada una)
+# q1, q2 y q3
+# Deciles (Separan la distribución de los datos en 10 partes de 10% cada una)
+# d1, d2, d3, d4, d5, d6, d7, d8, d9
+# Percentiles o centiles (Separan la distribución de los datos en 100 partes de 1% cada una) 
+# p1, p2, p3, ... p10, ... p20, ..., p25, ... , p50, p75, ... p99
+
+# Equivalencias
+# d1 = p10 (En general dk = p(k*10) para toda k = 1, ... 9)
+# q1 =  p25
+# q2 = d5 = p50 (= mediana)
+# q3 = p75
 ```R
-my_scatplot + facet_wrap("cyl")
-```
-Al igual que el _facet_wrap_ se puede dividir por tipo de transmisión utilizando la opción _facet_grid_ (am =	Transmission (0 = automatic, 1 = manual))
-```R
-my_scatplot + facet_grid(am~cyl)
+cuartiles <- quantile(df$total_day_calls, probs = c(0.25, 0.50, 0.75))
+cuartiles
+
+deciles <-quantile(df$total_day_calls, probs = c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9))
+deciles
+
+percentiles <- quantile(df$total_day_calls, probs = seq(0.01,0.99, by=0.01))
+percentiles
 ```
 
-Como puedes observar, hay muchas formas de representar el gráfico de dispersión, éstas solo son algunas de ellas. 
+# Medidas de forma
+Sesgo: Nos permite ver si los datos se encuentran de forma simétrica alrededor de la media 
+Curtosis: Nos permite tener una idea de qué tan concentrados se encuentran los datos alrededor 
+de la media
+```R
+d <- read.csv("https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2022/main/Sesion-03/Data/distribuciones.csv")
+
+skewness(d$rs) #s > 0 Sesgo a la derecha
+skewness(d$sim) #s = 0 Simétrica
+skewness(d$ls) #s < 0 Sesgo a la izquierda
+
+kurtosis(d$rs) #Leptocúrtica k > 3
+kurtosis(d$sim) #Mesocúrtica k = 3
+                #Platocúrtica k < 3
+```
