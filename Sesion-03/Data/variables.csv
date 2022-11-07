@@ -1,0 +1,13 @@
+EDAD,SEXO,ESTUDIOS,INGRESO,NIVEL_SOCIOECO,MEDIO_CONTACTO,NO_HIJOS,ACTIVO
+28,M,Bachillerato,2702.39,Medio,Correo,1,0
+31,M,Licenciatura,2065.84,Medio,Redes,2,0
+27,F,Bachillerato,1992.47,Alto,Redes,3,1
+32,M,Bachillerato,2058.92,Medio,Redes,2,0
+35,F,Maestria,2366.48,Alto,Correo,0,1
+29,F,Primaria,2687.29,Medio,WA,2,1
+30,F,Licenciatura,1809.98,Bajo,WA,0,1
+30,M,Licenciatura,2521.4,Alto,WA,3,1
+29,M,Maestria,2794.03,Medio,Correo,0,0
+33,F,Primaria,2969.28,Bajo,WA,2,1
+30,F,Bachillerato,2426.04,Bajo,Correo,3,0
+28,M,Licenciatura,2547.32,Medio,Redes,1,1
