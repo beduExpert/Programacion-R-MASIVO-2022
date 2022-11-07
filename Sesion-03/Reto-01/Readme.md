@@ -16,7 +16,7 @@ library(ggplot2)
 Para este reto vamos a hacer uso del dataframe `diamonds`, disponible en la librería 
 de `ggplot2`. Realiza los siguientes incisos y responde a las preguntas:
 
-1) ¿Qué tipo de variable y escala de medición tiene la variable cut?
+1) ¿Qué tipo de variable y escala de medición tiene la variable `cut`?
 
 
 2) Reliza una tabla de frecuencias absolutas y relativas
@@ -27,9 +27,9 @@ caso afirmativo, agrégala a tu tabla anterior
 
 
 4) Con base en tu tabla, responde:
-    - ¿Cuál es el porcentaje de diamantes que tienen un corte Very Good?
-    - ¿Cuál es el porcentaje de diamantes que tienen un corte entre Fair y Very Good?
-    - ¿Cuál es el porcentaje de diamantas que tienen un corte al menos Very Good?
+    - ¿Cuál es el porcentaje de diamantes que tienen un corte `Very Good`?
+    - ¿Cuál es el porcentaje de diamantes que tienen un corte entre `Fair` y `Very Good`?
+    - ¿Cuál es el porcentaje de diamantas que tienen un corte al menos `Very Good`?
 
 5) Crea una tabla de distribución de frecuencias para el precio de los diamantes. Para ello 
 determina el número de clases con base en la regla de Sturges `k = 1+3.3Log10(n)`
