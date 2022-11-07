@@ -1,15 +1,24 @@
-# RETO 2. Teorema central del límite
+## RETO 02: DISTRIBUCIÓN DE POISSON Y EXPONENCIAL
+```R
+set.seed(0202)
+```
 
-#### Objetivo
+Un banco recibe, en promedio, 6 cheques sin fondo por día.
 
-- Calcular probabilidades usando el teorema central del límite.
 
-#### Requisitos
+a) Grafica la función de distribución de la variable aleatoria. (Asume que se obtienen 
+10,000 muestras)
 
-- Haber trabajado con el Prework y el Work
+b) ¿Cuál es la probabilidad de que reciba 4 cheques sin fondo en un dia
 
-#### Desarrollo
+c) ¿Cuál es la probabilidad de que reciba más de 8 cheques sin fondo?
 
-Las calificaciones de exámenes para todos los estudiantes de último año de preparatoria en cierto estado tienen media de 60 y varianza de 64. Una muestra aleatoria de `n = 100` estudiantes de una escuela preparatoria grande tuvo una calificación media de 58. ¿Hay evidencia para sugerir que el nivel de conocimientos de esta escuela sea inferior? (Calcule la probabilidad de que la media de una muestra aleatoria sea a lo sumo 58 cuando `n = 100`.)
+d) ¿Cuál es la probabilidad de que reciba entre 4 y 10 cheques sin fondo?
 
-Basado en Wackerly, D. et al. (2010). Estadística Matemática con Aplicaciones. Cengage Learning Editores, S.A. de C.V.
+e) ¿Cuál es la probabilidad de que tengan que pasar 5 horas o menos hasta que 
+se presente el siguiente cheque sin fondos?
+
+f) ¿Cuál es la probabilidad de que tengan que pasar entre 2 y 4 hasta que se presente 
+el siguiente cheque sin fondos?
+
+g) Realiza la gráfica de distribución de probabilidad de la variable aleatoria anterior
