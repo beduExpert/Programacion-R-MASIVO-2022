@@ -1,35 +1,46 @@
-# Comenzamos leyendo un fichero, el cual contiene información sobre dos grupos de control G1 y G2, a los cuales se les realizó a cada uno una medición en 3 momentos diferentes C1, C2 y C3
-# library(dplyr) # para usar mutate
-data <- read.csv("boxp.csv") # Coloca el archivo boxp.csv en tu WD
+## EJEMPLO 4: HISTOGRAMAS Y BOXPLOTS
+"Un histograma es una gráfica de barras en donde el eje horizontal representa los 
+intervalos de cases y el eje vertical representa frecuencias (absolutas o porcentuales)"
+hist(var$INGRESO, breaks = bins, main = "Histograma Ingreso")
 
-# Revisamos el encabezado del fichero y el nombre de sus variables o columnas
+my_hist <- hist(var$INGRESO, breaks = bins, main = "Histograma", xlab = "Ingreso")
+my_hist$counts <- cumsum(my_hist$counts)
+plot(my_hist, main = "Histograma acumulado", xlab = "Ingreso")  
 
-head(data)
-names(data)
+ggplot(var, aes(INGRESO)) +
+  geom_histogram(bins = 4) + 
+  labs(title = "Histograma", 
+       x = "Ingreso",
+       y = "Frequency") + 
+  theme_classic()
 
-# Observamos algunos datos estadísticos sobre las variables
+ggplot(var, aes(INGRESO)) +
+  geom_histogram(aes(y = cumsum(..count..)), bins = 4) + 
+  labs(title = "Histograma acumulado", 
+       x = "Ingreso",
+       y = "Frequency") + 
+  theme_classic()
 
-summary(data)
+"Los histogramas nos ayudan a conocer la distribución de la variable, la cual junto 
+con su forma, nos ayuda a entender el comportamiento de los datos.
 
-# Como estamos ante la presencia de NA´s los eliminamos con complete.cases() y solamente seleccionamos aquellos sin NAsy convertimos en factores la variableCategoriayGrupo`
+Los histogramas pueden ser simétricos. Lo que implica que su moda, media y mediana 
+son aproximadamente iguales:"
+d <- read.csv("https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2022/main/Sesion-03/Data/distribuciones.csv")
 
-data <- na.omit(data)
+hist(d$sim, main = "Distribución simétrica")
+Mode(d$sim)[1]; median(d$sim); mean(d$sim)
 
-data <- mutate(data, Categoria = factor(Categoria), Grupo = factor(Grupo))
+hist(d$rs, main = "Distribución con sesgo a la derecha")
+Mode(d$rs)[1]; median(d$rs); mean(d$rs)
 
-str(data)
+hist(d$ls, main = "Distribución con sesgo a la izquierda")
+Mode(d$ls)[1]; median(d$ls); mean(d$ls)
 
-# Finalmente realizamos el boxplot
+"Otra método gráfica para visulizar la distribución de una variable es a través de 
+diagramas de caja y brazo, los cuales se basan en los cuartiles de la distribución 
+y en su rango intercuartílico para mostrar datos extremos o atípicos."
 
-ggplot(data, aes(x = Categoria, y = Mediciones, fill = Grupo)) + geom_boxplot() +
-  ggtitle("Boxplots") +
-  xlab("Categorias") +
-  ylab("Mediciones")
-
-# Agregamos el nombre de las etiquetas para los grupos G1 y G2
-
-ggplot(data, aes(x = Categoria, y = Mediciones, fill = Grupo)) + geom_boxplot() +
-  scale_fill_discrete(name = "Dos Gps", labels = c("G1", "G2")) + 
-  ggtitle("Boxplots") +
-  xlab("Categorias") +
-  ylab("Mediciones")
+boxplot(d$sim, horizontal = TRUE)
+boxplot(d$rs, horizontal = TRUE)
+boxplot(d$ls, horizontal = TRUE)
