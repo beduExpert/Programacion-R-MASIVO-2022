@@ -1,26 +1,32 @@
-# Reto 2. Teorema central del límite
+## EJEMPLO 02: DISTRIBUCIÓN DE POISSON Y EXPONENCIAL
+"Un banco recibe, en promedio, 6 cheques sin fondo por día." 
+set.seed(0202)
 
-# Las calificaciones de exámenes para todos los estudiantes de último año de 
-# preparatoria en cierto estado tienen media de 60 y varianza de 64. 
-# Una muestra aleatoria de n = 100 estudiantes de una escuela preparatoria 
-# grande tuvo una calificación media de 58. ¿Hay evidencia para sugerir que el 
-# nivel de conocimientos de esta escuela sea inferior? 
-# (Calcule la probabilidad de que la media de una muestra aleatoria sea a lo 
-# sumo 58 cuando n = 100.)
+"a) Grafica la función de distribución de la variable aleatoria. (Asume que se obtienen 
+10,000 muestras)"
+poisson <- rpois(n = 10000, lambda = 6)
+barplot(table(poisson)/length(poisson),
+        main = "Distribución de Poisson", 
+        xlab = "X=x")
 
-# **Solución**
-  
-# Denote con Y_barra la media de una muestra aleatoria de n = 100 calificaciones 
-# de una población con media: 60 y  varianza: 64. Por el Teorema Central del 
-# Límite, Y_barra iene aproximadamente una distribución normal con media: 60 y 
-# varianza: 64/100. Deseamos calcular P(Y_barra <= 58)
+"b) ¿Cuál es la probabilidad de que reciba 4 cheques sin fondo en un dia"
+dpois(x = 4, lambda = 6)
 
-pnorm(58, mean = 60, sd = 8/10)
+"c) ¿Cuál es la probabilidad de que reciba más de 8 cheques sin fondo?"
+ppois(q = 8, lambda = 6, lower.tail = FALSE)
 
-# Debido a que esta probabilidad es muy pequeña, no es probable que la muestra 
-# de la escuela estudiada se pueda considerar como muestra aleatoria de una 
-# población con media: 60 y varianza: 64. La evidencia sugiere que la calificación 
-# promedio para esta preparatoria es menor que el promedio general de la población:60.
+"d) ¿Cuál es la probabilidad de que reciba entre 4 y 10 cheques sin fondo?"
+ppois(q = 10, lambda = 6) - ppois(q = 4, lambda = 6)
 
-# Wackerly, D. et al. (2010). Estadística Matemática con Aplicaciones. 
-# Cengage Learning Editores, S.A. de C.V.
+"e) ¿Cuál es la probabilidad de que tengan que pasar 5 horas o menos hasta que 
+se presente el siguiente cheque sin fondos?"
+pexp(q = 5, rate = 6/24, lower.tail = FALSE)
+
+"f) ¿Cuál es la probabilidad de que tengan que pasar entre 2 y 4 hasta que se presente 
+el siguiente cheque sin fondos?"
+pexp(q = 4, rate = 6/24) - pexp(q = 2, rate = 6/24)
+
+"g) Realiza la gráfica de distribución de probabilidad de la variable aleatoria anterior"
+curve(dexp(x, rate = 6/24), from=0, to=20, 
+      col='blue', main = "Distribución exponencial",
+      ylab = "f(x)", xlab = "Tiempo entre eventos")
