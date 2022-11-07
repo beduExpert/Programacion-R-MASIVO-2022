@@ -1,4 +1,4 @@
-# Estadística y Programación con R
+# Estadística con R
 
 ## :wave: Bienvenid@s
 
