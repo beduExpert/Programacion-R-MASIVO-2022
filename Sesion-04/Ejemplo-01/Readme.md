@@ -53,6 +53,7 @@ barplot(table(count)/length(count),
 Para un experimento de Bernoulli tenemos que:
 - `E[X] = p`
 - `SD[X] = sqrt(p*(1-p))`
+
 Esto podemos comprobarlo con las funciones descriptivas que hemos visto:
 ```R
 mean(count)
@@ -113,6 +114,7 @@ pbinom(q = 5, size = 10, prob = 0.3, lower.tail = FALSE)
 Para una distribución binomial tenemos que:
 - `E[X] = size*p`
 - `SD[X] = sqrt(size*p*(1-p))`
+
 Esto podemos comprobarlo con las funciones descriptivas que hemos visto:
 ```R
 mean(binom)
