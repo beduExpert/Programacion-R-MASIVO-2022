@@ -2,8 +2,8 @@
 
 #### Objetivo
 
-- Aprender a obtener probabilidades, cuantiles y muestras aleatorias relacionadas con las distribuciones normal y t de Student
-- Intepretar las probabilidades cuando se consideran las gráficas de las funciones de densidad
+- Entender variables aleatorias como un ensayo de Bernoulli
+- Utilizar 
 
 #### Requisitos
 
@@ -16,8 +16,8 @@ set.seed(2022)
 ```
 
 Un ensayo de Bernoulli es un experimento aleatorio en el que sólo se pueden 
-obtener dos resultados: éxito o fracaso. La variable aleatoria X de este experimento 
-tiene probabilidad p de resultar en éxito.
+obtener dos resultados: éxito o fracaso. La variable aleatoria `X` de este experimento 
+tiene probabilidad `p` de resultar en éxito.
 
 Pensemos en el caso simple de lanzar una moneda justa al aire:
 ```R
@@ -51,8 +51,8 @@ barplot(table(count)/length(count),
 ```
 
 Para un experimento de Bernoulli tenemos que:
-    - E[X] = p
-    - SD[X] = sqrt(p*(1-p))
+- `E[X] = p`
+- `SD[X] = sqrt(p*(1-p))`
 Esto podemos comprobarlo con las funciones descriptivas que hemos visto:
 ```R
 mean(count)
@@ -61,7 +61,7 @@ sd(count)
 
 Si nos decidimos a repetir n veces un experimento de Bernoulli y definimos la 
 variable aleatoria X como el número de éxitos en n experimentos de Bernoulli, 
-entonces X~Binomial(n,p).
+entonces `X~Binomial(n,p)`.
 
 Por ejemplo: Un cliente tiene una probabilidad de 0.3 de realizar una compra en 
 nuestra tienda. Si al día tenemos 10 clientes, ¿cuál es la probabilidad de que 
@@ -111,8 +111,8 @@ pbinom(q = 5, size = 10, prob = 0.3, lower.tail = FALSE)
 ```
 
 Para una distribución binomial tenemos que:
-    - E[X] = size*p
-    - SD[X] = sqrt(size*p*(1-p))
+- `E[X] = size*p`
+- `SD[X] = sqrt(size*p*(1-p))`
 Esto podemos comprobarlo con las funciones descriptivas que hemos visto:
 ```R
 mean(binom)
@@ -120,7 +120,7 @@ sd(binom)
 ```
 
 Como pudiste darte cuenta en la gráfica de distribución de nuestra variable aleatoria,
-esta está sesgada hacia la derecha. El sesgo de la distribución depende del parámetro p
+esta está sesgada hacia la derecha. El sesgo de la distribución depende del parámetro `p`
 ```R
 {par(mfrow=c(1,3))
 binom.der <- rbinom(n = 10000, size = 10, prob = 0.25)
