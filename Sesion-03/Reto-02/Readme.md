@@ -1,10 +1,7 @@
-# RETO 2. Estadísticos de la NBA
+## RETO 02: MEDIDAS DESCRIPTIVAS
 
 #### Objetivo
-- Generar histogramas
-- Generar gráficos de dispersión
-- Identificar datos relevantes 
-
+- Utilizar medidas descriptivas y métodos gráficos para analizar variables.
 
 #### Requisitos
 - Tener previamente instalados R y Rstudio
@@ -12,19 +9,22 @@
 - Graficas básicas
 
 #### Desarrollo
+```R
+library(ggplot2)
+```
 
-El archivo _players_stats.csv_, cotiene estadísticas completas de los jugadores de las temporadas 2014-2015, encontrarás datos personales como: altura, peso, entre otras, utiliza fichero para:
+Para este reto vamos a hacer uso del dataframe `diamonds`, disponible en la librería 
+de ggplot2. Realiza los siguientes incisos y responde a las preguntas:
 
-1. Generar un histograma de los minuntos totales (`MIN`), de los jugadores y agregar una línea donde se muestre la media (Hint: para agregar la línea que muestre la media consulta la documentación sobre `geom_vline` y el argumento `xintercept`)
+1) Calcula e interpreta las medidas de tendencia central de la variable `price`
 
-2. Generar un histograma de edad (`Age`) y agregar una línea con la media
 
-3. Hacer un scatterplot de las variables `Weight` y  `Height` y observar la correlación que existe entre ambas variables (1 sola gráfica)
+2) Con base en tu resultado anteior, ¿qué se puede concluir respecto al sesgo del precio?
 
-4. Utiliza la función `which.max` para saber quién es el jugador más alto, una vez hecho esto, presenta los resultados en una leyenda que diga "El jugador más alto es: `Name`, con una altura de: `Height`". Las unidades de altura deben ser en metros.
+3) Calcula e interpreta la desviación estándar y los cuartiles de la distribución:
 
-5. Utiliza la función `which.min` para saber quién es el jugador más bajito, una vez hecho esto, presenta los resultados en una leyenda que diga "El jugador más bajito es: `Name`, con una altura de: `Height`". Las unidades de altura deben ser en metros.
+4) Realiza un histograma de la variable precio. ¿Su distribución coincide con tu 
+conclusión de la pregunta 2?
 
-6. ¿Cuál es la altura promedio?, representa el resultado en una frase que diga: "La altura promedio es: ALTURA"
-
-7. Generar un scatterplot donde se representen las Asistencias totales (`AST.TOV`) vs Puntos (`PTS`), además has un face wrap con la posición (`Pos`). 
+5) Realiza un boxplot de la variable precio. ¿Su forma se relaciona con la distribución 
+mostrada por el histograma anteior? ¿Existen datos atípicos?
