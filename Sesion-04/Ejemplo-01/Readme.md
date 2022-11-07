@@ -3,7 +3,7 @@
 #### Objetivo
 
 - Entender variables aleatorias como un ensayo de Bernoulli
-- Utilizar 
+- Utilizar la distribución binomial para modelar variables aleatorias
 
 #### Requisitos
 
