@@ -1,9 +1,8 @@
-# Ejemplo 2. Histogramas
+## EJEMPLO 2: TABLAS DE DISTRIBUCIÓN DE FRECUENCIAS
 
 #### Objetivo
-- Generar histogramas de datasets
-- Cambiar propiedades de los histogramas 
-- Comparar entre `hist()` y `ggplot`
+- Crear e interpretar tablas de distribución de frecuencias para variables cualitativas y cuantitativas
+- Entender la diferencia entre frecuencia absoluta y relativa
 
 #### Requisitos
 - Tener previamente instalados R y Rstudio
@@ -12,59 +11,41 @@
 
 #### Desarrollo
 
-Vamos a comenzar realizando la carga de los _datasets_ y librerias necesarias, como se muestra a continuación: 
+El objetivo principal de la estadística descriptiva, es presentar, de forma sintetizada, 
+la información para su correcto análisis.
+
+Vamos a comenzar con métodos tabulares para presentar un resumen de la información:
 ```R
-library(dplyr) # Para usar el operador %>%
-data <- read.csv("../Sesion-03/Data/boxp.csv")
-head(data)
-names(data)
+freq <- table(var$ESTUDIOS)
+transform(freq, 
+          rel.freq=prop.table(Freq))
+
+ggplot(var, aes(x = ESTUDIOS)) +
+  geom_bar()
 ```
 
-Modificamos una columna para ocultar los datos reales en caso de compartirlos 
+Hacer este mismo análisis para variables cuantitativas puede resultar en una tabla 
+de frecuencias muy larga y poco informativa (¿por qué?). En su lugar, debemos realizar
+clases o intervalos con rangos específicos.
 
+Vamos a comenzar por calcular el número de clases y el ancho de la clase:
 ```R
-data <- mutate(data2, Mediciones = Mediciones*1.23) # se multilica por un factor la columna
-head(data)
-```
-Podemos revertir esto dividiendo entre el fator 1.23
-```R
-data3 <- mutate(data, Mediciones = Mediciones/1.23) # se regresa a su valor original
-head(data3)
-``` 
-
-Utilizando la función `hist`
-
-```R
-hist(data$Mediciones, breaks = (seq(0,300, 20)), 
-     main = "Histograma de Mediciones",
-     xlab = "Mediciones",
-     ylab = "Frecuencia")
+k = ceiling(sqrt(length(var$INGRESO)))
+ac = (max(var$INGRESO)-min(var$INGRESO))/k
 ```
 
-Ahora utilizando `ggplot` para apreciar los resultados de las dos funciones
-
+Ahora vamos a crear una secuencia que vaya del valor mínimo al máximo con el ancho 
+de clase. Esto nos va a permitir hacer cortes con las clases correspondientes:
 ```R
-#Evitar el Warning de filas con NA´s
-data <- na.omit(data) 
+bins <- seq(min(var$INGRESO), max(var$INGRESO), by = ac)
 
-data %>%
-  ggplot() + 
-  aes(Mediciones) +
-  geom_histogram(binwidth = 10)
+ingreso.clases <- cut(var$INGRESO, breaks = bins, include.lowest=TRUE, dig.lab = 8)
 ```
 
-Agregando algunas etiquetas y tema, intenta modificar algunas de las opciones para que aprecies los resultados
-
+Con esto, podemos crear nuestra tabla de distribución de frecuencias:
 ```R
-data %>%
-  ggplot() + 
-  aes(Mediciones) +
-  geom_histogram(binwidth = 10, col="black", fill = "blue") + 
-  ggtitle("Histograma de Mediciones") +
-  ylab("Frecuencia") +
-  xlab("Mediciones") + 
-  theme_light()
+dist.freq <- table(ingreso.clases)
+transform(dist.freq, 
+          rel.freq=prop.table(Freq), 
+          cum.freq=cumsum(prop.table(Freq)))
 ```
-
-Tanto `hist()`, como `ggplot() + aes() + geom_histogram()` son útiles para generar los histogramas, tú decide cual te funciona mejor.  
-
