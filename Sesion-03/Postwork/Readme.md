@@ -2,9 +2,7 @@
 
 #### Objetivo
 
-- Realizar descarga de archivos desde internet
-- Generar nuevos data frames
-- Visualizar probabilidades estimadas con la ayuda de gráficas
+- Realizar un análisis descriptivo de las variables de un dataframe
 
 #### Requisitos
 
@@ -14,20 +12,18 @@
 
 #### Desarrollo
 
-Ahora graficaremos probabilidades (estimadas) marginales y conjuntas para el número de goles que anotan en un partido el equipo de casa o el equipo visitante.
+Utilizando el dataframe `boxp.csv` realiza el siguiente análisis descriptivo. No olvides excluir los missing values y transformar las variables a su
+tipo y escala correspondiente.
 
-1. Con el último data frame obtenido en el postwork de la sesión 2, elabora tablas de frecuencias relativas para estimar las siguientes probabilidades:
+"1) Calcula e interpreta las medidas de tendencia central de la variable `Mediciones`
 
-- La probabilidad (marginal) de que el equipo que juega en casa anote x goles (x=0,1,2,)
+2) Con base en tu resultado anteior, ¿qué se puede concluir respecto al sesgo de `Mediciones`?
 
-- La probabilidad (marginal) de que el equipo que juega como visitante anote y goles (y=0,1,2,)
+3) Calcula e interpreta la desviación estándar y los cuartiles de la distribución de `Mediciones`
 
-- La probabilidad (conjunta) de que el equipo que juega en casa anote x goles y el equipo que juega como visitante anote y goles (x=0,1,2,, y=0,1,2,)
+4) Con ggplot, realiza un histograma separando la distribución de `Mediciones` por `Categoría`
+¿Consideras que sólo una categoría está generando el sesgo?
 
-2. Realiza lo siguiente:
-
-- Un gráfico de barras para las probabilidades marginales estimadas del número de goles que anota el equipo de casa.
-- Un gráfico de barras para las probabilidades marginales estimadas del número de goles que anota el equipo visitante.
-- Un HeatMap para las probabilidades conjuntas estimadas de los números de goles que anotan el equipo de casa y el equipo visitante en un partido.
-
-__Notas para los datos de soccer:__ https://www.football-data.co.uk/notes.txt
+5) Con ggplot, realiza un boxplot separando la distribución de `Mediciones` por `Categoría` 
+y por `Grupo` dentro de cada categoría. ¿Consideras que hay diferencias entre categorías? ¿Los grupos al interior de cada categoría 
+podrían estar generando el sesgo?
