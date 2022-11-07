@@ -43,8 +43,8 @@ barplot(table(poisson)/length(poisson),
 ```
 
 Para una distribución de Possion tenemos que:
-    - E[X] = lambda
-    - SD[X] = sqrt(lambda)
+- E[X] = lambda
+- SD[X] = sqrt(lambda)
     
 Esto podemos comprobarlo con las funciones descriptivas que hemos visto:
 ```R
@@ -80,8 +80,8 @@ curve(dexp(x, rate =rate.exp), from=0, to=15,
 ```
 
 Para una distribución de exponencial tenemos que:
-    - E[X] = 1/lambda
-    - SD[X] = sqrt(1/lambda^2)
+- E[X] = 1/lambda
+- SD[X] = sqrt(1/lambda^2)
     
 Esto podemos comprobarlo con las funciones descriptivas que hemos visto:
 ```R
