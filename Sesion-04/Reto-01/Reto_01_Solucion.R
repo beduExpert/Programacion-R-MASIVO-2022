@@ -1,22 +1,28 @@
-# Reto 1. Distribución normal
+## RETO 01: DISTRIBUCIÓN BINOMIAL
+"Una maquina de ensamblaje, tiene una probabilidad de 0.05 de ensambar de forma 
+defectuosa una una unidad. Si la producción de una unidad es totaltamente independiente 
+de las demás y al día se producen 10 unidades:"
+set.seed(0202)
 
-# Una compañía que manufactura y embotella jugo de manzana usa una máquina que 
-# automáticamente llena botellas de 16 onzas. Hay alguna variación, no obstante, 
-# en las cantidades de líquido que se ponen en las botellas que se llenan. 
-# Se ha observado que la cantidad de líquido está normalmente distribuida en 
-# forma aproximada con media de 16 onzas y desviación estándar de 1 onza.
+"a) Grafica la función de distribución de la variable aleatoria. (Asume que se obtienen 
+10,000 muestras)"
+binom <- rbinom(n = 10000, size = 10, prob = 0.15)
+barplot(table(binom)/length(binom),
+        main = "Distribución Binomial", 
+        xlab = "# unidades defectuosas")
 
-# Determine la proporción de botellas que tendrán más de 18 onzas.
+"b) ¿Cuál es la probabilidad de que se produzcan dos unidades defectuosas?"
+dbinom(x = 2, size = 10, prob = 0.15)
 
-# **Solución**
-  
-pnorm(q = 18, mean = 16, sd = 1, lower.tail = FALSE)
+"c) ¿Cuál es la probabilidad de que a lo mucho 4 unidades sean defectuosas?"
+pbinom(q = 4, size = 10, prob = 0.15)
 
-# Observemos la región que corresponde a esta probabilidad en la siguiente gráfica en color azul
+"d) ¿Cuál es la probabiliad de que por lo menos tres unidades se encuentren defectuosa?"
+1 - pbinom(q = 2, size = 10, prob = 0.15)
 
-x <- seq(-4, 4, 0.01) + 16 # Algunos posibles valores que puede tomar la v.a. X (mínimo: mu-4sigma, máximo: mu+4sigma)
-y <- dnorm(x, mean = 16, sd = 1) # Valores correspondientes de la función de densidad de probabilidad
+"e) ¿Cuál es la probabilidad de que entre 2 y 4 unidades se encuentren defectuosas"
+pbinom(q = 4, size = 10, prob = 0.15) - pbinom(q = 2, size = 10, prob = 0.15)
 
-plot(x, y, type = "l", xlab="", ylab="")
-title(main = "Densidad de Probabilidad Normal", sub = expression(paste(mu == 16, " y ", sigma == 1)))
-polygon(c(18, x[x>=18], max(x)), c(0, y[x>=18], 0), col="blue")
+"f) ¿Cuál es el número esperado de unidades defectuosas? ¿Con qué variación?"
+mean(binom)
+sd(binom)
