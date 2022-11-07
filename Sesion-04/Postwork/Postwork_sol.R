@@ -1,7 +1,7 @@
 library(DescTools)
 library(ggplot2)
 # Cargar el dataframe
-df <- read.csv("telecom_service.csv")
+df <- read.csv("https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2022/main/Sesion-03/Data/telecom_service.csv")
 
 # Estadísticos de tendencia central
 Mode(df$total_intl_charge)[1]
