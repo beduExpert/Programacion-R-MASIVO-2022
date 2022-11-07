@@ -1,8 +1,8 @@
-# Ejemplo 1.  Paquete ggplot2
+## EJEMPLO 1: TIPOS DE VARIABLES Y ESCALAS DE MEDICIÓN
 
 #### Objetivo
-- Generar gráficos atractivos 
-- Aprender la sintaxis del paquete ggplot
+- Conocer los tipos de variables estadísticas y su escala de medición
+- Aprender a transformar las variables en el tipo adecuado para su manejo en R
 
 #### Requisitos
 - Tener previamente instalados R y Rstudio
@@ -11,42 +11,40 @@
 - Manejo de data frames
 - Analizar el código que se va mostrando y tratar de comprender la sintaxis
 
-
 #### Desarrollo
-
-Comenzando con gráficos simples; vamos a utilizar el dataset `mtcars`. 
-
-
-Instalamos el paquete (si es necesario) y lo cargamos
-```R 
+```R
+library(dplyr)
+library(DescTools)
 library(ggplot2)
+library(moments)
+```
+A nivel estadístico, existen dos tipos de variables con distintas escalas de medición:
+  - Cualitativas: Aquellas que describen una cualidad de la observación
+        - Nominales: El orden de la cualidad no es importante
+        - Ordinales: El orden de la cualidad sí es importante
+        
+  - Cuantitativas: Aquellas que rdescriben una cantidad relacionada con la observación.
+      estas pueden ser de intervalo o razón.
+        - Discretas: Resultan de un proceso de conteo
+        - Continuas: Resultan de un proceso de medición
+
+Es importante identificar correctamente el tipo de variable y su escala de medición, 
+ya que con base en ello aplicaremos cierto tipo de técnicas y herramientas estadísticas.
+
+Veamos la estadística descriptiva de las siguientes variables. ¿Tiene sentido?
+```R
+var <- read.csv("https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2022/main/Sesion-03/Data/variables.csv")
+str(var)
+summary(var)
 ```
 
-Primero recordamos cuáles son las variables que contiene el dataset
+Vamos a transformar las variables a su tipo y escala correspondiente
 ```R
-names(mtcars)
-``` 
-Graficamos las variables `cyl` en el eje _x_ y `hp` en _y_, observa el comando :arrow_right: `geom_point()`
-```R
-ggplot(mtcars, aes(x=cyl, y = hp, colour = mpg )) + 
-  geom_point()  # Tipo de geometría, intenta utilizar alguna otra
-```
+var$SEXO <- factor(var$SEXO)
+var$ESTUDIOS <- factor(var$ESTUDIOS, levels = c("Primaria", "Bachillerato", "Licenciatura", "Maestria"), ordered = TRUE)
+var$NIVEL_SOCIOECO <- factor(var$NIVEL_SOCIOECO, levels = c("Bajo", "Medio", "Alto"), ordered = TRUE)
+var$MEDIO_CONTACTO <- factor(var$MEDIO_CONTACTO)
+var$ACTIVO <- factor(var$ACTIVO, labels = c("No", "Si"))
 
-Agregando características de tema y facewrap
-```R
-ggplot(mtcars, aes(x=cyl, y = hp, colour = mpg )) + 
-  geom_point() +   
-  theme_gray() +   # Temas (inteta cambiarlo)
-  facet_wrap("cyl")  # Lo divide por el núm de cilindros
-``` 
-
-Agregando nombres a los ejes _x_, _y_
-```R
-ggplot(mtcars, aes(x=cyl, y = hp, colour = mpg )) + 
-  geom_point() +   
-  theme_gray() +   # Temas (inteta cambiarlo)
-  facet_wrap("cyl") +  # Lo divide por el núm de cilindros
-  xlab('Núm Acilindros')+  # Nombre en los ejes
-  ylab('Caballos de Fuerza')
+summary(var)
 ```
-Adicionalmente se pueden realizar otros tipos de gráficos, estos se verán en los próximos ejemplos.
