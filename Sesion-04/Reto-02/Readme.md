@@ -1,10 +1,19 @@
 ## RETO 02: DISTRIBUCIÓN DE POISSON Y EXPONENCIAL
+
+#### Objetivo
+
+- Calcular probabilidades haciendo uso de la distribución de Poisson y exponencial.
+
+#### Requisitos
+
+- Haber trabajado con el Prework y el Work
+
+#### Desarrollo
+
+Un banco recibe, en promedio, 6 cheques sin fondo por día.
 ```R
 set.seed(0202)
 ```
-
-Un banco recibe, en promedio, 6 cheques sin fondo por día.
-
 
 a) Grafica la función de distribución de la variable aleatoria. (Asume que se obtienen 
 10,000 muestras)
