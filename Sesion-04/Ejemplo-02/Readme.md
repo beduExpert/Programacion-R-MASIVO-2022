@@ -1,4 +1,4 @@
-# EJEMPLO 2. Teorema central del límite
+## EJEMPLO 02: DISTRIBUCIÓN DE POISSON Y EXPONENCIAL
 
 #### Objetivo
 
@@ -11,113 +11,81 @@
 
 #### Desarrollo
 
-Cargamos el paquete `ggplot2` para hacer algunas gráficas
+Si X es una variable alestoria tal que X representa el número de eventos que ocurren 
+en un periodo de tiempo fijo, entonces X~Poisson(lambda), donde lambda es el número 
+promedio de eventos en un intervalo de tiempo.
 
+Por ejemplo, un ECommerce registra, en promedio, 8 órdenes de compra cada 30 minutos. 
+¿Cuál es la probabilidad de que se registren 12 órdenes de compra en los siguientes 30 minutos?
 ```R
-library(ggplot2)
+dpois(x = 12, lambda = 8)
 ```
 
-Consideremos una variable aleatoria (v.a.) X con distribución exponencial y parámetro lambda = 2
-
+Cuál es la probabilidad de que se registren entre 4 y 9 órdenes de compra en los 
+siguientes 30 minutos?
 ```R
-x <- seq(0, 5, 0.02)
-plot(x, dexp(x, rate = 2), type = "l", lwd = 2, ylab = "")
-title(main = "Función de Densidad Exponencial", ylab = "f(x)",
-      sub = expression("Parámetro " ~ lambda == 2))
-text(x = 3, y = 1.5, labels = expression(f(x)==2*exp(-2*x) ~ " para x "  >= 0))
-text(x = 3, y = 1.3, labels = paste("0 en otro caso"))
-text(x = 1, y = 1, labels = expression("E(X) = " ~ 1/lambda == 1/2), col = 2)
-text(x = 3, y = 0.5, labels = expression("DE(X) = " ~ 1/lambda == 1/2), col = 4)
+dpois(x = 9, lambda = 8) - dpois(x = 4, lambda = 8)
 ```
 
-![Exp](https://user-images.githubusercontent.com/50311949/118197269-349d4600-b414-11eb-8e26-5a7fa66a3789.png)
-
-Ahora obtenemos una muestra aleatoria de tamaño n = 4 de la distribución exponencial considerada 
-
+Cuál es la probabilidad de que se registren menos de 5 órdenes de compra 
+en los siguientes 30 minutos?
 ```R
-set.seed(10) # Para reproducir posteriormente la muestra
-(m1.4 <- rexp(n = 4, rate = 2))
+ppois(q = 4, lambda = 8, lower.tail = TRUE)
 ```
 
-Obtenemos la media de la muestra generada
-
+Para nuestro ejemplo, la distribución de la variable aleatoria tiene la siguiente 
+forma:
 ```R
-mean(m1.4)
+poisson <- rpois(n = 10000, lambda = 8)
+barplot(table(poisson)/length(poisson),
+        main = "Distribución de Poisson", 
+        xlab = "X=x")
 ```
 
----
-
-Ahora obtenemos 5 muestras de tamaño 3 
-
+Para una distribución de Possion tenemos que:
+    - E[X] = lambda
+    - SD[X] = sqrt(lambda)
+    
+Esto podemos comprobarlo con las funciones descriptivas que hemos visto:
 ```R
-set.seed(64) # Para reproducir las muestras en el futuro
-(m5.3 <- sapply(X = rep(3, 5), FUN = rexp, 2))
+mean(poisson)
+sd(poisson)
 ```
 
-Obtenemos las medias de las 5 muestras
+Relacionada a la distribución de Possion, está la distribución exponencial, la 
+cual modela la probabilidad del tiempo entre eventos de Poisson. Como el tiempo es 
+una variable aleatoria continua, la distribución exponencial pertence a la familia 
+de funciones de distribución continuas.
 
+Esta distribución toma un sólo parámetro, el número de eventos de Possion por unidad 
+de tiempo. Con nuestro ejemplo anterior, sabemos que, en promedio, se realizan 0.2667 
+órdenes de compra por minuto.
 ```R
-(media5.3 <- apply(m5.3, 2, mean))
+rate.exp <- 8/30
+rate.exp
 ```
 
-Ahora obtenemos 1000 muestras de tamaño 7 y las 1000 medias correspondientes a las muestras
-
+¿Cuál es la probabilidad de que tengan que pasar menos de 5 minutos hasta que se 
+realice la siguiente orden de compra?
 ```R
-set.seed(465) # Para reproducir las muestras en el futuro
-m1000.7 <- sapply(X = rep(7, 1000), FUN = rexp, 2)
-media1000.7 <- apply(m1000.7, 2, mean)
-mdf <- as.data.frame(media1000.7)
-tail(mdf)
+pexp(q = 4, rate = rate.exp)
 ```
 
-Observamos que el histograma de las medias tiene aproximádamente forma de campana
-
+Para nuestro ejemplo, la distribución de la variable aleatoria tiene la siguiente 
+forma:
 ```R
-ggplot(mdf, aes(media1000.7)) + 
-  geom_histogram(colour = 'green', 
-                 fill = 'orange',
-                 alpha = 0.7) + # Intensidad del color fill
-  geom_vline(xintercept = mean(media1000.7), linetype="dashed", color = "black") + 
-  ggtitle('Histograma para las 1000 medias') + 
-  labs(x = 'medias', y = 'Frecuencia')+
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5, size = 16)) 
+curve(dexp(x, rate =rate.exp), from=0, to=15, 
+      col='blue', main = "Distribución exponencial",
+      ylab = "f(x)", xlab = "Tiempo entre eventos")
 ```
 
-![hist7](https://user-images.githubusercontent.com/50311949/118197383-73cb9700-b414-11eb-973d-9ad5d60ae5ae.png)
-
+Para una distribución de exponencial tenemos que:
+    - E[X] = 1/lambda
+    - SD[X] = sqrt(1/lambda^2)
+    
+Esto podemos comprobarlo con las funciones descriptivas que hemos visto:
 ```R
-mean(media1000.7); 1/2 # Media de las 1000 medias y media de la población de la cual vienen las 1000 muestras
-sd(media1000.7); (1/2)/sqrt(7) # DE de las 1000 medias y DE de la población de la cual vienen las 1000 muestras dividida por la raíz del tamaño de la muestra
-```
-
-Ahora obtenemos 1000 muestras de tamaño 33 y las 1000 medias correspondientes a las muestras
-
-```R
-set.seed(4465) # Para reproducir las muestras en el futuro
-m1000.33 <- sapply(X = rep(33, 1000), FUN = rexp, 2)
-media1000.33 <- apply(m1000.33, 2, mean)
-mdf <- as.data.frame(media1000.33)
-tail(mdf)
-```
-
-Observamos que el histograma de las medias es más parecida todavía a una campana
-
-```R
-ggplot(mdf, aes(media1000.33)) + 
-  geom_histogram(colour = 'yellow', 
-                 fill = 'purple',
-                 alpha = 0.7) + # Intensidad del color fill
-  geom_vline(xintercept = mean(media1000.33), linetype="dashed", color = "black") + 
-  ggtitle('Histograma para las 1000 medias') + 
-  labs(x = 'medias', y = 'Frecuencia')+
-  theme_get() +
-  theme(plot.title = element_text(hjust = 0.5, size = 16)) 
-```
-
-![hist33](https://user-images.githubusercontent.com/50311949/118197481-a83f5300-b414-11eb-855b-fa0475a0013d.png)
-
-```R
-mean(media1000.33); 1/2 # Media de las 1000 medias y media de la población de la cual vienen las 1000 muestras
-sd(media1000.33); (1/2)/sqrt(33) # DE de las 1000 medias y DE de la población de la cual vienen las 1000 muestras dividida por la raíz del tamaño de la muestra
+expon <- rexp(n = 1000, rate = rate.exp)
+mean(expon)
+sd(expon)
 ```
