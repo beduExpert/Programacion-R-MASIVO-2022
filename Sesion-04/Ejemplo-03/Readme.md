@@ -1,4 +1,4 @@
-# EJEMPLO 3. Contraste de hipótesis
+## EJEMPLO 03: DISTRIBUCIÓN NORMAL, NORMAL ESTÁNDAR Y VALORES Z
 
 #### Objetivo
 
@@ -11,117 +11,157 @@
 
 #### Desarrollo
 
-#### Contrastes comunes con muestras grandes
+##### Aproximación de la distribución normal a la binomial
+La distribución normal tiene un papel fundamental en muchas áreas de estudio, ya que, 
+de forma natural muchas variables siguen o pueden aproximarse a esta distribución.
 
-#### Contraste de dos colas
-
-Dada dos muestras aleatorias de tamaños n1 = 56 y n2 = 63
-
+Algunos puntos importantes de esta distribución son:
+- Tiene dos parámetros: `X~N(Media, SD)`
+- Es simétrica y con forma de campana
 ```R
-set.seed(174376)
-m1 <- rexp(n = 56, rate = 4.1); 1/4.1 # media real de la población
-tail(as.data.frame(m1))
-m2 <- rexp(n = 63, rate = 3.4); 1/3.4 # media real de la población
-tail(as.data.frame(m2))
-1/4.1-1/3.4 # diferencia de medias real
+{
+  curve(dnorm(x, mean = 170, sd = 10), from = 100, to = 200, 
+        col='blue', main = "Densidad Normal:\nDiferente media",
+        ylab = "f(x)", xlab = "X")
+  abline(v = 170, lwd = 0.5, lty = 2)
+  curve(dnorm(x, mean = 150, sd = 10), from = 100, to = 200, 
+        col='red', add = TRUE)
+  abline(v = 150, lwd = 0.5, lty = 2)
+  curve(dnorm(x, mean = 130, sd = 10), from = 100, to = 200, 
+        col='green', add = TRUE)
+  abline(v = 130, lwd = 0.5, lty = 2)
+}
+
+{
+  curve(dnorm(x, mean = 150, sd = 5), from = 120, to = 180, 
+        col='blue', main = "Densidad Normal:\nDiferente desviación estándar",
+        ylab = "f(x)", xlab = "X")
+  curve(dnorm(x, mean = 150, sd = 10), from = 120, to = 180, 
+        col='red', add = TRUE)
+  curve(dnorm(x, mean = 150, sd = 15), from = 120, to = 180, 
+        col='green', add = TRUE)
+}
 ```
 
-estamos interesados en contrastar las hipótesis H<sub>0</sub>: mu1-mu2 = 0 *vs* H<sub>1</sub>: mu1-mu2 diferente de 0 (contraste de dos colas)
-
-El valor observado del estadístico de prueba en este caso está dado por:
-
+La distribución binomial puede aproximarse a la distribución normal cuando `p` es 
+aproximadamente `0.5` y la muestra es `>= 10`
 ```R
-z0 <- (mean(m1)-mean(m2)-0)/sqrt(var(m1)/56 + var(m2)/63)
-z0
+binom.aprox <- rbinom(n = 10000, size = 10, prob = 0.5)
+binom.mean <- mean(binom.aprox)
+binom.sd <- sd(binom.aprox)
+
+barplot(table(binom.aprox)/length(binom.aprox),
+        main = "Distribución Binomial", 
+        xlab = "X=x")
+curve(dnorm(x, mean = binom.mean, sd = binom.sd), from=0, to=10, 
+      col='blue', main = "Densidad de Probabilidad Normal",
+      ylab = "f(x)", xlab = "X")
 ```
 
-que proviene de una distribución normal estándar aproximadamente.
-
-Supongamos que estamos interesados en encontrar la región de rechazo (de dos colas) con un nivel de significancia alpha = 0.05, debemos encontrar el valor z_{0.025} que satisface P(Z > z_{0.025}) = 0.025.
-
+Ahora vamos a demostrar que la aproximación es buena, calculando el promedio y la 
+desviación estándar
 ```R
-(z.025 <- qnorm(p = 0.025, lower.tail = FALSE))
+normal.binom <- rnorm(100000, mean = binom.mean, sd = binom.sd)
+
+mean(normal.binom)
+sd(normal.binom)
 ```
 
-Como
+##### Distribución normal
+La distribución normal es una distribución para variables aleatorias continuas, 
+por lo que, a diferencia de las distribuciones para variables discretas, la 
+probabilidad sólo puede calcularse para intervalos de valores.
 
+Por ejemplo: dada la siguiente variable aleatoria normalmente distribuida:
 ```R
-(z0 < -z.025) | (z0 > z.025)
+mean <- 175
+sd <- 6
+x <- seq(-4, 4, 0.01)*mean + sd
+y <- dnorm(x, mean = mean, sd = sd) 
+
+plot(x, y, type = "l", xlab = "X", ylab = "f(x)",
+     main = "Densidad de Probabilidad Normal", 
+     sub = expression(paste(mu == 175, " y ", sigma == 6)))
+
+integrate(dnorm, lower = x[1], upper = x[length(x)], mean=binom.mean, sd = binom.sd)
 ```
 
-fallamos en rechazar la hipótesis nula.
-
-**p-value** El p-value lo podemos calcular como 
-
+Calcula `P(X <= 180)`:
 ```R
-(pvalue <- 2*pnorm(z0, lower.tail = FALSE))
+pnorm(q = 180, mean = mean, sd = sd)
+
+par(mfrow = c(2, 2))
+plot(x, y, type = "l", xlab = "", ylab = "")
+title(main = "Densidad de Probabilidad Normal", sub = expression(paste(mu == 175, " y ", sigma == 6)))
+
+polygon(c(min(x), x[x<=180], 180), c(0, y[x<=180], 0), col="red")
 ```
 
+Calcula `P(X <= 165)`:
 ```R
-x <- seq(-4, 4, 0.01)
-y <- dnorm(x)
+pnorm(q = 165, mean = mean, sd = sd)
+
+plot(x, y, type = "l", xlab = "", ylab = "")
+title(main = "Densidad de Probabilidad Normal", sub = expression(paste(mu == 175, " y ", sigma == 6)))
+
+polygon(c(min(x), x[x<=165], 165), c(0, y[x<=165], 0), col="yellow")
+```
+
+Calcula `P(165 <= X <= 180)`:
+```R
+pnorm(q = 180, mean = mean, sd = sd) - pnorm(q = 165, mean = mean, sd = sd)
+
 plot(x, y, type = "l", xlab="", ylab="")
-title(main = "Densidad normal estándar", sub = expression(paste(mu == 0, " y ", sigma == 1)))
+title(main = "Densidad de Probabilidad Normal", sub = expression(paste(mu == 175, " y ", sigma == 6)))
 
-polygon(c(min(x), x[x<=-z0], -z0), c(0, y[x<=-z0], 0), col="purple")
-axis(side = 1, at = -z0, font = 2, padj = 1, lwd = 2)
-
-polygon(c(z0, x[x>=z0], max(x)), c(0, y[x>=z0], 0), col="purple")
-axis(side = 1, at = z0, font = 2, padj = 1, lwd = 2)
+polygon(c(165, x[x>=165 & x<=180], 180), c(0, y[x>=165 & x<=180], 0), col="green")
 ```
 
-![pvalue2](https://user-images.githubusercontent.com/50311949/118203683-2a824400-b422-11eb-9118-b40ea3779706.png)
-
-#### Contraste de hipótesis con muestras pequeñas para mu y mu1 - mu2
-
-#### Contraste de dos colas
-
-Dada dos muestras aleatorias de tamaños n1 = 23 y n2 = 20
-
+Calcula `P(X >= 182)`:
 ```R
-set.seed(1776)
-m1 <- rnorm(n = 23, mean = 175, sd = 3)
-tail(as.data.frame(m1))
-m2 <- rnorm(n = 20, mean = 160, sd = 3)
-tail(as.data.frame(m2))
-175-160 # diferencia de medias real
+pnorm(q = 182, mean = mean, sd = sd, lower.tail = FALSE)
+
+plot(x, y, type = "l", xlab="", ylab="")
+title(main = "Densidad de Probabilidad Normal", sub = expression(paste(mu == 175, " y ", sigma == 6)))
+
+polygon(c(182, x[x>=182], max(x)), c(0, y[x>=182], 0), col="blue")
+
+dev.off()
 ```
 
-estamos interesados en contrastar las hipótesis H<sub>0</sub>: mu1-mu2 = 0 *vs* H<sub>1</sub>: mu1-mu2 diferente de 0 (contraste de dos colas)
-
-El valor observado del estadístico de prueba en este caso está dado por:
-
+Como con cualquier otra distribución, también podemos calcular los cuantiles de la 
+distribución, es decir podemos encontrar el valor `b`, tal que `P(X <= b) = 0.75`:
 ```R
-t0 <- (mean(m1)-mean(m2)-0)/(sqrt((22*var(m1)+19*var(m2))/(23+20-2))*sqrt(1/23+1/20))
-t0
+b <- qnorm(p = 0.75, mean = mean, sd = sd)
+b
 ```
 
-que proviene de una distribución t de Student con 23 + 20 - 2 = 41 gl
-
-Supongamos que estamos interesados en encontrar la región de rechazo (de dos colas) con un nivel de significancia alpha = 0.05, debemos encontrar el valor t_{0.025} que satisface P(T > t_{0.025}) = 0.025.
-
+Podemos comptobar el resultaso anterior calculando `P(X <= 179.0469)`:
 ```R
-(t.025 <- qt(p = 0.025, df= 41, lower.tail = FALSE))
+pnorm(b, mean = mean, sd = sd)
 ```
 
-Como
+##### Distribución normal estándar y valores Z
+La distribución normal estándar es un caso especial de la distribución normal 
+con media 0 y desviación estándar 1: `Z ~ N(0,1)`. Esta distribución es de particular 
+interés ya que todas las variables aleatorias `X ~ N(Media, SD)` pueden transformarse a
+`Z`, lo cual nos permite poder comparar variables normalmente distribuídas entre sí.
 
+Para pasar de `X` a `Z`, es necesario 'estandarizar' la variable `X` de la siguiente forma:
+`Z = (X - media)/ SD`
+
+Por ejemplo: Sea `X ~ N(120, 85)`. Calcula la probabilidad de que `X` sea menor a 100
 ```R
-(t0 < -t.025) | (t0 > t.025)
+pnorm(q = 100, mean = 120, sd = 85)
 ```
 
-rechazamos la hipótesis nula.
-
-**p-value** El p-value lo podemos calcular como 
-
+Estandarizando tenemos que `Z ~ N(0,1)`, y el valor estandarizado de 100 es
 ```R
-(pvalue <- 2*pt(t0, df = 41, lower.tail = FALSE))
+z <- (100-120)/85
+z
 ```
 
-__También podemos usar la función `t.test` para llevar a cabo el procedimiento de contraste de hipótesis__
-
+Por lo tanto, la probabilidad de que `Z sea menor a -0.2352941 es
 ```R
-t.test(x = m1, y = m2,
-       alternative = "two.sided",
-       mu = 0, paired = FALSE, var.equal = TRUE)
+pnorm(z)
 ```
