@@ -2,7 +2,7 @@
 
 #### Objetivo
 
-- Investigar la dependencia o independecia de las variables aleatorias X y Y, el número de goles anotados por el equipo de casa y el número de goles anotados por el equipo visitante.
+- Realizar un análisis probabilístico del total de cargos internacionales de una compañía de telecomunicaciones
 
 #### Requisitos
 
@@ -11,10 +11,20 @@
 
 #### Desarrollo
 
-Ahora investigarás la dependencia o independencia del número de goles anotados por el equipo de casa y el número de goles anotados por el equipo visitante mediante un procedimiento denominado bootstrap, revisa bibliografía en internet para que tengas nociones de este desarrollo. 
+Utilizando la variable `total_intl_charge` de la base de datos `telecom_service.csv` de la sesión 3, realiza un análisis probabilístico. Para ello, debes determinar la función de distribución de probabilidad que más se acerque el comportamiento de los datos.
+Hint: Puedes apoyarte de medidas descriptivas o técnicas de visualización.
 
-1. Ya hemos estimado las probabilidades conjuntas de que el equipo de casa anote X=x goles (x=0,1,... ,8), y el equipo visitante anote Y=y goles (y=0,1,... ,6), en un partido. Obtén una tabla de cocientes al dividir estas probabilidades conjuntas por el producto de las probabilidades marginales correspondientes.
+Una vez que hayas seleccionado el modelo, realiza lo siguiente:
 
-2. Mediante un procedimiento de boostrap, obtén más cocientes similares a los obtenidos en la tabla del punto anterior. Esto para tener una idea de las distribuciones de la cual vienen los cocientes en la tabla anterior. Menciona en cuáles casos le parece razonable suponer que los cocientes de la tabla en el punto 1, son iguales a 1 (en tal caso tendríamos independencia de las variables aleatorias X y Y).
+1) Grafica la distribución teórica de la variable aleatoria `total_intl_charge`
 
-__Notas para los datos de soccer:__ https://www.football-data.co.uk/notes.txt
+2) ¿Cuál es la probabilidad de que el total de cargos internacionales sea menor a 1.85 usd?
+
+3) ¿Cuál es la probabilidad de que el total de cargos internacionales sea mayor a 3 usd?
+
+4) ¿Cuál es la probabilidad de que el total de cargos internacionales esté entre 2.35usd y 4.85 usd?
+
+5) Con una probabilidad de 0.48, ¿cuál es el total de cargos internacionales más alto que podría esperar?
+
+6) ¿Cuáles son los valores del total de cargos internacionales que dejan exactamente al centro el 80% de probabilidad?
+
