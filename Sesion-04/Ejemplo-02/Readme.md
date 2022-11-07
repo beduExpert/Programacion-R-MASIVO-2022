@@ -11,8 +11,8 @@
 
 #### Desarrollo
 
-Si X es una variable alestoria tal que X representa el número de eventos que ocurren 
-en un periodo de tiempo fijo, entonces X~Poisson(lambda), donde lambda es el número 
+Si X es una variable alestoria tal que `X` representa el número de eventos que ocurren 
+en un periodo de tiempo fijo, entonces `X~Poisson(lambda), donde lambda es el número 
 promedio de eventos en un intervalo de tiempo.
 
 Por ejemplo, un ECommerce registra, en promedio, 8 órdenes de compra cada 30 minutos. 
