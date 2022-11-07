@@ -1,8 +1,7 @@
 ## RETO 01: TABLAS DE DISTRIBUCIÓN DE FRECUENCIAS
 
 #### Objetivo
-- Crear histogramas con `hist()` y con `ggplot`
-- Comparar las características de ambas funciones  
+- Utilizar tablas de distribución de frecuencias para analizar variables  
 
 #### Requisitos
 - Tener previamente instalados R y Rstudio
