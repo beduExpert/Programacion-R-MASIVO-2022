@@ -1,11 +1,9 @@
 
-# Reto 2. Máquinas de vectores de soporte
+# Reto 2. Inferencia sobre la media
 
 ### OBJETIVO 
 
-- Crear un conjunto de entrenamiento y uno de prueba a partir de un conjunto de datos dado
-- Ajustar máquinas de vectores de soporte a un conjunto de entrenamiento
-- Llevar a cabo clasificación con un conjunto de prueba y crear la matriz de confusión
+- Practicar la aplicación de técnicas estadísticas para inferir sobre la media de la población
 
 #### REQUISITOS 
 
@@ -14,10 +12,21 @@
 
 #### DESARROLLO
 
-En el archivo de datos _datosclases.csv_, adjunto se encuentran observaciones correspondientes a dos clases diferentes indicadas por la variable `y`. Únicamente hay dos variables predictoras o características. A continuación realice los siguientes requerimientos (Hint: transforme primero la variable de respuesta `y` a variable categórica con las funciones `mutate` y `factor`):
+Utilizando la base de datos de mpg (Fuel Economy Data) disponible en la librería 
+de ggplot2, realiza los siguientes ejercicios indicando el juego de hipótesis y 
+concluyendo de forma estadística a un nivel de confianza del 95%
+```R
+library(ggplot2)
+```
 
-1. Carga los paquetes `ggplot2` y `e1071`; observe algunas características del data frame con las funciones `tail` y `dim`. Obtenga el gráfico de dispersión de los datos diferenciando las dos clases.
+1) Con base en los datos, existe evidencia estadística para concluir que, en promedio, 
+los coches producidos entre 1999 y 2008 podían recorrer más de 22.8 millas de 
+carretera por galón (hwy)?
 
-2. Genera de manera aleatoria un vector de índices para filtrar un conjunto de entrenamiento a partir del conjunto de datos dado. Con ayuda de las funciones `tune` y `svm` ajuste máquinas de vectores de soporte con un kernel radial a los datos de entrenamiento, para valores del parámetro `cost` igual a 0.1, 1, 10, 100, 1000 y valores del parámetro `gamma` igual a 0.5, 1, 2, 3, 4. Obtenga un resumen de los resultados.
+2) Con base en los datos, existe evidencia estadística para concluir que, en promedio, 
+el desplazamiento del motor en litros (displ) para los coches producidos entre 
+1999 y 2008 era mayor o igual 3.7 litros?
 
-3. Con el modelo que tuvo el mejor desempeño en el paso anterior realiza clasificación con la función `predict` y el conjunto de datos de prueba. Muestre la matriz de confusión.
+3) Con base en los datos, existe evidencia estadística para concluir que, en promedio, 
+los motores con 4 cilindros (cyl = 4) tienen un mayor rendimiento en millas de 
+carretera por galón (hwy) que los motores con 6 cilindros (cyl = 6)
