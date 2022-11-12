@@ -1,8 +1,8 @@
-# Ejemplo 2. Máquinas de vectores de soporte (Compañía de tarjetas de crédito)
+# Ejemplo 2. Inferencia a la media de la población
 
 #### Objetivo
 
-- Clasificar clientes potenciales de una compañía de tarjetas de crédito usando máquinas de vectores de soporte
+- Aprender a inferir los valores de la media de una o dos poblaciones
 
 #### Requisitos
 
@@ -11,146 +11,61 @@
 
 #### Desarrollo
 
-Paquetes de R utilizados
+# Muestra grande (n >= 30) o desv. estándar poblacional conocida
+Cuando la muestra es grande o conocemos la desv. estandar de la población, el estadístico 
+de prueba que utilizaremos para tomar una decisión sobre la hipótesis nula tendrá 
+una distribución normal estándar, con la cual se calcularán los valores p del 
+estadístico de prueba.
 
+# Muestra pequeña (n < 30) y desv. estándar poblacional conocida
+Cuando la muestra es pequeña y no conocemos la desviación estándar de la población, 
+podemos utilizar un estimador, conocido como desviación estándar de la muestra. 
+Esto hace que el estadístico de prueba cambie su distribución a una t de Student.
+
+Esta distribución tiene características similares a la distribución normal estándar, 
+salvo que tiene un único parámetro (grados de libertad) y es utilizada 
+preferentemente en lugar de la distribución Z, ya que a medida que el tamaño de 
+la muestra es más grande, su densidad se acerca a la de la distribución normal estándar
 ```R
-library(dplyr)
-library(e1071)
-library(ggplot2)
-library(ISLR)
+{curve(dnorm(x), from = -4, to = 4, xlab = "X", ylab = "f(x)", main = "Distribución t - Student")
+legend(x = 2, y = 0.4, legend=c("N(0,1)", "df=1", "df=5", "df=10", "df=100"),
+       col=c("black","blue", "green", "orange", "red"), lty = 1, bty = "n", cex=0.8)}
+curve(dt(x, 1), from = -4, to = 4, col = "blue", add = TRUE)
+curve(dt(x, 5), from = -4, to = 4, col = "green", add = TRUE)
+curve(dt(x, 10), from = -4, to = 4, col = "orange", add = TRUE)
+curve(dt(x, 100), from = -4, to = 4, col = "red", add = TRUE)
 ```
 
-1. Observemos algunas características del data frame Default del paquete ISLR, con funciones tales como head, tail, dim y str.
-
+Ejemplo: Un estudio anterior de telecomunicaciones señala que, en promedio, el 
+total de llamadas internacionales es menor a 4.54. ¿A qué NC EEE para concluir 
+que lo mismo sucede en nuestro mercado?
 ```R
-?Default
-head(Default)
-tail(Default)
-dim(Default)
-str(Default)
+df <- read.csv("https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2022/main/Sesion-03/Data/telecom_service.csv")
 ```
 
-2. Usando ggplot del paquete ggplot2, realicemos un gráfico de dispersión con la variable balance en el eje x, la variable income en el eje y, diferenciando las distintas categorías en la variable default usando el argumento colour. Lo anterior para estudiantes y no estudiantes usando facet_wrap.
-
+Planteamiento de hipótesis:
+Ho: prom_total_intl_calls >= 4.54
+Ha: prom_total_intl_calls < 4.54
 ```R
-ggplot(Default, aes(x = balance, y = income, colour = default)) + 
-  geom_point() + facet_wrap('student') + 
-  theme_grey() + ggtitle("Datos Default")
+t.test(x=df$total_intl_calls, alternative = 'less', mu=4.54)
 ```
 
-3. Generemos un vector de índices llamado train, tomando de manera aleatoria 5000 números de los primeros 10,000 números naturales, esto servirá para filtrar el conjunto de entrenamiento y el conjunto de prueba del data frame Default. Realicemos el gráfico de dispersión análogo al punto 2, pero para los conjuntos de entrenamiento y de prueba.
+Ejemplo: El mismo estudio, señala que, en promedio, el número de mensajes de voz 
+es mayor a 7.79 A un NC del 95%, ¿EEE para concluir que lo mismo sucede en nuestro mercado?
 
+Planteamiento de hipótesis:
+Ho: prom_total_num_vmail_messages <= 7.79
+Ha: prom_total_num_vmail_messages > 7.79
 ```R
-set.seed(2020)
-train = sample(nrow(Default), 
-               round(nrow(Default)/2))
-tail(Default[train, ])
-
-ggplot(Default[train, ], 
-       aes(x = balance, y = income, colour = default)) + 
-  geom_point() + facet_wrap('student') + 
-  theme_dark() + ggtitle("Conjunto de entrenamiento")
-
-ggplot(Default[-train, ], 
-       aes(x = balance, y = income, colour = default)) + 
-  geom_point() + facet_wrap('student') + 
-  theme_light() + ggtitle("Conjunto de prueba")
+t.test(x=df$number_vmail_messages, alternative = 'greater', mu=7.79)
 ```
 
-4. Ahora utilicemos la función tune junto con la función svm para seleccionar el mejor modelo de un conjunto de modelos, los modelos considerados serán aquellos obtenidos al variar los valores de los parámetros cost y gamma (usaremos un kernel radial).
+Ejemplo: El mismo estudio, señala que, en promedio, el número de llamadas de servicio 
+es mayor a 7.79 A un NC del 95%, ¿EEE para concluir que lo mismo sucede en nuestro mercado?
 
+Planteamiento de hipótesis:
+Ho: prom_customer_service_calls == 1.59
+Ha: prom_customer_service_calls =! 1.59
 ```R
-# Ahora utilizamos la función `tune` junto con la función `svm` para 
-# seleccionar el mejor modelo de un conjunto de modelos, los modelos 
-# considerados son aquellos obtenidos al variar los valores de los 
-# parámetros `cost` y `gamma`. Kernel Radial
-
-#tune.rad = tune(svm, default~., data = Default[train,], 
-#                kernel = "radial", 
-#                ranges = list(
-#                  cost = c(0.1, 1, 10, 100, 1000), 
-#                  gamma = seq(0.01, 10, 0.5)
-#                ) 
-#)
-
-# Se ha elegido el mejor modelo utilizando *validación cruzada de 10 
-# iteraciones*
-
-# summary(tune.rad)
-
-# Aquí un resumen del modelo seleccionado
-
-# summary(tune.rad$best.model)
-
-best <- svm(default~.,  data = Default[train,],
-            kernel = "radial",
-            cost = 100,
-            gamma = 1.51
-            )
-```
-
-5. Con el mejor modelo seleccionado y utilizando el conjunto de prueba, obtengamos una matriz de confusión, para observar el número de aciertos y errores cometidos por el modelo. También obtengamos la proporción total de aciertos y la matriz que muestre las proporciones de aciertos y errores cometidos pero por categorías.
-
-```R
-mc <- table(true = Default[-train, "default"], 
-            pred = predict(best, 
-                           newdata = Default[-train,]))
-mc
-
-# El porcentaje total de aciertos obtenido por el modelo usando el 
-# conjunto de prueba es el siguiente
-
-round(sum(diag(mc))/sum(colSums(mc)), 5)
-
-# Ahora observemos las siguientes proporciones
-
-rs <- apply(mc, 1, sum)
-r1 <- round(mc[1,]/rs[1], 5)
-r2 <- round(mc[2,]/rs[2], 5)
-rbind(No=r1, Yes=r2)
-```
-
-6. Ajustemos nuevamente el mejor modelo, pero ahora con el argumento decision.values = TRUE. Obtengamos los valores predichos para el conjunto de prueba utilizando el mejor modelo, las funciones predict, attributes y el argumento decision.values = TRUE dentro de predict.
-
-```R
-fit <- svm(default ~ ., data = Default[train,], 
-           kernel = "radial", cost = 100, gamma = 1.51,
-           decision.values = TRUE)
-
-fitted <- attributes(predict(fit, Default[-train,], 
-                             decision.values = TRUE))$decision.values
-```
-
-7. Realicemos clasificación de las observaciones del conjunto de prueba utilizando los valores predichos por el modelo y un umbral de decisión igual a cero. También obtengamos la matriz de confusión y proporciones como anteriormente hicimos.
-
-```R
-eti <- ifelse(fitted < 0, "Yes", "No")
-
-mc <- table(true = Default[-train, "default"], 
-            pred = eti)
-mc
-
-round(sum(diag(mc))/sum(colSums(mc)), 5)
-
-rs <- apply(mc, 1, sum)
-r1 <- round(mc[1,]/rs[1], 5)
-r2 <- round(mc[2,]/rs[2], 5)
-rbind(No=r1, Yes=r2)
-```
-
-8. Repitamos el paso 7 pero con un umbral de decisión diferente, de tal manera que se reduzca la proporción del error más grave para la compañía de tarjetas de crédito.
-
-```R
-eti <- ifelse(fitted < 1.002, "Yes", "No")
-
-mc <- table(true = Default[-train, "default"], 
-            pred = eti)
-mc
-
-round(sum(diag(mc))/sum(colSums(mc)), 5)
-
-rs <- apply(mc, 1, sum)
-r1 <- round(mc[1,]/rs[1], 5)
-r2 <- round(mc[2,]/rs[2], 5)
-rbind(No=r1, Yes=r2)
+t.test(x=df$customer_service_calls, alternative = 'two.sided', mu=1.59)
 ```
