@@ -1,69 +1,53 @@
-# Reto 2. Máquinas de vectores de soporte
+# Reto 02: Inferencia sobre la media
 
-# En el archivo de datos csv adjunto se encuentran observaciones correspondientes a dos clases diferentes indicadas por la variable y. Únicamente hay dos variables predictoras o características. Realice lo siguiente:
-  
-# 1. Cargue los paquetes ggplot2 y e1071; observe algunas características del data frame con las funciones tail y dim. Obtenga el gráfico de dispersión de los datos diferenciando las dos clases.
-# 2. Genere de manera aleatoria un vector de índices para filtrar un conjunto de entrenamiento a partir del conjunto de datos dado. Con ayuda de las funciones tune y svm ajuste máquinas de vectores de soporte con un kernel radial a los datos de entrenamiento, para valores del parámetro cost igual a 0.1, 1, 10, 100, 1000 y valores del parámetro gamma igual a 0.5, 1, 2, 3, 4. Obtenga un resumen de los resultados.
-# 3. Con el modelo que tuvo el mejor desempeño en el paso anterior realice clasificación con la función predict y el conjunto de datos de prueba. Muestre la matriz de confusión.
-
-# **Solución**
-
-# Primero establecemos nuestro directorio de trabajo en donde
-# deberán estar nuestros datos.
-
-datos <- read.csv("datosclases.csv")
-
-# 1. 
-
-# Cargamos los paquetes `ggplot2` y `e1071`,
-# observamos algunas características del data frame
-# con las funciones `tail` y `dim`.
-
-library(dplyr)
+"Utilizando la base de datos de mpg (Fuel Economy Data) disponible en la librería 
+de ggplot2, realiza los siguientes ejercicios indicando el juego de hipótesis y 
+concluyendo de forma estadística a un nivel de confianza del 95%"
 library(ggplot2)
-library(e1071)
 
-###
+"1) Con base en los datos, existe evidencia estadística para concluir que, en promedio, 
+los coches producidos entre 1999 y 2008 podían recorrer más de 22.8 millas de 
+carretera por galón (hwy)?"
 
-tail(datos); dim(datos); str(datos)
-datos <- mutate(datos, y = factor(y))
-# Obtenemos el gráfico de dispersión de los datos
-# diferenciando las dos clases
+"Planteamiento de hipótesis:
+Ho: prom_hwy <= 22.8
+Ha: prom_hwy > 22.8"
+t.test(mpg$hwy, alternative = 'greater', mu=22.8)
 
-ggplot(datos, aes(x = x.1, y = x.2, colour = y)) + 
-  geom_point() + 
-  theme_dark() + ggtitle("Datos")
+"R/ Con un NC del 95%, no existe evidencia estadística para rechazar Ho, es decir, 
+, en promedio, los coches producidos entre 1999 y 2008 podían recorrer 22.8 millas de 
+carretera por galón o menos"
 
-###
+"2) Con base en los datos, existe evidencia estadística para concluir que, en promedio, 
+el desplazamiento del motor en litros (displ) para los coches producidos entre 
+1999 y 2008 era mayor o igual 3.7 litros?"
 
-# 2.
+"Planteamiento de hipótesis:
+Ho: prom_displ >= 3.7
+Ha: prom_displ < 3.7"
+t.test(mpg$displ, alternative = 'less', mu=3.7)
 
-# Generamos índices para el conjunto de entrenamiento
+"R/ Con un NC del 95%, existe evidencia estadística para rechazar Ho, es decir, 
+en promedio, el desplazamiento del motor en litros (displ) para los coches 
+producidos entre 1999 y 2008 era menor a 3.7 litros?"
 
-train <- sample(300, 150)
-tail(as.data.frame(train))
+"3) Con base en los datos, existe evidencia estadística para concluir que, en promedio, 
+los motores con 4 cilindros (cyl = 4) tienen un mayor rendimiento en millas de 
+carretera por galón (hwy) que los motores con 6 cilindros (cyl = 6)"
 
-###
+"Planteamiento de hipótesis:
+Ho: prom_hwy_cyl_4 <= prom_hwy_cyl_6
+Ha: prom_hwy_cyl_4 > prom_hwy_cyl_6"
 
-# Ajustamos máquinas de vectores de soporte con un kernel radial 
-# para diferentes valores de los parámetros `cost` y `gamma`
+var.test(unlist(mpg[mpg$cyl == 4, "hwy"]), 
+         unlist(mpg[mpg$cyl == 6, "hwy"]), 
+         ratio = 1, alternative = "two.sided")
 
-set.seed(67)
-tune.out <- tune(svm, y~., data = datos[train, ], 
-                 kernel = "radial", 
-                 ranges = list(cost = c(0.1, 1, 10, 100, 1000), 
-                               gamma = c(0.5, 1, 2, 3, 4)))
+t.test(mpg[mpg$cyl == 4, "hwy"], 
+       mpg[mpg$cyl == 6, "hwy"], 
+       alternative = "greater",
+       mu = 0, var.equal = TRUE)
 
-
-### Obtenemos un resumen de los modelos ajustados y su desempeño
-
-summary(tune.out)
-
-
-###
-
-# Realizamos clasificación con el mejor modelo ajustado y obtenemos la matriz de confusión.
-
-table(true = datos[-train, "y"], 
-      pred = predict(tune.out$best.model, newdata = datos[-train,]))
-
+"R/ Con un NC del 95%, existe evidencia estadística para rechazar Ho, es decir, 
+en promedio, los motores con 4 cilindros (cyl = 4) tienen un mayor rendimiento 
+en millas de carretera por galón (hwy) que los motores con 6 cilindros (cyl = 6)"
