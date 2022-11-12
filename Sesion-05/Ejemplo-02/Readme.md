@@ -9,15 +9,17 @@
 - Tener instalados R y RStudio
 - Haber trabajado con el Prework
 
-#### Desarrollo
+#### Desarrollo:
 
-# Muestra grande (n >= 30) o desv. estándar poblacional conocida
+#### Inferencia a una población
+
+###### Muestra grande (n >= 30) o desv. estándar poblacional conocida
 Cuando la muestra es grande o conocemos la desv. estandar de la población, el estadístico 
 de prueba que utilizaremos para tomar una decisión sobre la hipótesis nula tendrá 
 una distribución normal estándar, con la cual se calcularán los valores p del 
 estadístico de prueba.
 
-# Muestra pequeña (n < 30) y desv. estándar poblacional conocida
+###### Muestra pequeña (n < 30) y desv. estándar poblacional conocida
 Cuando la muestra es pequeña y no conocemos la desviación estándar de la población, 
 podemos utilizar un estimador, conocido como desviación estándar de la muestra. 
 Esto hace que el estadístico de prueba cambie su distribución a una t de Student.
@@ -68,4 +70,49 @@ Ho: prom_customer_service_calls == 1.59
 Ha: prom_customer_service_calls =! 1.59
 ```R
 t.test(x=df$customer_service_calls, alternative = 'two.sided', mu=1.59)
+```
+#### Inferencia a dos poblaciones
+
+## EJEMPLO 02.b: INFERENCIA A LA MEDIA DE DOS POBLACIONES
+En inferencia estadística también podemos hacer comparaciones entre la media de 
+una variable para diferentes grupos.
+
+En el caso de comparación de dos medias, el estadístico a utilizarse puede distribuir 
+como una normal estándar o una t - Student, dependiende si se cumplen las condiciones 
+antes mencionadas. Para el caso particular de la distribución t - Student, es necesario 
+verificar si las desviaciones estándar de cada grupo son iguales o diferentes en 
+la población, por lo que realizaremos una prueba estadística para verificar esto:
+
+Ejemplo: El mismo estudio, señala que, el promedio de llamadas de atención a clientes
+en los usuarios que cancelaron el servicio es mayor que los que no cancelaron
+A un NC del 90%, ¿EEE para concluir que lo mismo sucede en nuestro mercado?
+
+Planteamiento de hipótesis:
+Ho: prom_customer_service_calls_churn1 <= prom_customer_service_calls_churn2 
+Ha: prom_customer_service_calls_churn1 > prom_customer_service_calls_churn2
+```R
+var.test(df[df$churn == 1, "customer_service_calls"], 
+         df[df$churn == 0, "customer_service_calls"], 
+         ratio = 1, alternative = "two.sided")
+
+t.test(x = df[df$churn == 1, "customer_service_calls"], y = df[df$churn == 0, "customer_service_calls"],
+       alternative = "greater",
+       mu = 0, var.equal = FALSE)
+```
+
+Ejemplo: Prueba que, en promedio, el número de llamadas internacionales realizadas 
+por los usuarios que cancelaron es igual a las realizadas por quienes no cancelaron
+
+Planteamiento de hipótesis:
+Ho: prom_total_intl_calls_churn1 == prom_total_intl_calls_churn2 
+Ha: prom_total_intl_calls_churn1 =! prom_total_intl_calls_churn2
+```R
+var.test(df[df$churn == 1, "total_intl_calls"], 
+         df[df$churn == 0, "total_intl_calls"], 
+         ratio = 1, alternative = "two.sided")
+
+t.test(x = df[df$churn == 1, "customer_service_calls"], 
+       y = df[df$churn == 0, "customer_service_calls"],
+       alternative = "two.sided",
+       mu = 0, var.equal = TRUE)
 ```
