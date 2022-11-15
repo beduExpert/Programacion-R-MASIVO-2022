@@ -1,49 +1,78 @@
-# Reto 1. Proceso AR(1)
+#Reto 01: Regresión Lineal y predicción
 
-# 1. Simule un proceso AR(1) de la forma x[t] = 0.5 * x[t-1] + w[t] para
-# t = 1, 2, ..., 200 y muestre gráficamente la serie de tiempo obtenida
+"Una aseguradora de automóviles sueca está interesada en un modelo predictivo que 
+le permite establecer el pago que sus clientes deben hacer por el seguro (Payment), explicado 
+por el número de casos (Claims) y el número de asegurados (Insured).
 
-# 2. Obtenga el correlograma y el correlograma parcial del proceso AR(1)
-# simulado
+Tu trabajo es determinar el mejor modelo de predicción"
 
-# 3. Ajuste un modelo autorregresivo a la serie simulada utilizando la
-# función ar, observe el orden del módelo y el parámetro 
-# estimado (los paramétros estimados) 
+df <- read.csv("https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2022/main/Sesion-06/data/SwedishMotorInsurance.csv", header = TRUE)
+head(df)
 
-# **Solución**
+"1) Selecciona solo las variables de interés y realiza una matriz de correlaciones."
+df.select <- select(df, Payment, Claims, Insured)
+round(cor(df.select),4)
 
-# Simulación en R
+attach(df.select)
+pairs(~ Payment + Claims + Insured, 
+      data = df, gap = 0.4, cex.labels = 1.5)
 
-# Un proceso AR(1) puede ser simulado en R como sigue:
+"2) Estima un modelo de regresión lineal de acuerdo con lo solicitado por la aseguradora. No 
+olvides interpretar tus resultados y realizar el diagnóstico sobre los residuos."
+m1 <- lm(Payment ~ Claims + Insured)
 
-set.seed(1)
-x <- w <- rnorm(200)
-for(t in 2:200) x[t] <- 0.5 * x[t-1] + w[t]
-plot(x, type = "l", xlab = "", ylab = "")
-title(main = "Proceso AR(1) simulado",
-      xlab = "Tiempo",
-      ylab = expression(x[t]),
-      sub = expression(x[t]==0.5*x[t-1]+w[t]))
+summary(m1)
 
-#
+StanRes <- rstandard(m1)
 
-acf(x, main = "")
-title(main = "Correlograma del proceso AR(1) simulado", 
-      sub = expression(x[t]==0.5*x[t-1]+w[t]))
+par(mfrow = c(2, 2))
+plot(m1$fitted.values, Payment, ylab = "Valores ajustados")
+plot(Claims, StanRes, ylab = "Residuales Estandarizados")
+plot(Insured, StanRes, ylab = "Residuales Estandarizados")
 
-#
+qqnorm(StanRes)
+qqline(StanRes)
 
-pacf(x, main = "")
-title(main = "Correlograma Parcial del proceso AR(1) simulado", 
-      sub = expression(x[t]==0.5*x[t-1]+w[t]))
+dev.off()
 
-###
+shapiro.test(StanRes)
 
-# Modelos Ajustados
+"3) Con el primero modelo, estima uno nuevo quitando la variable Insured. No 
+olvides interpretar tus resultados y realizar el diagnóstico sobre los residuos."
+m2 <- update(m1, ~.-Insured)
+summary(m2)
 
-# Ajuste de modelos a series simuladas
+StanRes2 <- rstandard(m2)
 
-x.ar <- ar(x, method = "mle")
-x.ar$order
-x.ar$ar
+par(mfrow = c(2, 2))
+plot(m2$fitted.values, Payment, ylab = "Valores ajustados")
+plot(Claims, StanRes2, ylab = "Residuales Estandarizados")
+plot(Insured, StanRes2, ylab = "Residuales Estandarizados")
 
+qqnorm(StanRes2)
+qqline(StanRes2)
+
+dev.off()
+
+shapiro.test(StanRes2)
+
+"4) Con el primero modelo, estima uno nuevo quitando la variable Claims. No 
+olvides interpretar tus resultados y realizar el diagnóstico sobre los residuos."
+m3 <- update(m1, ~.-Claims)
+summary(m3)
+
+StanRes3 <- rstandard(m3)
+
+par(mfrow = c(2, 2))
+plot(m3$fitted.values, Payment, ylab = "Valores ajustados")
+plot(Claims, StanRes3, ylab = "Residuales Estandarizados")
+plot(Insured, StanRes3, ylab = "Residuales Estandarizados")
+
+qqnorm(StanRes3)
+qqline(StanRes3)
+
+dev.off()
+
+shapiro.test(StanRes2)
+
+"5) ¿Cuál de los 3 modelos tiene un mejor poder predictivo?"
