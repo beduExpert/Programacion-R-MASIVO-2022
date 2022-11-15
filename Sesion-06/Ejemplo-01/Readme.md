@@ -2,7 +2,7 @@
 
 #### Objetivo
 
-- Entender el concepto de regresión lineal y sus aplicaciones
+- Entender el concepto de ´regresión lineal y sus aplicaciones
 - Estimar e interpretar modelos de regresión lineal 
 
 #### Requisitos 
