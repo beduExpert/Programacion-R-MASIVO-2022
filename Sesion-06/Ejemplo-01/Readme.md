@@ -101,4 +101,4 @@ anova(m2,mfull)
 Con base en el p-value del estadístico de prueba, no podemos rechazar Ho, por lo 
 existe al menos un coeficiente de los terminos de interacción que es distinto de 0 y,
 por lo tanto, contribuyen en la explicación del precio:
-`Y = beta0 + beta1*Food + beta2*Decor + beta4*East + e (Reducido)
+`Y = beta0 + beta1*Food + beta2*Decor + beta4*East + e (Reducido)`
