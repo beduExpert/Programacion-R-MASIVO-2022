@@ -31,10 +31,10 @@ head(df)
 2) Estima un modelo de regresión lineal de acuerdo con lo solicitado por la aseguradora. No 
 olvides interpretar tus resultados y realizar el diagnóstico sobre los residuos.
 
-3) Con el primero modelo, estima uno nuevo quitando la variable Insured. No 
+3) Con el primero modelo, estima uno nuevo quitando la variable `Insured`. No 
 olvides interpretar tus resultados y realizar el diagnóstico sobre los residuos.
 
-4) Con el primero modelo, estima uno nuevo quitando la variable Claims. No 
+4) Con el primero modelo, estima uno nuevo quitando la variable `Claims`. No 
 olvides interpretar tus resultados y realizar el diagnóstico sobre los residuos.
 
 5) ¿Cuál de los 3 modelos tiene un mejor poder predictivo?
