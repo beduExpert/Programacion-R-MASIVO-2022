@@ -1,25 +1,26 @@
-# Sesión 8: Dashboards con Shiny - Entorno GUI
+# Sesión 8: RStudio Cloud - Github, conexiones con BDs
 
 ## :dart: Objetivos
-Generar dashboards que muestren información de análisis, ya sea en forma de tablas y gráficas mediante la librería de Shiny
+- Utilizar RStudio desde la nube y realizar una vinculación con el repositorio de GitHub
+para generar conexiones con BDs y vincular RStudio Cloud con Github.
+- Conectarse con bases de datos relacionales a través de MySql, Postgrees, etc.
 
-
-## 🤓 ¿Para qué aprenderán?
+## 🤓 ¿Que aprenderán? 
 
 Durante el transcurso de esta sesión serás capaz de desarrollar las siguientes capacidades de R 
-- Realizar la presentación de gráficas, tablas, data tables, imágenes, queries, entre otras aplicaciones de R en dashboards, haciéndolo mediante una visualización atractiva y pudiendo compartir tu información con cualquier actor clave para su manejo.  
+
+- Trabajar con RStudio desde la nube y enviar (traer) código a (desde) un repositorio de github
+- Conectarte a una BDD con `R`
+- Importar datos de una BDD a `R`
+- Manipular datos de una BDD en `R`
 
 ## 📂 Organización de la clase
 
-- [Ejemplo 1](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-08/Ejemplo-01) Ambiente de trabajo UI y Server
-- [Ejemplo 2](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-08/Ejemplo-02) Creación de un Dashboard con pestañas y data tables
-   - [Reto 1](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-08/Reto-01) Crear un Dashboard con pestañas
-- [Ejemplo 3](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-08/Ejemplo-03) Dashboard interactivo ejecutivo
-- [Ejemplo 4](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-08/Ejemplo-04) Publica tu dashboard
-   - [Reto 3](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-08/Reto-03) Generar un dashboard de tipo profesional
-- [Postwork](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-08/Postwork) Dashboard final
-
-Ejemplos adicionales
-- [Ejemplo 5](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-08/Ejemplo-05) Dashboard dinámico
-   - [Reto 2](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-08/Reto-02) Dashboard dinámico
-- [Ejemplo 6](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-08/Ejemplo-06) Dashboard condicional
+- [Ejemplo 1](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-07/Ejemplo-01) Conexión entre RStudio y Github
+- [Ejemplo 2](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-07/Ejemplo-02) Conexión a una BDD con R
+   - [Reto 1](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-07/Reto-01) Vinculación entre RStudio Cloud -> Github
+- [Ejemplo 3](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-07/Ejemplo-03) Variantes en la lectura de BDD con R
+- [Ejemplo 4](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-07/Ejemplo-04) Lectura de archivos JSON, XML y tablas en HTML
+   - [Reto 2](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-07/Reto-02) Extracción de tablas en un HTML
+ 
+ - [Postwork](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-07/Postwork) Conexión con Mongodb
