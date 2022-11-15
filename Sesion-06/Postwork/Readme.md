@@ -19,7 +19,11 @@ modelo más adecuado siguiendo los procedimientos vistos
 
 Considera:
 
-Y: Sales (Ventas de un producto)
-X1: TV (Presupuesto de publicidad en TV para el producto)
-X2: Radio (Presupuesto de publicidad en Radio para el producto)
-X3: Newspaper (Presupuesto de publicidad en Periódico para el producto)
+- Y: Sales (Ventas de un producto)
+- X1: TV (Presupuesto de publicidad en TV para el producto)
+- X2: Radio (Presupuesto de publicidad en Radio para el producto)
+- X3: Newspaper (Presupuesto de publicidad en Periódico para el producto)
+
+```R
+adv <- read.csv("https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2022/main/Sesion-06/data/advertising.csv")
+```
