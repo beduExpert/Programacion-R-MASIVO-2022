@@ -1,135 +1,86 @@
-#### Técnicas descriptivas: gráficas, tendencias y variación estacional
+################ SESIÓN 6: REGRESIÓN LINEAL Y CLASIFICACIÓN  ##################
+###############################################################################
 
-# Datos de pasajeros aéreos (en miles) de una aerolínea
+## EJEMPLO 01: MODELO DE REGRESIÓN LINEAL
+"La regresión lineal es una técnica de modelado estadístico que se emplea para 
+describir una variable de respuesta continua como una función de una o varias 
+variables predictoras. Puede ayudar a comprender y predecir el comportamiento de 
+distintos fenómenos aleatorios
 
-AP <- AirPassengers
-AP
+Este modelo describe la relación entre una variable dependiente como una función 
+de una o varias variables independientes. El método más utlizado para su estimación 
+es el de Mínimos Cuadrados Ordinarios, el cual consiste en minizar la suma de los 
+residuos al cuadrado, siendo el residuo la diferencia que hay entre el valor observado 
+y el valor pronosticado por una propuesta de modelo.
 
-# Clase de un objeto
+Estos modelos lineales tienen, como toda línea recta, una intersección y una pendiente 
+asociada a cada variables explicativa.
 
-class(AP)
+Ahora vamos cómo hacer la estimación de un modelo y hagamos la interpretación de los 
+resultados obtenidos:"
+library(dplyr)
+library(ggplot2)
 
-start(AP); end(AP); frequency(AP)
+df <- read.csv("nyc_restaurants.csv", header = TRUE)
+str(df)
 
-summary(AP)
+df$East <- factor(df$East, labels = c("No", "Yes"))
 
-plot(AP, ylab = "Pasajeros (1000's)", xlab = "Tiempo", 
-     main = "Reserva de pasajeros aéreos internacionales", 
-     sub = "Estados Unidos en el periodo 1949-1960")
+df.select <- select(df, Price, Food, Decor, Service)
+round(cor(df.select),4)  
 
-################################################
+pairs(~ Price + Food + Decor + Service + East, 
+      data = df, gap = 0.4, cex.labels = 1.5)
 
-# https://github.com/AtefOuni/ts/tree/master/Data
+"Estimación por Mínimos Cuadrados Ordinarios (OLS)
+Y = beta0 + beta1*Food + beta2*Decor + beta3*Service + beta4*East + e"
+attach(df)
+m1 <- lm(Price ~ Food + Decor + Service + East)
 
-# Series de Tiempo Múltiple
+summary(m1)
 
-# Serie de producción de electricidad, cerveza y chocolate
-
-# Establecer el directorio de trabajo según corresponda
-
-# setwd()
-
-CBE <- read.csv("cbe.csv", header = TRUE)
-CBE[1:4,]
-class(CBE)
-
-Elec.ts <- ts(CBE[, 3], start = 1958, freq = 12)
-Beer.ts <- ts(CBE[, 2], start = 1958, freq = 12)
-Choc.ts <- ts(CBE[, 1], start = 1958, freq = 12)
-
-plot(cbind(Elec.ts, Beer.ts, Choc.ts), 
-     main = "Producción de Chocolate, Cerveza y Electricidad", 
-     xlab = "Tiempo",
-     sub = "Enero de 1958 - Diciembre de 1990")
-
-################################################
-
-# Serie de temperaturas globales, expresadas como anomalías de las medias mensuales
-
-Global <- scan("global.txt")
-Global.ts <- ts(Global, st = c(1856, 1), end = c(2005, 12), fr = 12)
-Global.annual <- aggregate(Global.ts, FUN = mean)
-plot(Global.ts, xlab = "Tiempo", ylab = "Temperatura en °C", main = "Serie de Temperatura Global",
-     sub = "Serie mensual: Enero de 1856 a Diciembre de 2005")
-plot(Global.annual, xlab = "Tiempo", ylab = "Temperatura en °C", main = "Serie de Temperatura Global",
-     sub = "Serie anual de temperaturas medias: 1856 a 2005")
-
-################################################
-
-New.series <- window(Global.ts, start = c(1970, 1), end = c(2005, 12)) 
-New.time <- time(New.series)
-plot(New.series, xlab = "Tiempo", ylab = "Temperatura en °C", main = "Serie de Temperatura Global",
-     sub = "Serie mensual: Enero de 1970 a Diciembre de 2005"); abline(reg = lm(New.series ~ New.time))
+"De los resultados anteriores, podemos concluir que el coeficiente de la variable 
+Service no es significativo. Probemos nuestro modelo sin incluir dicha variable:
+Y = beta0 + beta1*Food + beta2*Decor + beta4*East + e"
+m2 <- update(m1, ~.-Service)
+summary(m2)
 
 
-#### Descomposición de series
+# TÉRMINOS DE INTERACCIÓN
+"La variable East es una variable dicotómica que identifica si el restaurante está 
+en el este de la 5ta Avenida o no. Con este tipo de variables, podemos evaluar 
+efectos cruzados, es decir, podemos generar un efecto diferenciados en cada una de 
+las variables continuas dependiendo de si miden a un restaurante que está o no en 
+el este de la 5ta Avenida.
 
-# Modelo Aditivo
+Con esto en mente, podemos considerar el siguiente modelo con efectos cruzados:
+Y = beta0 + beta1*Food + beta2*Decor +  beta3*Service + beta4*East 
+      + beta5*Food*East + beta6*Decor*East + beta7*Service*East + e (Completo)
+El cual estiamos de la siguiente forma"
+mfull <- lm(Price ~ Food + Decor + Service + East + 
+              Food:East + Decor:East + Service:East)
 
-# Se debe elegir entre el modelo aditivo o el modelo multiplicativo cuando sea razonable suponer la descomposición
-Elec.decom.A <- decompose(Elec.ts)
+summary(mfull)
 
-plot(Elec.decom.A, xlab = "Tiempo", 
-     sub = "Descomposición de los datos de producción de electricidad")
+"De forma individual, los coeficientes de los términos de interacción no son significativos.
+Sin embargo, también debemos evaluar la significancia global del modelo, esto es, 
+podemos comparar un modelo tomando en cuenta todos los efectos cruzados y compararlo 
+contra otro modelo sin efectis cruzados.
 
-# Componentes
+Para ello, planteamos el siguiente juego de hipótesis:
+H0: beta3 = beta5 = beta6 = beta7 = 0
+(Y = beta0 + beta1*Food + beta2*Decor + beta4*East + e)
 
-Tendencia <- Elec.decom.A$trend
-Estacionalidad <- Elec.decom.A$seasonal
-Aleatorio <- Elec.decom.A$random
+H1: H0 no es verdad (AL MENOS UN COEFICIENTE ES DISTINTO DE 0)
+(Y = beta0 + beta1*Food + beta2*Decor +  beta3*Service + beta4*East 
+         + beta5*Food*East + beta6*Decor*East + beta7*Service*East + e)
 
-plot(Elec.ts, 
-     xlab = "Tiempo", main = "Datos de Producción de Electricidad", 
-     ylab = "Producción de electricidad", lwd = 2,
-     sub = "Tendencia con efectos estacionales aditivos sobrepuestos")
-lines(Tendencia, lwd = 2, col = "blue")
-lines(Tendencia + Estacionalidad, lwd = 2, col = "red", lty = 2)
+Para este tipo de inferencia usamos el enfoque de análisis de varianza (ANOVA), 
+ya que estamos comparando la variabilidad de un modelo no restringido contra la 
+variabilidad de un modelo restringido."
+anova(m2,mfull)
 
-ts.plot(cbind(Tendencia, Tendencia + Estacionalidad), 
-        xlab = "Tiempo", main = "Datos de Producción de Electricidad", 
-        ylab = "Producción de electricidad", lty = 1:2, 
-        col = c("blue", "red"), lwd = 2,
-        sub = "Tendencia con efectos estacionales aditivos sobrepuestos")
-
-Tendencia[20] + Estacionalidad[20] + Aleatorio[20]
-Elec.ts[20]
-
-###
-
-# Modelo Multiplicativo
-
-Elec.decom.M <- decompose(Elec.ts, type = "mult")
-
-plot(Elec.decom.M, xlab = "Tiempo", 
-     sub = "Descomposición de los datos de producción de electricidad")
-
-# Componentes
-
-Trend <- Elec.decom.M$trend
-Seasonal <- Elec.decom.M$seasonal
-Random <- Elec.decom.M$random
-
-plot(Elec.ts, 
-     xlab = "Tiempo", main = "Datos de Producción de Electricidad", 
-     ylab = "Producción de electricidad", lwd = 2,
-     sub = "Tendencia con efectos estacionales multiplicativos sobrepuestos")
-lines(Trend, lwd = 2, col = "blue")
-lines(Trend * Seasonal, lwd = 2, col = "red", lty = 2)
-
-ts.plot(cbind(Trend, Trend * Seasonal), 
-        xlab = "Tiempo", main = "Datos de Producción de Electricidad", 
-        ylab = "Producción de electricidad", lty = 1:2, 
-        col = c("blue", "red"), lwd = 2,
-        sub = "Tendencia con efectos estacionales multiplicativos sobrepuestos")
-
-Trend[100]*Seasonal[100]*Random[100]
-Elec.ts[100]
-
-
-# J. Cryer & K. Chan. (2008). Time Series Analysis With Applications 
-# in R. 233 Spring Street, New York, NY 10013, USA: Springer 
-# Science+Business Media, LLC.
-
-# P. Cowpertwait & A. Metcalfe. (2009). Introductory Time Series with R. 
-# 233 Spring Street, New York, NY 10013, USA: Springer Science+Business 
-# Media, LLC.
+"Con base en el p-value del estadístico de prueba, no podemos rechazar Ho, por lo 
+existe al menos un coeficiente de los terminos de interacción que es distinto de 0 y,
+por lo tanto, contribuyen en la explicación del precio:
+Y = beta0 + beta1*Food + beta2*Decor + beta4*East + e (Reducido)"
