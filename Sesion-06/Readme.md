@@ -15,11 +15,11 @@ En esta sesión estudiaremos temas relacionados con los siguientes puntos:
 
 ## 📂 Organización de la clase
 
-- [Ejemplo 1](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-05/Ejemplo-01) Modelo de regresión lineal
-- [Ejemplo 2](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-05/Ejemplo-01) Supuestos del modelo de regresión lineal y predicción
-   - [Reto 1:](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-05/Reto-01) Swedish Motor Insurance
-- [Ejemplo 3](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-05/Ejemplo-02) Modelo de regresión logística
-   - [Reto 2:](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-05/Reto-02) Determinantes de la inseguridad alimentaria
+- [Ejemplo 1](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-06/Ejemplo-01) Modelo de regresión lineal
+- [Ejemplo 2](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-06/Ejemplo-02) Supuestos del modelo de regresión lineal y predicción
+   - [Reto 1:](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-06/Reto-01) Swedish Motor Insurance
+- [Ejemplo 3](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-06/Ejemplo-03) Modelo de regresión logística
+   - [Reto 2:](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-06/Reto-02) Determinantes de la inseguridad alimentaria
 
 ## Postwork
-- [Postwork](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-05/Postwork)
+- [Postwork](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-06/Postwork)
