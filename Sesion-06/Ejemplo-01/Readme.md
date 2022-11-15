@@ -43,7 +43,7 @@ pairs(~ Price + Food + Decor + Service + East,
 ```
 
 Estimación por Mínimos Cuadrados Ordinarios (OLS)
-´Y = beta0 + beta1*Food + beta2*Decor + beta3*Service + beta4*East + e´
+'Y = beta0 + beta1*Food + beta2*Decor + beta3*Service + beta4*East + e'
 ```R
 attach(df)
 m1 <- lm(Price ~ Food + Decor + Service + East)
@@ -53,7 +53,7 @@ summary(m1)
 
 De los resultados anteriores, podemos concluir que el coeficiente de la variable 
 Service no es significativo. Probemos nuestro modelo sin incluir dicha variable:
-´Y = beta0 + beta1*Food + beta2*Decor + beta4*East + e´
+'Y = beta0 + beta1*Food + beta2*Decor + beta4*East + e'
 ```R
 m2 <- update(m1, ~.-Service)
 summary(m2)
@@ -67,8 +67,8 @@ las variables continuas dependiendo de si miden a un restaurante que está o no 
 el este de la 5ta Avenida.
 
 Con esto en mente, podemos considerar el siguiente modelo con efectos cruzados:
-´Y = beta0 + beta1*Food + beta2*Decor +  beta3*Service + beta4*East 
-      + beta5*Food*East + beta6*Decor*East + beta7*Service*East + e (Completo)´
+'Y = beta0 + beta1*Food + beta2*Decor +  beta3*Service + beta4*East 
+      + beta5*Food*East + beta6*Decor*East + beta7*Service*East + e (Completo)'
       
 El cual estiamos de la siguiente forma:
 ```E
@@ -85,11 +85,11 @@ contra otro modelo sin efectis cruzados.
 
 Para ello, planteamos el siguiente juego de hipótesis:
 - H0: beta3 = beta5 = beta6 = beta7 = 0
-´(Y = beta0 + beta1*Food + beta2*Decor + beta4*East + e)´
+'(Y = beta0 + beta1*Food + beta2*Decor + beta4*East + e)'
 
 - H1: H0 no es verdad (AL MENOS UN COEFICIENTE ES DISTINTO DE 0)
-´(Y = beta0 + beta1*Food + beta2*Decor +  beta3*Service + beta4*East 
-         + beta5*Food*East + beta6*Decor*East + beta7*Service*East + e)´
+'(Y = beta0 + beta1*Food + beta2*Decor +  beta3*Service + beta4*East 
+         + beta5*Food*East + beta6*Decor*East + beta7*Service*East + e)'
 
 Para este tipo de inferencia usamos el enfoque de análisis de varianza (ANOVA), 
 ya que estamos comparando la variabilidad de un modelo no restringido contra la 
@@ -101,4 +101,4 @@ anova(m2,mfull)
 Con base en el p-value del estadístico de prueba, no podemos rechazar Ho, por lo 
 existe al menos un coeficiente de los terminos de interacción que es distinto de 0 y,
 por lo tanto, contribuyen en la explicación del precio:
-Y = beta0 + beta1*Food + beta2*Decor + beta4*East + e (Reducido)´
+'Y = beta0 + beta1*Food + beta2*Decor + beta4*East + e (Reducido)'
