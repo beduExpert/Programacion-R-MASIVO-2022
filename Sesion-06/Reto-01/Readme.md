@@ -1,9 +1,9 @@
  
-## Reto 1. Proceso AR(1)
+## Reto 1. Swedish Motor Insurance
 
 ### OBJETIVO 
 
-- Observar algunas características de una serie de tiempo que proviene de un proceso AR(1) y ajustar un modelo.
+- Estimar y comparar modelos de regresión lineal
 
 #### REQUISITOS 
 
@@ -13,10 +13,28 @@
 
 #### DESARROLLO
 
-Reto 1. Simulación de un proceso AR(1)
+#Reto 01: Regresión Lineal y predicción
 
-1. Simula un proceso AR(1) de la forma x[t] = 0.5 * x[t-1] + w[t] para t = 1, 2, ..., 200 y muestra gráficamente la serie de tiempo obtenida
+Una aseguradora de automóviles sueca está interesada en un modelo predictivo que 
+le permite establecer el pago que sus clientes deben hacer por el seguro (Payment), explicado 
+por el número de casos (Claims) y el número de asegurados (Insured).
 
-2. Obtén el correlograma y el correlograma parcial del proceso AR(1) simulado
+Tu trabajo es determinar el mejor modelo de predicción
 
-3. Ajusta un modelo autorregresivo a la serie simulada utilizando la función `ar`, observa el orden del modelo y el parámetro estimado (los parámetros estimados) 
+```R
+df <- read.csv("https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2022/main/Sesion-06/data/SwedishMotorInsurance.csv", header = TRUE)
+head(df)
+```  
+
+1) Selecciona solo las variables de interés y realiza una matriz de correlaciones.
+
+2) Estima un modelo de regresión lineal de acuerdo con lo solicitado por la aseguradora. No 
+olvides interpretar tus resultados y realizar el diagnóstico sobre los residuos.
+
+3) Con el primero modelo, estima uno nuevo quitando la variable Insured. No 
+olvides interpretar tus resultados y realizar el diagnóstico sobre los residuos.
+
+4) Con el primero modelo, estima uno nuevo quitando la variable Claims. No 
+olvides interpretar tus resultados y realizar el diagnóstico sobre los residuos.
+
+5) ¿Cuál de los 3 modelos tiene un mejor poder predictivo?
