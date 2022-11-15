@@ -1,24 +1,89 @@
-# Postwork Sesión 6. 
+adv <- read.csv("https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2022/main/Sesion-06/data/advertising.csv")
 
-#### Objetivo
+attach(adv)
 
-- Aprender a crear una serie de tiempo en `R`
+# A continuación mostramos una matriz de gráficos de dispersión de los
+# tres predictores continuos y la variable de respuesta. 
 
-#### Requisitos
+pairs(~ Sales + TV + Radio + Newspaper, data = adv, gap = 0.4, cex.labels = 1.5)
 
-- Tener instalado R y RStudio
-- Haber trabajado con el prework y el work
+# Observamos relaciones aproximadamente lineales
 
-#### Desarrollo
+# Llevamos a cabo el ajuste de un modelo
+# Sales = beta0 + beta1*TV + beta2*Radio + beta3*Newspaper + e
 
-Importa el conjunto de datos match.data.csv a `R` y realiza lo siguiente:
+m1 <- lm(Sales ~ TV + Radio + Newspaper)
 
-1. Agrega una nueva columna `sumagoles` que contenga la suma de goles por partido.
+# Obtenemos un resumen
 
-2. Obtén el promedio por mes de la suma de goles.
+summary(m1)
 
-3. Crea la serie de tiempo del promedio por mes de la suma de goles hasta diciembre de 2019.
+# Ajustamos nuevamente un modelo pero ahora sin considerar la variable Newspaper
+# ya que en el resultado anterior se observó que su coeficiente de regresión
+# no fue estadísticamente significativo (al considerar su p-value)
 
-4. Grafica la serie de tiempo.
+# Y = beta0 + beta1*TV + beta2*Radio + e (Reducido)
 
-__Notas para los datos de soccer:__ https://www.football-data.co.uk/notes.txt
+m2 <- update(m1, ~.-Newspaper)
+summary(m2)
+
+# Diagnósticos
+
+
+# A continuación veremos gráficas de residuales estandarizados contra cada
+# predictor. 
+
+StanRes2 <- rstandard(m2)
+par(mfrow = c(2, 2))
+plot(TV, StanRes2, ylab = "Residuales Estandarizados")
+plot(Radio, StanRes2, ylab = "Residuales Estandarizados")
+
+qqnorm(StanRes2)
+qqline(StanRes2)
+
+dev.off()
+
+shapiro.test(StanRes2)
+
+# Consideraremos el siguiente modelo con interacción
+
+# Sales = beta0 + beta1*TV + beta2*Radio +  beta3*TV*Radio + e
+
+mfull <- lm(Sales ~ TV + Radio + 
+                         TV:Radio)
+
+summary(mfull)
+
+# Ahora compararemos el modelo mfull contra el modelo m2. 
+# Es decir, llevaremos a cabo una prueba de hipótesis
+# general de
+
+# H0: beta3 = 0
+# es decir Sales = beta0 + beta1*TV + beta2*Radio + e
+# contra
+# H1: H0 no es verdad
+# es decir, 
+# Sales = beta0 + beta1*TV + beta2*Radio +  beta3*TV*Radio +  e
+
+# Esta puede lograrse usando la siguiente prueba-F parcial.
+
+anova(m2,mfull)
+
+# Dado que el p-value es aproximadamente 7.633e-07, rechazamos la hipótesis nula
+# y nos decidimos por la hipótesis alternativa
+# Sales = beta0 + beta1*TV + beta2*Radio +  beta3*TV*Radio +  e
+
+# Diagnósticos
+StanRes <- rstandard(mfull)
+par(mfrow = c(2, 2))
+plot(TV, StanRes, ylab = "Residuales Estandarizados")
+plot(Radio, StanRes, ylab = "Residuales Estandarizados")
+
+# Buscamos evidencia para soportar la hipótesis de normalidad en los errores 
+
+qqnorm(StanRes)
+qqline(StanRes)
+
+dev.off()
+
+shapiro.test(StanRes)
