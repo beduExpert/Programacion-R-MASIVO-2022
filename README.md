@@ -14,10 +14,10 @@ Realizar tareas de limpieza, manipulación y análisis de bases de datos utiliza
  - [`Sesión 2:` Manipulación y visualización de datos en R ](Sesion-02/Readme.md) 
  - [`Sesión 3:` Análisis Exploratorio de Datos](Sesion-03/Readme.md)
  - [`Sesión 4:` Probabilidad y funciones de distribución](Sesion-04/Readme.md) 
- - [`Sesión 5:` EN REDISEÑO: Teorema del límite central e inferencia estadística](Sesion-05/Readme.md) 
- - [`Sesión 6:` EN REDISEÑO: Regresión lineal y clasificación](Sesion-06/Readme.md)
- - [`Sesión 7:` EN REDISEÑO: Series de tiempo](Sesion-07/Readme.md) 
- - [`Sesión 8:` EN REDISEÑO: Repositorios, control de cambios y conexión con bases de datos](Sesion-08/Readme.md)
+ - [`Sesión 5:` Teorema del límite central e inferencia estadística](Sesion-05/Readme.md) 
+ - [`Sesión 6:` Regresión lineal y clasificación](Sesion-06/Readme.md)
+ - [`Sesión 7:` EN REDISEÑO: Series de tiempo]() 
+ - [`Sesión 8:` EN REDISEÑO: Repositorios, control de cambios y conexión con bases de datos]()
 
 
  
