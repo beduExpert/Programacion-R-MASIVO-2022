@@ -1,25 +1,27 @@
 
-# Sesión 5: Regresión lineal y clasificación.
+# Sesión 5: Teorema del Límite Central e Inferecia Estadística
 
 ## :dart: Objetivos
 
-- Realizar predicciones de una variable cuantitativa con base en variables predictoras.
-- Entender como una variable de respuesta está relacionada con varias variables explicativas. 
-- Realizar clasificaciones con base en variables predictoras también llamadas características.
+- Comprender el concepto del teorema del límite central
+- Entender las diferencias entre la estadística descriptiva y la inferencial 
+- Conocer los elementos de una prueba estadística
 
 ## 🤓 ¿Que aprenderán? 
 
 En esta sesión estudiaremos temas relacionados con los siguientes puntos:
 
-- Predicción de una variable cuantitativa a partir de otras variables predictoras cuando es posible soportar algunas suposiciones.
-- Clasificación en categorías de un conjunto de objetos o personas.
+- Teorema del Límite Central
+- Inferencia estadística
+- Juegos de hipótesis
+- Estadístico de prueba y pvalue
 
 ## 📂 Organización de la clase
 
-- [Ejemplo 1](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-05/Ejemplo-01) Regresión lineal múltiple
-   - [Reto 1:](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-05/Reto-01) Regresión lineal múltiple (Ventas y presupuestos de publicidad)
-- [Ejemplo 2](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-05/Ejemplo-02) Máquinas de vectores de soporte (Compañía de tarjetas de crédito)
-   - [Reto 2:](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/master/Sesion-05/Reto-02) Máquinas de vectores de soporte
-
+- [Ejemplo 1](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-05/Ejemplo-01) Teorema de límite central y distribución de la media
+   - [Reto 1:](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-05/Reto-01) Función beta y el TLC
+- [Ejemplo 2](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-05/Ejemplo-02) Inferencia sobre la media
+   - [Reto 2:](https://github.com/beduExpert/Programacion-R-Santander-2023/tree/main/Sesion-05/Reto-02) Inferencia sobre la media
+- [Ejemplo 3](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-05/Ejemplo-02) Análisis de Varianza (ANOVA)
 ## Postwork
-- [Postwork](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-05/Postwork)
+- [Postwork](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-05/Postwork)
