@@ -1,169 +1,59 @@
-# Ejemplo 3. Modelos no estacionarios y predicción
+# EJEMPLO 03: MODELO DE REGRESIÓN LOGÍSTICA
 
-# Objetivo
+### Objetivo
 
-- Estudiar modelos no estacionarios y realizar predicción de series de tiempo
+- Entender el concepto de modelo de regresión logística y sus aplicaciones
+- Estimar e interpretar los resultados de la regresión logística
 
-# Requisitos
+### Requisitos
 
 - Tener instalado R y RStudio
 - Haber estudiado el Prework
 
-# Desarrollo
+### Desarrollo
 
-Tomamos datos de https://github.com/AtefOuni/ts/tree/master/Data
-    
-Serie de producción de electricidad de Australia
+La regresión logística es un tipo de análisis de regresión utilizado para predecir 
+el resultado de una variable categórica en función de las variables independientes 
+o predictoras.
 
+Es útil para modelar la probabilidad de un evento ocurriendo en función de otros factores.
 ```R
-# Establecer el directorio de trabajo según corresponda
-CBE <- read.csv("cbe.csv", header = TRUE)
-Elec.ts <- ts(CBE[, 3], start = 1958, freq = 12)
+df <- read.csv("https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2022/main/Sesion-03/Data/telecom_service.csv")
 
-plot(Elec.ts, xlab = "", ylab = "")
-title(main = "Serie de Producción de Electricidad Australiana",
-      ylab = "Producción de electricidad (GWh)",
-      xlab = "Tiempo")
+attach(df)
+y = df$churn
+x = df$customer_service_calls
 ```
 
-Utilizando la serie de diferencias, convertimos la serie a una estacionaria en la media
+Vamos a estimar la regresión logística y a interpretar los resultados:
 ```R
-plot(diff(Elec.ts), xlab = "", ylab = "")
-title(main = "Serie Diferenciada de Producción de Electricidad Australiana",
-      xlab = "Tiempo", ylab = "Dif Serie",
-      sub = "Gráfica de la serie diferenciada de primer órden")
+logistic.1 <- glm(y ~ x, 
+                  data = df, family = binomial)
+
+summary(logistic.1)
 ```
 
-Con el logaritmo, estabilizamos la serie para tener una varianza constante
+Veamos una representación gráfica del problema para enteder su diferencia respecto 
+a la regresión lineal:
 ```R
-plot(diff(log(Elec.ts)), xlab = "", ylab = "")
-title(main = "Serie de log dif de Producción de Electricidad Australiana",
-      xlab = "Tiempo", ylab = "Dif log-Serie",
-      sub = "Gráfica de la serie log-transformada diferenciada de primer órden")
+plot(churn ~ customer_service_calls, data=df, xlim = c(0,10))
+curve(predict(logistic.1, newdata = data.frame(x), type = "response"),
+      add = TRUE)
 ```
 
-Una vez hecha estas transformaciones realizamos la simulación y ajuste.
-
-A continuación, simulamos datos de un modelo ARIMA(1, 1, 1) y luego ajustamos un modelo a la serie simulada para recuperar los parámetros estimados.
-
+A diferencia del modelo de regresión lineal, no es posible calcular el R2 de una 
+regresión logística, sin embargo, se puede calcular la bondad de ajuste con base en 
+la log-verosimilitud del modelo nulo y el modelo actual.
 ```R
-set.seed(1)
-x <- w <- rnorm(1000)
-for(i in 3:1000) x[i] <- 0.5*x[i-1] + x[i-1] - 0.5*x[i-2] + w[i] + 0.3*w[i-1]
+pseudo_r2.1 <- (logistic.1$null.deviance - logistic.1$deviance)/logistic.1$null.deviance
+pseudo_r2.1
 ```
 
+Comparemos con otro modelo:
 ```R
-plot(x, type = "l", 
-     main = "Serie simulada de un modelo ARIMA(1, 1, 1)",
-     xlab = "Tiempo",
-     ylab = expression(x[t]),
-     sub = expression(x[t] == 0.5*x[t-1] + x[t-1] - 0.5*x[t-2] + w[t] + 0.3*w[t-1]))
+logistic.2 <- update(logistic.1, ~.+ total_day_calls + total_day_charge)
+summary(logistic.2)
+
+pseudo_r2.2 <- (logistic.2$null.deviance - logistic.2$deviance)/logistic.2$null.deviance
+pseudo_r2.2
 ```
-
-```R
-arima(x, order = c(1, 1, 1))
-```
-
-Simulación con la función arima.sim
-
-```R
-x <- arima.sim(model = list(order = c(1, 1, 1), ar = 0.5, ma = 0.3), n = 1000)
-```
-
-```R
-arima(x, order = c(1, 1, 1))
-```
-
-#### Modelos Arima estacionales
-
-Procedimiento de ajuste
-Serie de producción de electricidad de Australia
-
-```R
-plot(Elec.ts, xlab = "", ylab = "")
-title(main = "Serie de Producción de Electricidad Australiana",
-      ylab = "Producción de electricidad (GWh)",
-      xlab = "Tiempo")
-```
-
-```R
-plot(log(Elec.ts), xlab = "", ylab = "")
-title(main = "Log de Serie de Producción de Electricidad Australiana",
-      ylab = "Log de Producción de electricidad (GWh)",
-      xlab = "Tiempo")
-```
-
-```R
-Elec.AR <- arima(log(Elec.ts), order = c(1, 1, 0), 
-                 seas = list(order = c(1, 0, 0), 12))
-
-Elec.MA <- arima(log(Elec.ts), order = c(0, 1, 1),
-                 seas = list(order = c(0, 0, 1), 12))
-
-
-AIC(Elec.AR)
-AIC(Elec.MA)
-```
-
-Función para buscar un "buen" modelo (**No basarse únicamente en los resultados de aplicar la función**)
-
-```R
-get.best.arima <- function(x.ts, maxord = c(1, 1, 1, 1, 1, 1)){
-  best.aic <- 1e8
-  n <- length(x.ts)
-  for(p in 0:maxord[1])for(d in 0:maxord[2])for(q in 0:maxord[3])
-    for(P in 0:maxord[4])for(D in 0:maxord[5])for(Q in 0:maxord[6])
-    {
-      fit <- arima(x.ts, order = c(p, d, q),
-                   seas = list(order = c(P, D, Q),
-                               frequency(x.ts)), method = "CSS")
-      fit.aic <- -2*fit$loglik + (log(n) + 1)*length(fit$coef)
-      if(fit.aic < best.aic){
-        best.aic <- fit.aic
-        best.fit <- fit
-        best.model <- c(p, d, q, P, D, Q)
-      }
-    }
-  list(best.aic, best.fit, best.model)
-}
-```
-
-Nuevo ajuste a los datos de la serie transformada de producción de electricidad
-
-```R
-best.arima.elec <- get.best.arima(log(Elec.ts),
-                                  maxord = c(2, 2, 2, 2, 2, 2))
-
-best.fit.elec <- best.arima.elec[[2]]  # Modelo
-best.arima.elec[[3]] # Tipo de modelo (órdenes)
-best.fit.elec
-best.arima.elec[[1]] # AIC
-```
-
-ACF para residuales del ajuste
-
-```R
-acf(resid(best.fit.elec), main = "")
-title(main = "Correlograma de los residuales del ajuste")
-```
-
-Predicción
-
-```R
-pr <- predict(best.fit.elec, 12)$pred 
-ts.plot(cbind(window(Elec.ts, start = 1981),
-              exp(pr)), col = c("blue", "red"), xlab = "")
-title(main = "Predicción para la serie de producción de electricidad",
-      xlab = "Mes",
-      ylab = "Producción de electricidad (GWh)")
-```
-
-Inspirado en la siguiente bibliografía:
-
-P. Cowpertwait & A. Metcalfe. (2009). Introductory Time Series with R. 233 Spring Street, New York, NY 10013, USA: Springer Science+Business Media, LLC.
-
-Otra referencia:
-
-J. Cryer & K. Chan. (2008). Time Series Analysis With Applications in R. 233 Spring Street, New York, NY 10013, USA: Springer Science+Business Media, LLC.
-
-
