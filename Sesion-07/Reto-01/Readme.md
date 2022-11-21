@@ -3,11 +3,6 @@
 #### Objetivo
 Estimar modelos AR, MA y ARMA
 
-#### Requisitos
-- Internet
-- Cuenta de RStudio Cloud
-- Cuenta de Github
-
 #### Desarrollo
 Un modelo autorregresivo es aquel donde el comportamiento en el tiempo de una serie 
 es explicado por el primer rezago de su comportamiento, es decir:
