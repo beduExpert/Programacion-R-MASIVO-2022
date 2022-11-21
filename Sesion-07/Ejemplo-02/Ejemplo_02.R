@@ -1,61 +1,66 @@
-# Ejemplo 2. Conexión a una BDD con R
+## EJEMPLO 02: DESCOMPOSICIÓN DE SERIES DE TIEMPO
+"En el análisis tradicional de series de tiempo, estas se determinan con base en 
+tres elementos:
+- Tendencia: Dirección de los datos a largo plazo
+- Estacionalidad: Comportamiento repetitivo de los datos en ciclos de tiempo específicos
+- Término aleatorio
 
-# Comenzaremos instalando las librerias necesarias para realizar la conexión y 
-# lectura de la base de datos en RStudio, si previamente los tenías instalados 
-# omite la instalación, recuerda que solo necesitas realizarla una vez.
+En R, podamos utilizar la función decompose() para extraer estos 3 elementos usando 
+el método clásico de MA."
+#- Método aditivo
+Elec.decom.A <- decompose(Elec.ts, type = 'add')
 
-# install.packages("DBI")
-# install.packages("RMySQL")
+plot(Elec.decom.A, xlab = "Tiempo", 
+     sub = "Descomposición de los datos de producción de electricidad")
 
-library(DBI)
-library(RMySQL)
+"Ahora podemos extraer cada uno de los componentes para analizarlos gráficamente"
+{Tendencia <- Elec.decom.A$trend
+Estacionalidad <- Elec.decom.A$seasonal
+Aleatorio <- Elec.decom.A$random}
 
-# Una vez que se tengan las librerias necesarias se procede a la lectura 
-# (podría ser que necesites otras, si te las solicita instalalas y cargalas), 
-# de la base de datos de Shiny la cual es un demo y nos permite interactuar con 
-# este tipo de objetos. El comando dbConnect es el indicado para realizar la 
-# lectura, los demás parametros son los que nos dan acceso a la BDD.
+plot(Elec.ts, 
+     xlab = "Tiempo", main = "Datos de Producci?n de Electricidad", 
+     ylab = "Producci?n de electricidad", lwd = 2,
+     sub = "Tendencia con efectos estacionales aditivos sobrepuestos")
+lines(Tendencia, lwd = 2, col = "blue")
+lines(Tendencia + Estacionalidad, lwd = 2, col = "red", lty = 2)
 
-MyDataBase <- dbConnect(
-  drv = RMySQL::MySQL(),
-  dbname = "shinydemo",
-  host = "shiny-demo.csa7qlmguqrf.us-east-1.rds.amazonaws.com",
-  username = "guest",
-  password = "guest")
+ts.plot(cbind(Tendencia, Tendencia + Estacionalidad), 
+        xlab = "Tiempo", main = "Datos de Producci?n de Electricidad", 
+        ylab = "Producci?n de electricidad", lty = 1:2, 
+        col = c("blue", "red"), lwd = 2,
+        sub = "Tendencia con efectos estacionales aditivos sobrepuestos")
 
-# Si no se arrojaron errores por parte de R, vamos a explorar la BDD
+"Vamos a verificar que el método de descomposición y la suma de los elementos, 
+realmente genera el dato de la serie:"
+Tendencia[20] + Estacionalidad[20] + Aleatorio[20]
+Elec.ts[20]
 
-dbListTables(MyDataBase)
+#- Modelo multiplicativo
+Elec.decom.M <- decompose(Elec.ts, type = "mult")
 
-# Ahora si se quieren desplegar los campos o variables que contiene la tabla 
-# City se hará lo siguiente
+plot(Elec.decom.M, xlab = "Tiempo", 
+     sub = "Descomposición de los datos de producción de electricidad")
 
-dbListFields(MyDataBase, 'City')
+"Ahora podemos extraer cada uno de los componentes para analizarlos gráficamente"
+{Trend <- Elec.decom.M$trend
+Seasonal <- Elec.decom.M$seasonal
+Random <- Elec.decom.M$random}
 
-# Para realizar una consulta tipo MySQL sobre la tabla seleccionada haremos lo 
-# siguiente
+plot(Elec.ts, 
+     xlab = "Tiempo", main = "Datos de Producci?n de Electricidad", 
+     ylab = "Producci?n de electricidad", lwd = 2,
+     sub = "Tendencia con efectos estacionales multiplicativos sobrepuestos")
+lines(Trend, lwd = 2, col = "blue")
+lines(Trend * Seasonal, lwd = 2, col = "red", lty = 2)
 
-DataDB <- dbGetQuery(MyDataBase, "select * from City")
+ts.plot(cbind(Trend, Trend * Seasonal), 
+        xlab = "Tiempo", main = "Datos de Producción de Electricidad", 
+        ylab = "Producción de electricidad", lty = 1:2, 
+        col = c("blue", "red"), lwd = 2,
+        sub = "Tendencia con efectos estacionales multiplicativos sobrepuestos")
 
-# Observemos que el objeto DataDB es un data frame, por lo tanto ya es un objeto 
-# de R y podemos aplicar los comandos usuales
-
-class(DataDB)
-head(DataDB)
-
-
-pop.mean <- mean(DataDB$Population)  # Media a la variable de población
-pop.mean 
-
-pop.3 <- pop.mean *3   # Operaciones aritméticas
-pop.3
-
-# Incluso podemos hacer unos de otros comandos de busqueda aplicando la 
-# libreria dplyr
-
-library(dplyr)
-pop50.mex <-  DataDB %>% filter(CountryCode == "MEX" ,  Population > 50000)   # Ciudades del país de México con más de 50,000 habitantes
-
-head(pop50.mex)
-
-unique(DataDB$CountryCode)   # Países que contiene la BDD
+"Vamos a verificar que el método de descomposición y la suma de los elementos, 
+realmente genera el dato de la serie:"
+Trend[100]*Seasonal[100]*Random[100]
+Elec.ts[100]
