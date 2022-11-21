@@ -1,57 +1,53 @@
-# Ejemplo 3. Variantes en la lectura de BDD con R
+## EJEMPLO 03: CAMINATA ALEATORIA Y FUNCIONES DE AUTOCORRELACIÓN
+"Para poder realizar estimaciones y predicciones de series de tiempo, los modelos 
+clásicos requieren que las series de tiempo sean estacionarias, es decir, que su 
+promedio (valor de tendencia de largo plazo) sea constante al igual que varianza.
 
-# Ahora utilizaremos otra opción para realizar queries a una BDD con la ayuda 
-# de dplyr que sustituye a SELECT en MySQL y el operador %>%, hay que recordar 
-# que con este comando también podemos realizar búsquedas de forma local.
+Para entender cómo se comporta una serie de tiempo, vamos a analizar el modelo de 
+ruido blanco ~ N(0,1)"
+set.seed(3)
+w <- rnorm(300)
+plot(w, type = "l", xlab = "")
+title(main = "Ruido Blanco Gaussiano", xlab = "Tiempo")
 
-# Comenzamos instalando las paqueterías necesarias y cargándolas a R
+mean(w);sd(w)
 
-# install.packages("pool")
-# install.packages("dplyr")
+"La función de autocorrelación es una medida de la correlación entre las observaciones 
+temporales separadas por k rezagos."
+acf(w)
 
-library(dplyr)
-library(pool)
+"La función de autocorrelación parcial es una medida de la correlación entre las observaciones 
+temporales separadas por k rezagos, tomando en cuenta los valores de los intervalos intermedios"
+pacf(w)
 
-# Se realiza la lectura de la BDD con el comando dbPool, los demás parámetros 
-# se siguen utilizando igual que el ejemplo anterior
+"En una serie de ruído blanco, la AC y la ACP no tiene valores significativos en los 
+rezagos de la variable."
 
-my_db <- dbPool(
-  RMySQL::MySQL(), 
-  dbname = "shinydemo",
-  host = "shiny-demo.csa7qlmguqrf.us-east-1.rds.amazonaws.com",
-  username = "guest",
-  password = "guest"
-)
+"Un ejemplo de serie no estacionaria es el modelo de caminada aleatoria. En este modelo
+tanto el promedio como la varianza dependen fuertemente del tiempo y sus incrementos son
+ruído blanco:"
+x <- w <- rnorm(1000)
+for(t in 2:1000) x[t] <- x[t-1] + w[t]
 
-# Para ver el contenido de la BDD y realizar una búsqueda se procede de la 
-# siguiente manera
+plot(x, type = "l", main = "Caminata Aleatoria Simulada", 
+     xlab = "t", ylab = expression(x[t]), 
+     sub = expression(x[t]==x[t-1]+w[t]))
 
-dbListTables(my_db)
+"Este es el comportamiento de la gran mayoría de las series de tiempo, lo que hace 
+muy complicado utilizarlas directamente para hacer estimaciones o predicción.
+Veamos como se comportan sus funciones de AC y ACP:"
+acf(x)
+pacf(x)
 
-# Obtener los primeros 5 registros de Country
+"Como se observa, la función de ACP no muestra rezagos significativos, sin embargo, 
+la función de AC muestra una serie de tiempo totalmente correlacionada. Para nuestra 
+suerte, muchas de las variables económicas y financieras es posible convertirlas en 
+estacionarias calculando la primera diferencia; es decir, el cambio entre un periodo 
+en el tiempo y otro:"
 
-my_db %>% tbl("Country") %>% head(5) # library(dplyr)
+plot(diff(x), type = "l", main = "Primera diferencia de X", 
+     xlab = "t", ylab = expression(x[t]), 
+     sub = expression(x[t]==x[t-1]+w[t]))
 
-# Obtener los primeros 5 registros de CountryLanguage
-
-my_db %>% tbl("CountryLanguage") %>% head(5)
-
-# Otra forma de generar una búsqueda será con la librería DBI, utilizando el 
-# comando dbSendQuery
-
-library(DBI)
-conn <- dbConnect(
-  drv = RMySQL::MySQL(),
-  dbname = "shinydemo",
-  host = "shiny-demo.csa7qlmguqrf.us-east-1.rds.amazonaws.com",
-  username = "guest",
-  password = "guest")
-
-rs <- dbSendQuery(conn, "SELECT * FROM City LIMIT 5;")
-
-dbFetch(rs)
-
-# Para finalizar nos desconectamos de la BDD
-
-dbClearResult(rs)
-dbDisconnect(conn)
+acf(diff(x))
+pacf(diff(x))
