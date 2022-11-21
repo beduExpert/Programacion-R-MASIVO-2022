@@ -1,9 +1,8 @@
-# Ejemplo 1. Conexión entre RStudio y Github
+# Ejemplo 1. Manipulación de series de tiempo
 
 #### Objetivo
-- Hacer uso de los recursos de la nube de RStudio y Github
-- Utilizar como repositorio y control de cambios a Github
-- Hacer el commit, push y pull
+- Aprender a transformar vectores en series de tiempo
+- Graficas series de tiempo
 
 #### Requisitos
 - Tener una cuenta de RStudio cloud
@@ -11,29 +10,34 @@
 
 #### Desarrollo
 
-Dentro de esta sesión podrás realizar una interacción entre RStudio y Github, lo que te permitirá trabajar con scripts en una interface de RStudio desde la nube, es decir, que se cargará en la ventada de tu explorador, con esto podrás trabajar de manera remota con scripts y poder alojarlos en algún repositorio.
+Una serie de tiempo representa una secuencia de datos ordenados de forma cronológica
+y secuencial, por lo que para su análisis es necesario que todas las observaciones 
+estén registradas con un índice en tiempo discreto y que las observaciones estén en
+intervalos de tiempo equidistantes.
 
-- Primero vamos a configurar RStudio Cloud y Github, deberás seguir los pasos que se muestran en el siguiente video:
-
-[![](rstudiogit.png)](https://www.loom.com/share/11de365fbfb14f8887939691df0d8300)
-
-- Ahora vamos agregar un token de Github a RStudio Cloud para vincularlos, siguiendo las siguientes instrucciones: 
-
-[![](token.png)](https://www.loom.com/share/4e05a8daf0b54bfca842eb22fbe6f781)
-
-Para realizar la carga del _token_ en R se hace lo siguiente: 
-
+Veamos cómo analizar y manipular series de tiempo en R. Para ello vamos a comenzar 
+analizando el siguiente dataframe:
 ```R
-library(gitcreds)
-install.packages("gitcreds")
-
-gitcreds_set() # Para ingresar el token
-
-gitcreds_get() # Sirve para verificar que se ingresó el token
+url = "https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2021/main/Sesion-06/Ejemplo-01/cbe.csv"
+CBE <- read.csv(url, header = TRUE)
+head(CBE)
+class(CBE)
 ```
+La función `ts()` nos permite crear un objeto de serie de tiempo a partir de un vector.
+Basta con establecer los siguientes argumentos
+- `start`: Periodo inicial de la serie
+- `end`: Periodo inicial de la seria
+- `freq`: Número de observaciones por unidad de tiempo
 
-Una vez agregado el token se puede verificar directamente en el repositorio de *Github* que se realizó la carga de tu archivo, intentalo.
+Vamos a crear 3 series de tiempo mensuales para los datos que tenemos:
+```R
+Elec.ts <- ts(CBE[, 3], start = c(1958,1), freq = 12)
+Beer.ts <- ts(CBE[, 2], start = c(1958,1), freq = 12)
+Choc.ts <- ts(CBE[, 1], start = c(1958,1), freq = 12)
+class(Elec.ts);class(Beer.ts);class(Choc.ts)
 
-- En caso contrario, para hacer el `pull`, mandar archivos desde Github hacía RStudio se hará de la siguiente manera:
-
-[![](gitrstudio.png)](https://www.loom.com/share/e4b8d870e5ee476e886306300cf7f306)
+plot(cbind(Elec.ts, Beer.ts, Choc.ts), 
+     main = "Producci?n de Chocolate, Cerveza y Electricidad", 
+     xlab = "Tiempo",
+     sub = "Enero de 1958 - Diciembre de 1990")
+```
