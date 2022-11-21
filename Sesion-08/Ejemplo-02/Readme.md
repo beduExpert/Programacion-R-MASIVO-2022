@@ -10,7 +10,7 @@
 - Haber estudiado el prework
 
 #### Desarrollo
-"La paquetería DBI nos ayuda a generar conexiones a DBMS dentro de nuestra sesión 
+La paquetería DBI nos ayuda a generar conexiones a DBMS dentro de nuestra sesión 
 de R, para ello, la paquetería separa la conexión en back-end y front-end.
 El back-end es manejado por la librería DBI, en la cual podemos establecer y cerrar 
 conexiones, ejecturar SQL queries, entre otras funciones administrativas
@@ -22,32 +22,38 @@ El front-end depende del servicio de DBMS:
 entre muchos otros.
 
 Algunas de estas librarías para front-end necesitan tener instalado explícitamente 
-DBI, como es el caso de RMySQL:"
+DBI, como es el caso de RMySQL:
+```R
 install.packages("DBI")
 install.packages("RMySQL")
 
 library(DBI)
 library(RMySQL)
+```
 
-"Para realizar una conexión, necesitamos un engine que nos ayude a establecer el nombre 
+Para realizar una conexión, necesitamos un engine que nos ayude a establecer el nombre 
 del servidor (servidio de DBMS), el nombre de la base de datos, host y, en su caso,
-usuario y contraseña:"
+usuario y contraseña:
+```R
 db.conn <- dbConnect(
   drv = RMySQL::MySQL(),
   dbname = "shinydemo",
   host = "shiny-demo.csa7qlmguqrf.us-east-1.rds.amazonaws.com",
   username = "guest",
   password = "guest")
+```
 
-"Con la siguientes todas las tablas de datos que tenemos disponibles en nuestro database 
-y enlistar el nombre de los campos en cada una de ellas:"
+Con la siguientes todas las tablas de datos que tenemos disponibles en nuestro database 
+y enlistar el nombre de los campos en cada una de ellas:
+```R
 dbListTables(db.conn)
 
 dbListFields(db.conn, 'City')
 dbListFields(db.conn, 'Country')
 dbListFields(db.conn, 'CountryLanguage')
-
-"La función dbGetQuery() nos permite realizar una consulta y extraer los datos obtenidos."
+```
+La función dbGetQuery() nos permite realizar una consulta y extraer los datos obtenidos.
+```R
 db.data <- dbGetQuery(db.conn, 
                       "SELECT a.Name AS City
                             , a.District
@@ -58,20 +64,24 @@ db.data <- dbGetQuery(db.conn,
                       INNER JOIN Country AS b
                       ON a.CountryCode = b.Code
                       ORDER BY CityPopulation DESC")
-
-"Los datos son almacenados en un dataframe, por lo que podemos user otras funciones 
-para manipularlos, procesarlos y transformarlos."
+```
+Los datos son almacenados en un dataframe, por lo que podemos user otras funciones 
+para manipularlos, procesarlos y transformarlos.
+```R
 class(db.data)
 head(db.data)
-
-"En algunas ocasiones ejecutaremos queries para crear, eliminar o alterar tablas (DDL),
+```
+En algunas ocasiones ejecutaremos queries para crear, eliminar o alterar tablas (DDL),
 o para dar o revocar permisos, las cuales no regresan datos que podemos almacenar en un 
 dataframe. (DCL). Como la conexión que estamos realizando es una databse pública, nos podemos 
-implementar DDL o DCL, pero podemos ejemplificarlo de la siguiente forma:"
+implementar DDL o DCL, pero podemos ejemplificarlo de la siguiente forma:
+```R
 rs <- dbSendQuery(db.conn, "SELECT '¡Hola, mundo!' AS saludo")
 
 dbFetch(rs)
 dbClearResult(rs)
-
-"Una vez terminadas nuestras consultas, debemos cerrar nuestra conexión:"
+```
+Una vez terminadas nuestras consultas, debemos cerrar nuestra conexión:
+```R
 dbDisconnect(db.conn)
+```
