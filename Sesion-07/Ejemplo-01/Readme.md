@@ -18,7 +18,7 @@ intervalos de tiempo equidistantes.
 Veamos cómo analizar y manipular series de tiempo en R. Para ello vamos a comenzar 
 analizando el siguiente dataframe:
 ```R
-url = "https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2021/main/Sesion-06/Ejemplo-01/cbe.csv"
+url = "https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2022/main/Sesion-07/Data/cbe_data.csv"
 CBE <- read.csv(url, header = TRUE)
 head(CBE)
 class(CBE)
