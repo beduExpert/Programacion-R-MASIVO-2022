@@ -13,15 +13,14 @@ En esta sesión estudiaremos temas relacionados con los siguientes puntos:
 
 ## 📂 Organización de la clase
 
-- [Ejemplo 1](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-06/Ejemplo-01) Ejemplos de series de tiempo y técnicas descriptivas
-- [Ejemplo 2](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-06/Ejemplo-02)  Modelos estocásticos básicos, modelos estacionarios y predicción
-   - [Reto 1](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-06/Reto-01) Proceso AR(1)
-- [Ejemplo 3](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-06/Ejemplo-03) Modelos no estacionarios y predicción
-   - [Reto 2](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-06/Reto-02) Proceso ARIMA(1, 1, 1)
-
-Opcional: - [Reto 3](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-06/Reto-03) Gráfica de series de tiempo
+- [Ejemplo 1](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-07/Ejemplo-01) Manipulación de series de tiempo
+- [Ejemplo 2](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-07/Ejemplo-02) Descomposición de series de tiempo
+- [Ejemplo 3](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-07/Ejemplo-03) Caminata aleatoria y funciones de autocorrelación
+   - [Reto 1](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-07/Reto-01) Modelos autorregresivos y de media móvil de primer orden
+- [Ejemplo 4](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-07/Ejemplo-04) Modelos ARIMA
+   - [Reto 2](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-07/Reto-02) Proceso ARIMA(1,1,1) y predicción
 
 ## Postwork
--  [Postwork](https://github.com/beduExpert/Programacion-R-Santander-2021/tree/main/Sesion-06/Postwork)
+-  [Postwork](https://github.com/beduExpert/Programacion-R-Santander-2022/tree/main/Sesion-07/Postwork)
 
 
