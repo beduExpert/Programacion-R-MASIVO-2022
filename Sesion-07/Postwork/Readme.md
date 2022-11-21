@@ -1,28 +1,26 @@
 
 
-## Postwork. Alojar un fichero a un local host de MongoDB 
+## Postwork. Predicciones de la temperatura global
 
 ### OBJETIVO
 
-- Realizar el alojamiento de un fichero `.csv` a una base de datos (BDD), en un local host de Mongodb a través de `R`
-
-#### REQUISITOS
-
-- Mongodb Compass
-- librerías `mongolite`
-- Nociones básicas de manejo de BDD
+- Estimar modelos ARIMA y realizar predicciones
 
 #### DESARROLLO
+Utilizando el siguiente vector numérico, realiza lo que se indica:
+```R
+url = "https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2022/main/Sesion-07/Data/global.txt"
+Global <- scan(url, sep="")
+```
 
+1) Crea una objeto de serie de tiempo con los datos de Global. La serie debe ser mensual 
+comenzado en Enero de 1856
 
-Utilizando el manejador de BDD _Mongodb Compass_ (previamente instalado), deberás de realizar las siguientes acciones: 
+2) Realiza una gráfica de la serie de tiempo anteriorde 2005")
 
-- Alojar el fichero  `match.data.csv` en una base de datos llamada `match_games`, nombrando al `collection` como `match`
+3) Ahora realiza una gráfica de la serie de tiempo anterior, transformando a la 
+primera diferencia:
 
-- Una vez hecho esto, realizar un `count` para conocer el número de registros que se tiene en la base
+4) ¿Consideras que la serie es estacionaria en niveles o en primera diferencia?
 
-- Realiza una consulta utilizando la sintaxis de **Mongodb** en la base de datos, para conocer el número de goles que metió el Real Madrid el 20 de diciembre de 2015 y contra que equipo jugó, ¿perdió ó fue goleada?
-
-- Por último, no olvides cerrar la conexión con la BDD
- 
-__Notas para los datos de soccer:__ https://www.football-data.co.uk/notes.txt
+5) Con base en tu respuesta anterior, obten las funciones de autocorrelación y autocorrelación parcial?
