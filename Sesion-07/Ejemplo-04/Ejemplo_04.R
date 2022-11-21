@@ -1,94 +1,58 @@
-# Ejemplo 4. Lectura de archivos JSON, XML y tablas en HTML
+## EJEMPLO 04: MODELOS ARIMA
+"ARIMA representa modelos Autorregresivos (AR) Integrados (I) de Media Móvil (MA) y se 
+representan como ARIMA(q,d,p):
+- q: Número de términos autorregresivos (de la variable dependiente)
+- d: Número de diferencias aplicadas a la variable para hacerla estacionaria
+- p: Número de rezagos en el término de error
 
-# Comenzaremos instalando los paquetes necesarios para después cargarlos a R
+Veamos un ejemplo de serie de tiempo para determinar al modelo ARIMA a estimar:"
+set.seed(3)
+x <- w <- rnorm(1000)
+for(i in 3:1000) x[i] <- 0.5*x[i-1] + x[i-1] - 0.5*x[i-2] + w[i] + 0.3*w[i-1]
 
-# install.packages("rjson")   #Siempre usar comillas en el nombre del paquete
+plot(x, type = "l", 
+     main = "Serie simulada de un modelo ARIMA(1, 1, 1)",
+     xlab = "Tiempo",
+     ylab = expression(x[t]),
+     sub = expression(x[t] == 0.5*x[t-1] + x[t-1] - 0.5*x[t-2] + w[t] + 0.3*w[t-1]))
 
-library(rjson)            # Quitar comillas del nombre
+acf(x)
+pacf(x)
 
-# Json
-# Vamos a leer un archivo Json de prueba alojado aquí
+"Como podemos ver, la serie de tiempo es no estacionaria. Calculemos la primera diferencia:"
+acf(diff(x))
+pacf(diff(x))
 
-URL <- "https://tools.learningcontainer.com/sample-json-file.json" # Asignando el link a una variable
+"Esta transformación nos ayuda a tener una mejor idea del número de términos autorregresivos 
+y de medioa móvil que incluir en el modelo. Como era de esperarse, el modelo a estimar 
+debe tener I(1) y MA(1). Sin embargo, vemos que la función de AC muestra desde 1 a 3 
+términos autorregresivos. Para determinar el mejor modelo, vamos a estimar los modelos 
+propuestosy analizar los criterios de información de Akaike (AIC):"
+arima(x, order = c(1, 1, 1))
+arima(x, order = c(2, 1, 1))
+arima(x, order = c(3, 1, 1))
 
-JsonData <- fromJSON(file= URL)     # Se guarda el JSon en un objeto de R
+"El mejor modelo es aquel que tenga menor AIC.
+Ahora pongamos esto en práctica para la producción de electricidad:"
+plot(Elec.ts, xlab = "", ylab = "")
+title(main = "Serie de Producción de Electricidad Australiana",
+      ylab = "Producción de electricidad (GWh)",
+      xlab = "Tiempo")
 
-class(JsonData)                     # Vemos que tipo de objeto es JsonData
+plot(diff(Elec.ts), xlab = "", ylab = "")
+title(main = "Serie Diferenciada de Producción de Electricidad Australiana",
+      xlab = "Tiempo", ylab = "Dif Serie",
+      sub = "Gráfica de la serie diferenciada de primer Órden")
 
-str(JsonData)                       # Vemos la naturaleza de sus variables
+plot(diff(log(Elec.ts)), xlab = "", ylab = "")
+title(main = "Serie de log dif de Producción de Electricidad Australiana",
+      xlab = "Tiempo", ylab = "Dif log-Serie",
+      sub = "Gráfica de la serie log-transformada diferenciada de primer órden")
 
-# Finalmente ya que pudimos acceder al contenido del Json, también podemos 
-# realizar la manipulación de los datos dentro del Json, por ejemplo:
-  
-sqrt(JsonData$Mobile)
+fit <- arima(log(Elec.ts), order = c(0, 1, 1), seas = c(2, 0, 2))
 
-# Para entrar a las demás variables recuerda que puedas usar el operador de $, 
-# es decir, JsonData$
-
-# XML
-# Ahora vamos a leer datos XML en R, utilizando un archivo XML alojado aquí
-
-# Lo primero es instalar y cargar el paquete XML y alojar el link en una variable 
-# link, para su lectura
-
-# install.packages("XML")
-library(XML)
-link <- "http://www-db.deis.unibo.it/courses/TW/DOCS/w3schools/xml/cd_catalog.xml"
-
-# Analizando el XML desde la web
-xmlfile <- xmlTreeParse(link)
-# Ahora ya podemos ver las propiedades del objetvo xmlfile
-
-summary(xmlfile)
-head(xmlfile)
-# También gracias al xmlTreeParse podemos extraer los datos contenidos en el archivo
-
-#Extraer los valores xml
-topxml <- xmlSApply(xmlfile, function(x) xmlSApply(x, xmlValue))
-
-# Colocandolos en un Data Frame
-xml_df <- data.frame(t(topxml), row.names= NULL)
-
-str(xml_df) # Observar la naturaleza de las variables del DF
-# Convertiremos incluso las variables de PRICE y YEAR en datos numéricos para 
-# poder realizar operaciones con este dato
-
-xml_df$PRICE <- as.numeric(xml_df$PRICE) 
-xml_df$YEAR <- as.numeric(xml_df$YEAR)
-
-mean(xml_df$PRICE)
-mean(xml_df$YEAR)
-# Todo esto se puede realizar en un solo paso utilizando el siguiente comando
-
-data_df <- xmlToDataFrame(link)
-head(data_df)
-
-# Tablas en HTML
-# Comenzamos instalando el paquete rvest el cual nos permitirá realizar la 
-# lectura de la tabla en el HTML
-
-# install.packages("rvest")
-library(rvest)
-# Introducimos una dirección URL donde se encuentre una tabla
-
-theurl <- "https://solarviews.com/span/data2.htm"
-file <- read_html(theurl)    # Leemos el html
-# Selecciona pedazos dentro del HTML para identificar la tabla
-
-tables <- html_nodes(file, "table")  
-# Hay que analizar 'tables' para determinar cual es la posición en la lista 
-# que contiene la tabla, en este caso es la no. 4
-
-# Extraemos la tabla de acuerdo a la posición en la lista
-
-table1 <- html_table(tables[4], fill = TRUE)
-
-table <- na.omit(as.data.frame(table1))   # Quitamos NA´s que meten filas extras 
-# y convertimos la lista en un data frame para su manipulación con R
-
-str(table)  # Vemos la naturaleza de las variables
-# Por último realizamos una conversión de una columna tipo chr a num, se pueden 
-# hacer las conversiones que se requieran
-
-table$Albedo <- as.numeric(table$Albedo)
-str(table)
+pr <- predict(fit, 12)$pred 
+ts.plot(cbind(window(Elec.ts, start = 1981), exp(pr)), col = c("blue", "red"), xlab = "")
+title(main = "Predicción para la serie de producción de electricidad",
+      xlab = "Mes",
+      ylab = "Producción de electricidad (GWh)")
