@@ -1,126 +1,77 @@
-# Ejemplo 2. Creación de un Dashboard con pestañas y data tables
+# Ejemplo 2. Conexiones con DBMS
 
 #### Objetivo
 
-- Crear un dashboard simple
-- Agregar pestañas al dashboard
-- Agregar elementos
+- Crear conexiones con DBMS
+- Realizar SQL queries y obtener datos
 
 #### Requisitos
 - Tener instalado R y RStudio
 - Haber estudiado el prework
-- paquete _shiny_
 
 #### Desarrollo
+"La paquetería DBI nos ayuda a generar conexiones a DBMS dentro de nuestra sesión 
+de R, para ello, la paquetería separa la conexión en back-end y front-end.
+El back-end es manejado por la librería DBI, en la cual podemos establecer y cerrar 
+conexiones, ejecturar SQL queries, entre otras funciones administrativas
 
+El front-end depende del servicio de DBMS:
+-MySQL: RMySQL
+-Postgres: RPostgres
+-SQLite: RSQLite
+entre muchos otros.
 
-Continuando con la base del ejemplo anterior, ahora lo que haremos es agregar imágenes dentro de nuestro panel en el archivo **`ui.R`**
+Algunas de estas librarías para front-end necesitan tener instalado explícitamente 
+DBI, como es el caso de RMySQL:"
+install.packages("DBI")
+install.packages("RMySQL")
 
-```R
-library(shiny)
-shinyUI(
-    pageWithSidebar(
-        headerPanel("Aplicacion basica con Shiny"),
-        sidebarPanel(
-            p("Crear plots con el DF 'auto'"), 
-            selectInput("x", "Seleccione el valor de X",
-                        choices = names(mtcars))
-        ),
-        mainPanel(
-                    h3(textOutput("output_text")), 
-                    plotOutput("output_plot"), 
-              
-              #Agregamos una imágen
-                    img( src = "cor_mtcars.png", 
-                    height = 450, width = 450)
-              
-            )
-        )
-    )
-    
+library(DBI)
+library(RMySQL)
 
-```
+"Para realizar una conexión, necesitamos un engine que nos ayude a establecer el nombre 
+del servidor (servidio de DBMS), el nombre de la base de datos, host y, en su caso,
+usuario y contraseña:"
+db.conn <- dbConnect(
+  drv = RMySQL::MySQL(),
+  dbname = "shinydemo",
+  host = "shiny-demo.csa7qlmguqrf.us-east-1.rds.amazonaws.com",
+  username = "guest",
+  password = "guest")
 
-Esto podemos organizarlo de mejor manera agregando pestañas con el comando `tabsetPanel` y con `tabPanel`para cada pestaña individual
+"Con la siguientes todas las tablas de datos que tenemos disponibles en nuestro database 
+y enlistar el nombre de los campos en cada una de ellas:"
+dbListTables(db.conn)
 
-```R
-library(class)
-library(dplyr)
-library(stringr)
+dbListFields(db.conn, 'City')
+dbListFields(db.conn, 'Country')
+dbListFields(db.conn, 'CountryLanguage')
 
-library(shiny)
-#install.packages("shinydashboard")
-library(shinydashboard)
+"La función dbGetQuery() nos permite realizar una consulta y extraer los datos obtenidos."
+db.data <- dbGetQuery(db.conn, 
+                      "SELECT a.Name AS City
+                            , a.District
+                            , a.Population AS CityPopulation
+                            , b.Name AS Country
+                            , b.Population AS CountryPopulation
+                      FROM City AS a
+                      INNER JOIN Country AS b
+                      ON a.CountryCode = b.Code
+                      ORDER BY CityPopulation DESC")
 
-shinyUI(
-    pageWithSidebar(
-        headerPanel("Aplicacion básica con Shiny"),
-        sidebarPanel(
-            p("Crear plots con el DF 'auto'"), 
-            selectInput("x", "Seleccione el valor de X",
-                        choices = names(mtcars))
-        ),
-        mainPanel(
-            
-          
-    #Agregando pestañ±as
-    tabsetPanel(
-        tabPanel("Plots",                   #Pestaña de Plots <---------
-                 h3(textOutput("output_text")), 
-                 plotOutput("output_plot"), 
-        ),
-        
-        tabPanel("imágenes",                #Pestaña de imágenes  <---------
-                 img( src = "cor_mtcars.png", 
-                      height = 450, width = 450)
-        ), 
-        
-        tabPanel("Summary", verbatimTextOutput("summary")),     # <--------- Summary
-        tabPanel("Table", tableOutput("table")),                # <--------- Table
-        tabPanel("Data Table", dataTableOutput("data_table"))   # <--------- Data table
-    )
-)
-)
+"Los datos son almacenados en un dataframe, por lo que podemos user otras funciones 
+para manipularlos, procesarlos y transformarlos."
+class(db.data)
+head(db.data)
 
-)
+"En algunas ocasiones ejecutaremos queries para crear, eliminar o alterar tablas (DDL),
+o para dar o revocar permisos, las cuales no regresan datos que podemos almacenar en un 
+dataframe. (DCL). Como la conexión que estamos realizando es una databse pública, nos podemos 
+implementar DDL o DCL, pero podemos ejemplificarlo de la siguiente forma:"
+rs <- dbSendQuery(db.conn, "SELECT '¡Hola, mundo!' AS saludo")
 
+dbFetch(rs)
+dbClearResult(rs)
 
-
-```
-
-Ahora hay que agregar la información que desplegará cada una de esas pestañas en el archivo **`server.R`**
-
-```R
-library(shiny)
-
-shinyServer(function(input, output) {
-
- output$output_text <- renderText(paste("mpg~", input$x))   #Título del main Panel
- 
- #Gráficas                       <----------
- output$output_plot <- renderPlot( plot( as.formula(paste("mpg ~", input$x)),
-                                          data = mtcars) )
- 
-  #imprimiendo el summary       <----------                                  
- output$summary <- renderPrint({
-     summary(mtcars)
-    })
-     
- # Agregando el dataframe       <----------
- output$table <- renderTable({ 
-     data.frame(mtcars)
-     })
- 
- #Agregando el data table       <----------
- output$data_table <- renderDataTable({mtcars}, 
-                                      options = list(aLengthMenu = c(5,25,50),
-                                                     iDisplayLength = 5))
-                                    
-       
-})
-```
-
-
-El resultado final es algo similar a lo siguiente, se puede apreciar el data table donde se pueden realizar filtros simultáneos. 
-
-<img src="imagenes/2.1.png" width="790" height="450">
+"Una vez terminadas nuestras consultas, debemos cerrar nuestra conexión:"
+dbDisconnect(db.conn)
