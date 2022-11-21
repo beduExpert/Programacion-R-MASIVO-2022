@@ -1,7 +1,7 @@
-# Reto 1. RStudio Cloud -> Github
+# Reto 1. Modelos ARMA de primer orden
 
 #### Objetivo
-Practicar cómo transferir un archivo desde RStudio Cloud hacia Github y viceversa 
+Estimar modelos AR, MA y ARMA
 
 #### Requisitos
 - Internet
@@ -9,17 +9,20 @@ Practicar cómo transferir un archivo desde RStudio Cloud hacia Github y vicever
 - Cuenta de Github
 
 #### Desarrollo
+Un modelo autorregresivo es aquel donde el comportamiento en el tiempo de una serie 
+es explicado por el primer rezago de su comportamiento, es decir:
+y[t]=b*y[t-1] + w[t], donde b es el coeficiente del término autorregresivo y w es 
+una serie ruído blanco.
 
-Ahora vas a practicar los conocimientos adquiridos en esta sesión principalmente con RStudio y Github
+1) Coloca el número diez como semilla
 
-- Crea un repositorio en Github llamado `Reto_Sesion_7` 
+2) Simula un proceso AR(1) de la forma x[t] = 0.8 * x[t-1] + w[t] para t = 1, 2, ..., 200 
+y muestra gráficamente la serie de tiempo obtenida
 
-- Crea un **Project** llamado `Reto_Sesion_07` dentro de RStudio Cloud utilizando tu cuenta de RStudio, que esté ligado al repositorio recién creado
 
-- Ahora en RStudio crea un script llamado `queries.R`en donde se conecte a la BDD `shinydemo`
+3) Obtén el correlograma y el correlograma parcial del proceso AR(1) simulado
 
-- Una vez hecha la conexión a la BDD, generar una búsqueda con `dplyr` que devuelva el porcentaje de personas que hablan español en todos los países
 
-- Realizar una gráfica con `ggplot` que represente este porcentaje de tal modo que en el eje de las _Y_ aparezca el país y en _X_ el porcentaje, y que diferencíe entre aquellos que es su lengua oficial y los que no, con diferente color (puedes utilizar _geom_bin2d()_ ó _geom_bar()_ y _coord_flip()_, si es necesario para visualizar mejor tus gráficas)
+4) Ajusta un modelo autorregresivo a la serie simulada utilizando la función ar, 
+observa el orden del modelo y los parámetros estimados. ¿Coinciden con el modelo original?
 
-- Una vez hecho esto hacer el _commit_ y _push_ para mandar tu archivo (`queries.R`), al repositorio de Github `Reto_Sesion_7`
