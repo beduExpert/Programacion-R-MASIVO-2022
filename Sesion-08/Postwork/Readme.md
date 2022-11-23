@@ -1,5 +1,5 @@
 
-# Postwork sesión 8. Análisis estadístico
+# Postwork sesión 8. Análisis de la Inseguridad Alimentaria en México
 
 #### OBJETIVO
 
@@ -18,9 +18,9 @@ Un centro de salud nutricional está interesado en analizar estadísticamente y 
 La base de datos es un extracto de la Encuesta Nacional de Salud y Nutrición (2012) levantada por el Instituto Nacional de Salud Pública en México. La mayoría de las personas afirman que los hogares con menor nivel socioeconómico tienden a gastar más en productos no saludables que las personas con mayores niveles socioeconómicos y que esto, entre otros determinantes, lleva a que un hogar presente cierta inseguridad alimentaria.
 
 La base de datos contiene las siguientes variables:
-- ns5f (Nivel socieconómico del hogar): 1 "Bajo", 2 "Medio bajo", 3 "Medio", 4 "Medio alto", 5 "Alto"
+- nse5f (Nivel socieconómico del hogar): 1 "Bajo", 2 "Medio bajo", 3 "Medio", 4 "Medio alto", 5 "Alto"
 - area (Zona geográfica): 0 "Zona urbana", 1 "Zona rural"
-- numpe (Número de persona en el hogar)
+- numpeho (Número de persona en el hogar)
 - refin (Recursos financieros distintos al ingreso laboral): 0 "no", 1 "sí"
 - edadjef (Edad del jefe/a de familia)
 - sexoje (Sexo del jefe/a de familia): 0 "Hombre", 1 "Mujer"
@@ -30,7 +30,7 @@ La base de datos contiene las siguientes variables:
 - IA (Inseguridad alimentaria en el hogar): 0 "No presenta IA", 1 "Presenta IA"
 
 ```R
-df <- 
+df <- read.csv("https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2022/main/Sesion-08/Postwork/inseguridad_alimentaria_bedu.csv")
 ```
 
 1) Plantea el problema del caso
