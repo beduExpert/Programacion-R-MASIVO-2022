@@ -1,38 +1,43 @@
 
-# Postwork sesión 8. Dashboard 
+# Postwork sesión 8. Análisis estadístico
 
 #### OBJETIVO
 
-- Ejecutar el código. 
-- Observar el resultado de la toma de desiciones consecutivas, cuando estas se basan en datos históricos 
+- Realizar un análisis estadístico completo de un caso 
+- Publicar en un repositorio de Github el análisis y el código empleado 
 
 #### REQUISITOS
 
-- Reproducir el código 
-- Haber realizado los postworks previos 
-- Analizar los gráficos resultantes
+- Haber realizado los works y postworks previos 
+- Tener una cuenta en Github o en RStudioCloud
 
 #### DESARROLLO
 
-Para este postwork genera un dashboard en un solo archivo `app.R`, para esto realiza lo siguiente: 
+Un centro de salud nutricional está interesado en analizar estadísticamente y probabilísticamente los patrones de gasto en alimentos saludables y no saludables en los hogares mexicanos con base en su nivel socioeconómico, en si el hogar tiene recursos financieros extrar al ingreso y en si presenta o no inseguridad alimentaria. Además, está interesado en un modelo que le permita identificar los determinantes socioeconómicos de la inseguridad alimentaria.
 
-- Ejecuta el código `momios.R`
+La base de datos es un extracto de la Encuesta Nacional de Salud y Nutrición (2012) levantada por el Instituto Nacional de Salud Pública en México. La mayoría de las personas afirman que los hogares con menor nivel socioeconómico tienden a gastar más en productos no saludables que las personas con mayores niveles socioeconómicos y que esto, entre otros determinantes, lleva a que un hogar presente cierta inseguridad alimentaria.
 
-- Almacena los gráficos resultantes en formato `png` 
+La base de datos contiene las siguientes variables:
+- ns5f (Nivel socieconómico del hogar): 1 "Bajo", 2 "Medio bajo", 3 "Medio", 4 "Medio alto", 5 "Alto"
+- area (Zona geográfica): 0 "Zona urbana", 1 "Zona rural"
+- numpe (Número de persona en el hogar)
+- refin (Recursos financieros distintos al ingreso laboral): 0 "no", 1 "sí"
+- edadjef (Edad del jefe/a de familia)
+- sexoje (Sexo del jefe/a de familia): 0 "Hombre", 1 "Mujer"
+- añosedu (Años de educación del jefe de familia)
+- ln_als (Logarítmo natural del gasto en alimentos saludables)
+- ln_alns (Logarítmo natural del gasto en alimentos no saludables)
+- IA (Inseguridad alimentaria en el hogar): 0 "No presenta IA", 1 "Presenta IA"
 
-- Crea un dashboard donde se muestren los resultados con 4 pestañas:
-   
-- Una pestaña con gráficas de barras, donde en el eje de las _X_ se muestren los goles de local y visitante, con un menu de selección (en _choices_ deben aparecer éstas variables), utiliza la geometría de tipo _barras_, además de hacer un facet_wrap con la variable de el _equipo visitante_
-   
-- Realiza una pestaña donde agregues las imágenes de las gráficas del postwork 3
-    
-- En otra pestaña coloca el data table del fichero `match.data.csv` 
-    
-- Por último en otra pestaña agrega las imágenes de las gráficas de los factores de ganancia promedio y máximo
+```R
+df <- 
+```
 
-Nota: recuerda que si tienes problemas con el codificado guarda tu archivo `app.R` con la codificación `UTF-8`
+1) Plantea el problema del caso
+2) Realiza un análisis descriptivo de la información
+3) Calcula probabilidades que nos permitan entender el problema en México
+4) Plantea hipótesis estadísticas y concluye sobre ellas para entender el problema en México
+5) Estima un modelo de regresión, lineal o logístico, para identificiar los determinanres de la inseguridad alimentaria en México
+6) Escribe tu análisis en un archivo README.MD y tu código en un script de R y publica ambos en un repositorio de Github.
 
-__Notas para los datos de soccer:__ https://www.football-data.co.uk/notes.txt
-
-
-
+NOTA: Todo tu planteamiento deberá estár correctamente desarrollado y deberás analizar e interpretar todos tus resultados para poder dar una conclusión final al problema planteado.
