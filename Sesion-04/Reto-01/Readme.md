@@ -10,7 +10,7 @@
 
 #### Desarrollo
 
-Una maquina de ensamblaje, tiene una probabilidad de 0.05 de ensamblar de forma 
+Una maquina de ensamblaje, tiene una probabilidad de 0.15 de ensamblar de forma 
 defectuosa una una unidad. Si la producción de una unidad es totaltamente independiente 
 de las demás y al día se producen 10 unidades:
 ```R
